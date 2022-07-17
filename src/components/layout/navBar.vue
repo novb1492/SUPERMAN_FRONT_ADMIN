@@ -12,10 +12,10 @@
         <li class="nav-item">
          <!-- <a class="nav-link active" aria-current="page" href="javascript:void();" @click="test">배달시작</a>-->
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="!loginFlag">
           <a class="nav-link" href="javascript:void();">로그인</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-else>
           <a class="nav-link" href="javascript:void();">로그아웃</a>
         </li>              
         <li class="nav-item">
@@ -37,6 +37,7 @@ export default {
   computed: {
     ...mapGetters({
       situataion: 'getSituation',
+      loginFlag: 'getLoginFlag',
     })
   },
   components: {
