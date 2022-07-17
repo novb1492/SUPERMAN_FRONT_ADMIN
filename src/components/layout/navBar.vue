@@ -1,115 +1,64 @@
 <template>
-  <nav class="navigation">
-    <ul>
-      <li class="list active">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="home-outline"></ion-icon>
-          </span>
-          <span class="text">home</span>
-        </a>
-      </li>
-       <li class="list">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="cart-outline"></ion-icon>
-          </span>
-          <span class="text">cart</span>
-        </a>
-      </li>
-       <li class="list">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="reorder-three-outline"></ion-icon>
-          </span>
-          <span class="text">order</span>
-        </a>
-      </li>
-       <li class="list">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="person-outline"></ion-icon>
-          </span>
-          <span class="text">profile</span>
-        </a>
-      </li>
-       <li class="list">
-        <a href="#">
-          <span class="icon">
-            <ion-icon name="flame-outline"></ion-icon>
-          </span>
-          <span class="text">event</span>
-        </a>
-      </li>
-       <div class="indicator"></div>
-    </ul>
-  </nav>
+   <div class="he">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand "  href="/"><p class="pinkText">JangBoGo</p></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+         <!-- <a class="nav-link active" aria-current="page" href="javascript:void();" @click="test">배달시작</a>-->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:void();">{{loginFlag}}</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="javascript:void();" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            User
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div v-if="loginFlag">
+                <li><a class="dropdown-item" href="javascript:void();" @click="logout">로그아웃</a></li>
+              <div v-if="role==this.$ROLE_USER">
+                <!--일반회원 목록-->
+                <li><a class="dropdown-item" href="/userPage/0?page=1" >장바구니가기</a></li>
+                <li><a class="dropdown-item" href="javascript:void();" @click="showHomeAddress()">받을 주소 불러오기</a></li>
+                <li><a class="dropdown-item" href="javascript:void();" @click="showHomeAddress()">마이페이지</a></li>
+                <li><a class="dropdown-item" href="javascript:void();" @click="goPaymnetListPage">주문내역 보기</a></li>
+                <!--<li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="javascript:void();">Something else here</a></li>-->
+              </div>
+              <div v-else>
+                <!--기업회원 목록-->
+                <li><a class="dropdown-item" href="/companyPage/1?page=1&keyword=null">매장관리/등록</a></li>
+                <li><a class="dropdown-item" href="/companyPage">주문조회/등록</a></li>
+              </div>
+            </div>
+            <div v-else>
+              <li><a class="dropdown-item" href="/loginPage" >로그인</a></li>
+              <li><a class="dropdown-item" href="/beforeJoinPage" >회원가입</a></li>
+            </div>
+          </ul>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="javascript:void();" tabindex="-1" aria-disabled="true">Disabled</a>
+        </li>
+      </ul>
+      <div v-if="searchflag">
+      <span class="d-flex">
+        <input class="form-control me-2" id="search" type="search" placeholder="00슈퍼,00마트등 검색" @keyup.enter="callFirstDoor" aria-label="Search">
+        <button class="btn btn-outline-success" @click="callFirstDoor" type="button">Search</button>
+      </span>
+      </div>
+    </div>
+  </div>
+</nav>
+  </div>
 </template>
-<style scoped>
- .navigation{
-  width: 400px;
-  position: relative;
-  height: 70px;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
- }
- .navigation ul{
-  display: flex;
-  width: 350px;
- }
- .navigation ul li{
-  position: relative;
-  list-style: none;
-  width: 70px;
-  height: 70px;
-  z-index: 1;
- }
-.navigation ul li a{
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  width: 100%;
-  text-align: center;
-  font-weight: 500;
-}
-.navigation ul li a .icon{
-  position: relative;
-  display: block;
-  line-height: 75px;
-  font-size: 1.5em;
-  text-align: center;
-  transition: 0.5s;
-}
-.navigation ul li:hover a .icon{
-  transform: translateY(-50px);
-}
-.navigation ul li a .text{
-  position: absolute;
-  font-weight: 400;
-  font-size: 0.75em;
-  letter-spacing: 0.00;
-  transition: 0.5s;
-}
-.navigation ul li:hover a .text{
-  opacity: 1;
-  transform: translateY(10px);
-}
-.indicator{
-  position: absolute;
-  top: -50%;
-  width: 70px;
-  height: 70px;
-  background-color: #29fd53;
-  border-radius: 50%;
-  border: 6px solid ;
-  transition: 0.5s;
-}
-</style>
+
 <script>
 export default {
   name: 'navBar',
