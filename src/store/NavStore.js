@@ -7,7 +7,7 @@ export const NavStore = new Vuex.Store({
         situation:0
     },
     getters: {
-        getMap(state) {
+        getSituation(state) {
             return state.situation;
         },
     },
