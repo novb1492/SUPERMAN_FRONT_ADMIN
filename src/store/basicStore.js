@@ -1,14 +1,16 @@
-import actions from '../action/basicAction'
+import actions from '../action/basicActions'
 import mutations from '../mutaion/basicMutaions'
-import Vuex from 'vuex';
 
-export const basicStore = new Vuex.Store({
+export const basicStore ={
+    namespaced: true,
     state: {
-
+        tt:null,
     },
     getters: {
-
+        getTt(state){
+            return state.tt;
+        }
     },
+    actions,
     mutations,
-    actions
-});
+};

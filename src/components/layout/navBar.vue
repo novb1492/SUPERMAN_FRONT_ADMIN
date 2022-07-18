@@ -35,7 +35,7 @@ import { mapGetters } from 'vuex';
 export default {
   name: 'navBar',
   computed: {
-    ...mapGetters({
+    ...mapGetters('NavStore',{
       situataion: 'getSituation',
       loginFlag: 'getLoginFlag',
     })

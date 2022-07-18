@@ -1,8 +1,8 @@
 import actions from '../action/NavAction'
 import mutations from '../mutaion/NavMutations'
-import Vuex from 'vuex';
 
-export const NavStore = new Vuex.Store({
+export const NavStore ={
+    namespaced: true,
     state: {
         situation:0,
         loaginFlag:false,
@@ -17,4 +17,4 @@ export const NavStore = new Vuex.Store({
     },
     mutations,
     actions
-});
+};
