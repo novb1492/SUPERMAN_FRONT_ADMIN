@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     tryLogin(){
-      this.$store.dispatch('requestLogin',{email:this.email,pwd:this.pwd});
+      this.$store.dispatch('basicStore/requestLogin',{email:this.email,pwd:this.pwd});
     }
   },
   
