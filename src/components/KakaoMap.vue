@@ -14,7 +14,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({
+    ...mapGetters('kmapStore',{
       map: 'getMap',
       ownMarkerFlag:'getOwnMarkerFlag'
     })
@@ -26,7 +26,7 @@ export default {
         center: new window.kakao.maps.LatLng(33.450701, 126.570667), //지도의 중심좌표.
         level: 3 //지도의 레벨(확대, 축소 정도)
     };
-    this.$store.dispatch('init',values); //지도 생성
+    this.$store.dispatch('kmapStore/init',values); //지도 생성
     this.setDomSize(this.width,this.height);//돔 사이즈 지정
     window.addEventListener('resize',this.setDomResize);// 리사이즈 이벤트 지정
   },

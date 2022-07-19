@@ -9,6 +9,8 @@ export default {
         requestLogin(data).then(response=>{
             console.log(response);
             context.dispatch('NavStore/changeLoginFlag',true,{ root: true });
+        }).catch(error=>{
+            console.log(error);
         });
     }
 }
