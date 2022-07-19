@@ -5,14 +5,14 @@ export const NavStore ={
     namespaced: true,
     state: {
         situation:0,
-        loaginFlag:false,
+        loginFlag:false,
     },
     getters: {
         getSituation(state) {
             return state.situation;
         },
         getLoginFlag(state) {
-            return state.loaginFlag;
+            return state.loginFlag;
         },
     },
     mutations,
