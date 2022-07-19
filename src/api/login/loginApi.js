@@ -1,7 +1,7 @@
 import { instance } from "../request";
 
-function requestLogin() {
-    return instance.post('/login',null);
+function requestLogin(data) {
+    return instance.post('/login',data);
 }
 export {
     requestLogin,
