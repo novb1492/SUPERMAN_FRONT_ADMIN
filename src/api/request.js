@@ -23,6 +23,7 @@ export function setInterceptors(instance) {
     return instance;
 }
 export const instance = axios.create({
+    withCredentials:true,
     baseURL: 'http://localhost:8080',
 
 });
