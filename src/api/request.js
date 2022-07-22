@@ -3,7 +3,7 @@ import axios from 'axios';
 export function setInterceptors(instance) {
     instance.interceptors.request.use(
       function(config) {
-        config.headers.Authrozation = 'aaaaaa';
+        config.withCredentials=true;
         return config;
       },
       function(error) {
@@ -23,7 +23,6 @@ export function setInterceptors(instance) {
     return instance;
 }
 export const instance = axios.create({
-    withCredentials:true,
     baseURL: 'http://localhost:8080',
 
 });
