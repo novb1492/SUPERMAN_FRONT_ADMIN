@@ -3,7 +3,7 @@ export default {
     requestLogin(context,payload) {
         console.log(payload);
         let data=JSON.stringify({
-            "email":payload.email,
+            "userId":payload.email,
             "pwd":payload.pwd
         });
         requestLogin(data).then(response=>{
@@ -11,6 +11,9 @@ export default {
             context.dispatch('NavStore/changeLoginFlag',true,{ root: true });
         }).catch(error=>{
             console.log(error);
+            let resposne=error.response;
+            let data=resposne.data.data;
+            alert(data.message);
         });
     }
 }
