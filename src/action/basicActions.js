@@ -9,6 +9,13 @@ export default {
         requestLogin(data).then(response=>{
             console.log(response);
             context.dispatch('NavStore/changeLoginFlag',true,{ root: true });
+            let nextUrl=payload.nextUrl;
+            if(nextUrl==undefined||nextUrl==null||nextUrl=='null'||nextUrl=='undefined'){
+                location.href='/';
+                return;
+            }
+            location.href=nextUrl;
+
         }).catch(error=>{
             console.log(error);
             let resposne=error.response;

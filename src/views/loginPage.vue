@@ -26,20 +26,13 @@ export default {
     return {
       email:null,
       pwd:null,
-      nextUrl:localStorage.getItem('nextUrl'),
     }
-  },
-  computed: {
-   
-  },
-  mounted(){
   },
   methods: {
     tryLogin(){
-      this.$store.dispatch('basicStore/requestLogin',{email:this.email,pwd:this.pwd});
+      this.$store.dispatch('basicStore/requestLogin',{email:this.email,pwd:this.pwd,nextUrl:this.$route.query.nextUrl});
     }
-  },
-  
+  }
 }
 </script>
 
