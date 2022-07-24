@@ -3,6 +3,11 @@
 </template>
 <script>
 import MyUploadAdapter   from "@/assets/js/MyUploadAdapter.js";
+function MyCustomUploadAdapterPlugin( editor ) {
+    editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
+        return new MyUploadAdapter( loader );
+    };
+}
 export default {
    props:['idName'],
   name: 'Ck5Editor',
@@ -14,7 +19,7 @@ export default {
   mounted() {
       window.ClassicEditor
         .create( document.querySelector('#'+this.idName), {
-                extraPlugins: [this.MyCustomUploadAdapterPlugin],
+                extraPlugins: [MyCustomUploadAdapterPlugin],
             } )
           .then( newEditor  => {
                 console.log( 'Editor was initialized', newEditor  );
@@ -22,16 +27,7 @@ export default {
             } )
           .catch( error => {
             console.log(error);
-        } )    
-  },
-  methods: {
-    MyCustomUploadAdapterPlugin( editor) {
-      alert('a');
-      editor.plugins.get( 'FileRepository' ).createUploadAdapter = ( loader ) => {
-        // Configure the URL to the upload script in your back-end here!
-        return new MyUploadAdapter( loader );
-      };
-    },
+      } )    
   },
 }
 </script>
