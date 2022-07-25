@@ -131,10 +131,9 @@ export default {
       frm.append("upload",document.getElementById('img').files[0]);
       console.log(frm);
       requestUploadImg(frm).then(response=>{
-        console.log(response);
       
       }).catch(error=>{
-        console.log(error);
+          
       });
     }
   },
