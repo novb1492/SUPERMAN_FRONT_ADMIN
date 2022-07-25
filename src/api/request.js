@@ -3,7 +3,9 @@ import axios from 'axios';
 export function setInterceptors(instance) {
     instance.interceptors.request.use(
       function(config) {
-        config.withCredentials=true;
+        let data=JSON.parse(localStorage.getItem('authentication'));
+        config.headers.authentication=data.authentication;
+        config.headers.refreshToken=data.refresh;
         return config;
       },
       function(error) {
@@ -23,6 +25,9 @@ export function setInterceptors(instance) {
     return instance;
 }
 export const instance = axios.create({
-    baseURL: 'http://localhost:8080',
+    baseURL: 'https://localhost:8080',
+    headers: {
+      'Content-Type': "application/json",
+    }
 
 });

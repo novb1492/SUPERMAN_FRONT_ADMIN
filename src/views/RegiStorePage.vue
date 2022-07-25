@@ -111,26 +111,31 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
 import { checkLogin } from "@/assets/js/Jslib";
+import { requestUploadImg } from "@/api/Etc/EtcApi";
 export default {
   name:"RegiStorePage",
   data() {
     return {
-      
+      thumbnail:null,
+      requestTime:0,
     }
   },
-  computed: {
-    ...mapGetters('NavStore',{
-      loginFlag: 'getLoginFlag',
-    })
-  },
   mounted(){
-    checkLogin('/login');
+    checkLogin('/login','/regi-store');
   },
   methods: {
     uploadThumbNail(){
-      alert('a');
+      const frm = new FormData();
+      console.log(document.getElementById('img').files[0]);
+      frm.append("upload",document.getElementById('img').files[0]);
+      console.log(frm);
+      requestUploadImg(frm).then(response=>{
+        console.log(response);
+      
+      }).catch(error=>{
+        console.log(error);
+      });
     }
   },
 }

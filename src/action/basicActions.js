@@ -8,6 +8,11 @@ export default {
         });
         requestLogin(data).then(response=>{
             console.log(response);
+            let data=JSON.stringify({
+                "authentication":response.headers.authentication,
+                "refresh":response.headers.refreshtoken
+            });
+            localStorage.setItem("authentication",data);
             context.dispatch('NavStore/changeLoginFlag',true,{ root: true });
             let nextUrl=payload.nextUrl;
             if(nextUrl==undefined||nextUrl==null||nextUrl=='null'||nextUrl=='undefined'){
