@@ -1,0 +1,6 @@
+export function checkLogin(failUrl){
+        if(!sessionStorage.getItem('loginFlag')){
+            alert('잘못된 접근입니다');
+            location.href=failUrl;
+        }
+    }

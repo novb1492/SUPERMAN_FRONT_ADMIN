@@ -17,7 +17,13 @@
         </li>
         <li class="nav-item" v-else>
           <a class="nav-link" href="javascript:void();">로그아웃</a>
-        </li>              
+        </li>    
+        <li class="nav-item" v-if="loginFlag">
+          <a class="nav-link" href="javascript:void();" @click="goStoreList">매장관리</a>
+        </li>
+        <li class="nav-item" v-if="loginFlag">
+          <a class="nav-link" href="javascript:void();" @click="goRegiStore">매장등록</a>
+        </li>            
         <li class="nav-item">
           <a class="nav-link disabled" href="javascript:void();" tabindex="-1" aria-disabled="true">Disabled</a>
         </li>
@@ -46,6 +52,12 @@ export default {
   methods:{
     goLogin(){
       location.href='/login';
+    },
+    goRegiStore(){
+      location.href='/regi-store';
+    },
+    goStoreList(){
+      location.href='/store-list';
     }
   }
 }
