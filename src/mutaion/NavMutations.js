@@ -3,6 +3,6 @@ export default {
         state.situation=data;
     },
     changeLoginFlag(state,data){
-        state.loginFlag=data;
+        localStorage.setItem('loginFlag',data);
     },
 }

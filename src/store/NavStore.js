@@ -5,7 +5,7 @@ export const NavStore ={
     namespaced: true,
     state: {
         situation:0,
-        loginFlag:false,
+        loginFlag:localStorage.getItem('loginFlag'),
     },
     getters: {
         getSituation(state) {

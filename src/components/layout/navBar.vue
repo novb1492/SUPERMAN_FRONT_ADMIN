@@ -13,7 +13,7 @@
          <!-- <a class="nav-link active" aria-current="page" href="javascript:void();" @click="test">배달시작</a>-->
         </li>
         <li class="nav-item" v-if="!loginFlag">
-          <a class="nav-link" href="javascript:void();">로그인</a>
+          <a class="nav-link" href="javascript:void();" @click="goLogin">로그인</a>
         </li>
         <li class="nav-item" v-else>
           <a class="nav-link" href="javascript:void();">로그아웃</a>
@@ -40,8 +40,14 @@ export default {
       loginFlag: 'getLoginFlag',
     })
   },
-  components: {
+  mounted(){
+    console.log(this.loginFlag);
   },
+  methods:{
+    goLogin(){
+      location.href='/login';
+    }
+  }
 }
 </script>
 
