@@ -42,11 +42,7 @@
         <editor class="mt-2" :text="null" :placeHolder="'간단한 가게 설명을 적어주세요'" ref="ck_editor"/>
         </div>
         <div class="col">
-                <vue-daum-postcode
-              id="kpost"
-              @complete="onComplete"
-              style="overflow: scroll; width: 400px; height: 500px;"
-            />
+              <kakao-post-code></kakao-post-code>
               <span>우편번호</span>
               <input
               type="text"
@@ -113,7 +109,9 @@
 <script>
 import { checkLogin } from "@/assets/js/Jslib";
 import { requestUploadImg } from "@/api/Etc/EtcApi";
+import KakaoPostCode from '@/components/KakaoPostCode.vue';
 export default {
+  components: { KakaoPostCode },
   name:"RegiStorePage",
   data() {
     return {
