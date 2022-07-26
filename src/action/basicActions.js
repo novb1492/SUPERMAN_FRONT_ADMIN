@@ -1,4 +1,4 @@
-import {requestLogin  } from "../api/login/loginApi";
+import {requestLogin  } from "@/api/login/loginApi";
 export default {
     requestLogin(context,payload) {
         console.log(payload);

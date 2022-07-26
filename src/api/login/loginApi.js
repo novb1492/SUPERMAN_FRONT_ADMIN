@@ -1,7 +1,6 @@
-import { instance,setInterceptors } from "../request";
+import { instance } from "@/api/request";
 
 function requestLogin(data) {
-    setInterceptors(instance);
     return instance.post('/login',data);
 }
 export {

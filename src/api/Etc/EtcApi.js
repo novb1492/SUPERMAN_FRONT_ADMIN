@@ -1,4 +1,4 @@
-import { instance,setInterceptors } from "../request";
+import { instance,setInterceptors } from "@/api/request";
 
 async function requestUploadImg(data) {
     setInterceptors(instance);

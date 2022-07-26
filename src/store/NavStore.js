@@ -1,5 +1,5 @@
-import actions from '../action/NavAction'
-import mutations from '../mutaion/NavMutations'
+import actions from '@/action/NavAction'
+import mutations from '@/mutaion/NavMutations'
 
 export const NavStore ={
     namespaced: true,

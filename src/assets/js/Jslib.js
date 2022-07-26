@@ -4,3 +4,10 @@ export function checkLogin(failUrl,sucUrl){
             location.href=failUrl+'?nextUrl='+sucUrl;
         }
     }
+export function setToken(response) {
+    let data=JSON.stringify({
+        "authentication":response.headers.authentication,
+        "refresh":response.headers.refreshtoken
+    });
+    localStorage.setItem("authentication",data);
+}

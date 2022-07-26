@@ -1,5 +1,5 @@
-import actions from '../action/kakaomapActions'
-import mutations from '../mutaion/kmapMutaions'
+import actions from '@/action/kakaomapActions'
+import mutations from '@/mutaion/kmapMutaions'
 
 
 export const kmapStore ={
