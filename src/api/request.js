@@ -22,7 +22,6 @@ export function setInterceptors(instance) {
     },
     (error) => {
       console.log(error);
-      setToken(error.response);
       let response = error.response;
       let data = response.data;
       if (response.status == 403 && data.message == '새토큰이 발급되었습니다') {

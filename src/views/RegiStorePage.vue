@@ -19,7 +19,7 @@
         <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간" v-model="opentime" />
         <br>
         <span>마감시간</span>
-        <input type="time" class="ml135 mt-2 mb-2" id="closeTime" placeholder="마감시간" />
+        <input type="time" class="ml135 mt-2 mb-2" id="closeTime" placeholder="마감시간" v-model="closetime" />
         <br>
         <span>간단한 가게 설명을 적어주세요</span>
         <ck-5-editor :idName="'editor'"></ck-5-editor>
@@ -44,12 +44,12 @@
       <div class="col">
         <kakao-map :width="300" :height="300" ref="kmap"></kakao-map>
         <span>휴대폰번호</span>
-        <input type="text" class="ml80" id="phone">
+        <input type="text" class="ml80" id="phone" v-model="phone">
         <br>
         <span>매장전화번호</span>
         <input type="text" class="ml80 mt-2" id="tel">
         <br>
-        <input type="button" @click="showAuthPage('phone')" id="check_phone_button" class="mt-2" value="전화인증" />
+        <input type="button" @click="confrimPhone" id="check_phone_button" class="mt-2" value="전화인증" />
         <input type="button" value="가맹점 등록" @click="tryInsertStore">
       </div>
     </div>
@@ -58,7 +58,7 @@
 
 <script>
 import { checkLogin } from "@/assets/js/Jslib";
-import { requestUploadImg } from "@/api/Etc/EtcApi";
+import {  requestUploadImg } from "@/api/Etc/EtcApi";
 import KakaoPostCode from '@/components/KakaoPostCode.vue';
 import Ck5Editor from '@/components/Ck5Editor.vue';
 import KakaoMap from '@/components/KakaoMap.vue';
@@ -80,6 +80,7 @@ export default {
       companynum:null,
       opentime:null,
       closetime:null,
+      phone:null
     }
   },
   computed: {
@@ -134,9 +135,12 @@ export default {
     },
     catchUploadError(error){
       let response=error.response;
-      let state=response.state;
+      let state=response.status;
+      let data=response.data;
       if(state==403){
         alert('재로그인 후 시도해주세요');
+      }else if(state==400){
+        alert(data.message);
       }
     },
     showCircle(){
@@ -159,6 +163,13 @@ export default {
       });
       console.log(this.circle);
       this.circle.setMap(this.map); 
+    },
+    confrimPhone(){
+      // requestSns('phone',this.phone).then(response=>{
+
+      // }).catch(error=>{
+
+      // });
     }
   },
 }
