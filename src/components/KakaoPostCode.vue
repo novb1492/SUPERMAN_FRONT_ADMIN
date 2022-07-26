@@ -1,13 +1,19 @@
 <template>
     <input type="button" @click="sample3_execDaumPostcode" value="우편번호 찾기"><br>
-    <div id="wrap" style="display:none;border:1px solid;width:500px;height:300px;margin:5px 0;position:relative">
+    <div id="wrap" style="display:none;border:1px solid;margin:5px 0;position:relative">
         <img src="//t1.daumcdn.net/postcode/resource/images/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" @click="foldDaumPostcode" alt="접기 버튼">
     </div>
 </template>
 
 <script>
 export default {
+    props:['width','height'],
     name:"KakaoPostCode",
+    mounted() {
+        var  element_wrap=document.getElementById('wrap');
+        element_wrap.style.width=this.width+'px';
+        element_wrap.style.height=this.height+'px';
+    },
     methods:{
         sample3_execDaumPostcode() {
         // 현재 scroll 위치를 저장해놓는다.
@@ -43,20 +49,13 @@ export default {
                     // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
                     if(extraAddr !== ''){
                         extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample3_extraAddress").value = extraAddr;
-                
-                } else {
-                    document.getElementById("sample3_extraAddress").value = '';
-                }
-
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample3_postcode').value = data.zonecode;
-                document.getElementById("sample3_address").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample3_detailAddress").focus();
-
+                    }                
+                } 
+                let result=new Object;
+                result.addr=addr;
+                result.postcode=data.zonecode;
+                result.extraAddr=extraAddr;
+                this.$emit('resultPost',result);
                 // iframe을 넣은 element를 안보이게 한다.
                 // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
                 element_wrap.style.display = 'none';

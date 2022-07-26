@@ -39,16 +39,17 @@
         />
         <br>
         <span >간단한 가게 설명을 적어주세요</span>
-        <editor class="mt-2" :text="null" :placeHolder="'간단한 가게 설명을 적어주세요'" ref="ck_editor"/>
+          <ck-5-editor :idName="'editor'"></ck-5-editor>
         </div>
         <div class="col">
-              <kakao-post-code></kakao-post-code>
+              <kakao-post-code :width="400" :height="300" ref="kpostCode" v-on:resultPost="resultPost"></kakao-post-code>
               <span>우편번호</span>
               <input
               type="text"
               class="ml105 mt-2"
               id="postcode"
               placeholder="우편번호"
+              v-model="postcode"
               disabled
             />
             <br>
@@ -57,14 +58,7 @@
               class="ml135 mt-2"
               id="address"
               placeholder="주소"
-              disabled
-            />
-            <br>
-            <span>도로명주소</span><input
-              type="text"
-              class="ml135 mt-2"
-              id="address2"
-              placeholder="도로명주소"
+              v-model="addr"
               disabled
             />
             <br>
@@ -88,11 +82,12 @@
               id="deliverRadius"
               placeholder="최대배달반경"
               @keyup="showCircle"
+              v-model="radius"
             />
             <br>
         </div>
         <div class="col">
-          <k-map :width="400" :height="500" :zoomLevel=5 ref="k_map"/>
+          <kakao-map :width="300" :height="300"  ref="kmap"></kakao-map>
           <span >휴대폰번호</span>
           <input type="text" class="ml80" id="phone">
           <br>
@@ -110,19 +105,54 @@
 import { checkLogin } from "@/assets/js/Jslib";
 import { requestUploadImg } from "@/api/Etc/EtcApi";
 import KakaoPostCode from '@/components/KakaoPostCode.vue';
+import Ck5Editor from '@/components/Ck5Editor.vue';
+import KakaoMap from '@/components/KakaoMap.vue';
+import { mapGetters } from "vuex";
 export default {
-  components: { KakaoPostCode },
+  components: { KakaoPostCode, Ck5Editor, KakaoMap },
   name:"RegiStorePage",
   data() {
     return {
       thumbnail:null,
       requestTime:0,
+      addr:'',
+      detailAddr:'',
+      postcode:'',
+      marker:null,
+      radius:null,
+      circle:null,
+      result:null
     }
+  },
+  computed: {
+    ...mapGetters('kmapStore',{
+      geocoder:'getGeocoder',
+      map: 'getMap'
+    })
   },
   mounted(){
     checkLogin('/login','/regi-store');
   },
   methods: {
+    resultPost(data){
+      this.addr=data.addr;
+      this.postcode=data.postcode;
+      this.geocoder.addressSearch(data.addr,(results, status)=> {
+        if(status==window.daum.maps.services.Status.OK){
+          if(this.marker!=null){
+            this.marker.setMap(null);
+          }
+          this.result=results[0];
+          this.marker=this.$refs.kmap.setMarker(this.result);
+          this.marker.setMap(this.map);
+          this.map.relayout();
+          this.map.setCenter(new window.kakao.maps.LatLng(this.result.y, this.result.x));
+          if(this.radius!=null){
+            this.showCircle();
+          }
+        }
+      });
+    },
     uploadThumbNail(){
       const frm = new FormData();
       frm.append("upload",document.getElementById('img').files[0]);
@@ -150,6 +180,27 @@ export default {
       if(state==403){
         alert('재로그인 후 시도해주세요');
       }
+    },
+    showCircle(){
+      if(isNaN(this.radius)){
+        alert('배달거리는 숫자만 입력해주세요');
+        return;
+      }
+      if(this.circle!=null){
+        this.circle.setMap(null); 
+      }
+      this.circle = new window.kakao.maps.Circle({
+          center : new window.kakao.maps.LatLng(this.result.y,this.result.x),  // 원의 중심좌표 입니다 
+          radius: this.radius*1000, // 미터 단위의 원의 반지름입니다 
+          strokeWeight: 5, // 선의 두께입니다 
+          strokeColor: '#75B8FA', // 선의 색깔입니다
+          strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+          strokeStyle: 'dashed', // 선의 스타일 입니다
+          fillColor: '#CFE7FF', // 채우기 색깔입니다
+          fillOpacity: 0.7  // 채우기 불투명도 입니다   
+      });
+      console.log(this.circle);
+      this.circle.setMap(this.map); 
     }
   },
 }
