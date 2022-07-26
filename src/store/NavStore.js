@@ -1,11 +1,11 @@
 import actions from '@/action/NavAction'
 import mutations from '@/mutaion/NavMutations'
 
-export const NavStore ={
+export const NavStore = {
     namespaced: true,
     state: {
-        situation:0,
-        loginFlag:sessionStorage.getItem('loginFlag'),
+        situation: 0,
+        loginFlag: sessionStorage.getItem('loginFlag'),
     },
     getters: {
         getSituation(state) {

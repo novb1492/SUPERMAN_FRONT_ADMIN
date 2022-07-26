@@ -4,9 +4,9 @@ import loginPage from "@/views/loginPage.vue";
 import RegiStorePage from "@/views/RegiStorePage.vue";
 
 const routes = [
-  {path: "/",component: Home},
-  {path:"/login",component:loginPage},
-  {path:"/regi-store",component:RegiStorePage}
+  { path: "/", component: Home },
+  { path: "/login", component: loginPage },
+  { path: "/regi-store", component: RegiStorePage }
 
 ];
 

@@ -1,8 +1,8 @@
 export default {
-    changeSituation(state,data){
-        state.situation=data;
+    changeSituation(state, data) {
+        state.situation = data;
     },
-    changeLoginFlag(state,data){
-        sessionStorage.setItem('loginFlag',data);
+    changeLoginFlag(state, data) {
+        sessionStorage.setItem('loginFlag', data);
     },
 }

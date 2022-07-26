@@ -1,102 +1,57 @@
 <template>
-   <div style="margin-top: 70px;">
+  <div style="margin-top: 70px;">
     <div class="row">
-        <div class="col">
-           <h5 class="mt-2">매장을 대표하는 사진을 업로드해주세요</h5>
-        <img  :src="thumbnail"  id="thumbnail" class="storeThumbnail">
+      <div class="col">
+        <h5 class="mt-2">매장을 대표하는 사진을 업로드해주세요</h5>
+        <img :src="thumbnail" id="thumbnail" class="storeThumbnail">
         <br>
         <input type="file" id="img" class="mt-2" name="img" accept=".gif, .jpg, .png" @change="uploadThumbNail">
         <!--<br>
         <input type="button" class="mt-2"  value="업로드"  @click="uploadThumbNail">-->
         <br>
-         <span class="mt-2" >상호</span>
-        <input
-          type="text"
-          class="ml135 mt-2"
-          id="storeName"
-          placeholder="상호"   
-        />
+        <span class="mt-2">상호</span>
+        <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" />
         <br>
         <span>사업자번호(숫자만)</span>
-        <input type="text"
-          class="ml45 mt-2"
-          id="num"
-          placeholder="상호"   
-        />
+        <input type="text" class="ml45 mt-2" id="num" placeholder="상호" v-model="companynum" />
         <br>
         <span>오픈시간</span>
-        <input type="time"
-          class="ml135 mt-2"
-          id="openTime"
-          placeholder="오픈시간"
-        />
+        <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간" v-model="opentime" />
         <br>
         <span>마감시간</span>
-        <input type="time"
-          class="ml135 mt-2 mb-2"
-          id="closeTime"
-          placeholder="마감시간"
-        />
+        <input type="time" class="ml135 mt-2 mb-2" id="closeTime" placeholder="마감시간" />
         <br>
-        <span >간단한 가게 설명을 적어주세요</span>
-          <ck-5-editor :idName="'editor'"></ck-5-editor>
-        </div>
-        <div class="col">
-              <kakao-post-code :width="400" :height="300" ref="kpostCode" v-on:resultPost="resultPost"></kakao-post-code>
-              <span>우편번호</span>
-              <input
-              type="text"
-              class="ml105 mt-2"
-              id="postcode"
-              placeholder="우편번호"
-              v-model="postcode"
-              disabled
-            />
-            <br>
-            <span>주소</span><input
-              type="text"
-              class="ml135 mt-2"
-              id="address"
-              placeholder="주소"
-              v-model="addr"
-              disabled
-            />
-            <br>
-            <span>상세주소</span><input
-              type="text"
-              class="ml105 mt-2"
-              id="detailAddress"
-              placeholder="상세주소"
-            />
-            <br>
-            <span>최소배달금액(원)</span>
-            <input type="number"
-              class="ml105 mt-2"
-              id="minPrice"
-              placeholder="최소배달금액"
-            />
-            <br>
-            <span>최대배달반경(km)</span>
-            <input type="number"
-              class="ml80 mt-2"
-              id="deliverRadius"
-              placeholder="최대배달반경"
-              @keyup="showCircle"
-              v-model="radius"
-            />
-            <br>
-        </div>
-        <div class="col">
-          <kakao-map :width="300" :height="300"  ref="kmap"></kakao-map>
-          <span >휴대폰번호</span>
-          <input type="text" class="ml80" id="phone">
-          <br>
-          <span>매장전화번호</span>
-          <input type="text" class="ml80 mt-2" id="tel">
-          <br>
-          <input type="button" @click="showAuthPage('phone')" id="check_phone_button" class="mt-2" value="전화인증" />
-          <input type="button" value="가맹점 등록" @click="tryInsertStore" >
-        </div>
+        <span>간단한 가게 설명을 적어주세요</span>
+        <ck-5-editor :idName="'editor'"></ck-5-editor>
+      </div>
+      <div class="col">
+        <kakao-post-code :width="400" :height="300" ref="kpostCode" v-on:resultPost="resultPost"></kakao-post-code>
+        <span>우편번호</span>
+        <input type="text" class="ml105 mt-2" id="postcode" placeholder="우편번호" v-model="postcode" disabled />
+        <br>
+        <span>주소</span><input type="text" class="ml135 mt-2" id="address" placeholder="주소" v-model="addr" disabled />
+        <br>
+        <span>상세주소</span><input type="text" class="ml105 mt-2" id="detailAddress" placeholder="상세주소" />
+        <br>
+        <span>최소배달금액(원)</span>
+        <input type="number" class="ml105 mt-2" id="minPrice" placeholder="최소배달금액" />
+        <br>
+        <span>최대배달반경(km)</span>
+        <input type="number" class="ml80 mt-2" id="deliverRadius" placeholder="최대배달반경" @keyup="showCircle"
+          v-model="radius" />
+        <br>
+      </div>
+      <div class="col">
+        <kakao-map :width="300" :height="300" ref="kmap"></kakao-map>
+        <span>휴대폰번호</span>
+        <input type="text" class="ml80" id="phone">
+        <br>
+        <span>매장전화번호</span>
+        <input type="text" class="ml80 mt-2" id="tel">
+        <br>
+        <input type="button" @click="showAuthPage('phone')" id="check_phone_button" class="mt-2" value="전화인증" />
+        <input type="button" value="가맹점 등록" @click="tryInsertStore">
+      </div>
     </div>
   </div>
 </template>
@@ -121,7 +76,10 @@ export default {
       marker:null,
       radius:null,
       circle:null,
-      result:null
+      result:null,
+      companynum:null,
+      opentime:null,
+      closetime:null,
     }
   },
   computed: {
