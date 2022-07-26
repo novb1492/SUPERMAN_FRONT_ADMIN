@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export function setInterceptors(instance) {
     instance.interceptors.request.use(
-      function(config) {
+      (config)=> {
         let data=JSON.parse(localStorage.getItem('authentication'));
         if(data!=null){
           config.headers.authentication=data.authentication;
@@ -11,17 +11,16 @@ export function setInterceptors(instance) {
         }
         return config;
       },
-      function(error) {
+      (error)=> {
         return Promise.reject(error);
       },
     );
     // Add a response interceptor
     instance.interceptors.response.use(
-      function(response) {
-        console.log(response);
+      (response)=> {
         return response;
       },
-      function(error) {
+      (error)=> {
         console.log(error);
         setToken(error.response);
         let response=error.response;

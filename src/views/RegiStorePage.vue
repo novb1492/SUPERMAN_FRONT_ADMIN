@@ -127,18 +127,31 @@ export default {
   methods: {
     uploadThumbNail(){
       const frm = new FormData();
-      console.log(document.getElementById('img').files[0]);
       frm.append("upload",document.getElementById('img').files[0]);
-      console.log(frm);
       requestUploadImg(frm).then(response=>{
-        console.log(response);
+        let data=response.data;
+        this.thumbnail=data.message[0];
       }).catch(error=>{
           let response=error.response;
           let data=response.data;
           if(response.status==403&&data.message=='새토큰이 발급되었습니다'){
-            this.uploadThumbNail();
+              requestUploadImg(frm).then(response=>{
+                let data=response.data;
+                this.thumbnail=data.message[0];
+              }).catch(error=>{
+                this.catchUploadError(error);
+              });
+          }else{
+            this.catchUploadError(error);
           }
       });
+    },
+    catchUploadError(error){
+      let response=error.response;
+      let state=response.state;
+      if(state==403){
+        alert('재로그인 후 시도해주세요');
+      }
     }
   },
 }
