@@ -45,11 +45,11 @@ export default {
           },
 
           // User:
-          user: {
-            id: new Uint8Array(16),
-            name: "document.getElementById('email').value",
-            displayName: "John P. Smith"
-          },
+          // user: {
+          //   id: new Uint8Array(16),
+          //   name: "john.p.smith@example.com",
+          //   displayName: "John P. Smith"
+          // },
 
           pubKeyCredParams: [{
             type: "public-key",
