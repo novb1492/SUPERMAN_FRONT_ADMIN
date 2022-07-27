@@ -102,7 +102,7 @@ export default {
             type: "public-key"
           }];
           getCredentialDefaultArgs.publicKey.allowCredentials = idList;
-          this.creds=cred;
+          this.creds=JSON.parse(cred);
           // this.$router.go();
         })
         .catch((err) => {
