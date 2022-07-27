@@ -1,13 +1,13 @@
-import actions from '../action/basicActions'
-import mutations from '../mutaion/basicMutaions'
+import actions from '@/action/basicActions'
+import mutations from '@/mutaion/basicMutaions'
 
-export const basicStore ={
+export const basicStore = {
     namespaced: true,
     state: {
-        tt:null,
+        tt: null,
     },
     getters: {
-        getTt(state){
+        getTt(state) {
             return state.tt;
         }
     },

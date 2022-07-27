@@ -13,11 +13,17 @@
          <!-- <a class="nav-link active" aria-current="page" href="javascript:void();" @click="test">배달시작</a>-->
         </li>
         <li class="nav-item" v-if="!loginFlag">
-          <a class="nav-link" href="javascript:void();">로그인</a>
+          <a class="nav-link" href="javascript:void();" @click="goLogin">로그인</a>
         </li>
         <li class="nav-item" v-else>
           <a class="nav-link" href="javascript:void();">로그아웃</a>
-        </li>              
+        </li>    
+        <li class="nav-item" v-if="loginFlag">
+          <a class="nav-link" href="javascript:void();" @click="goStoreList">매장관리</a>
+        </li>
+        <li class="nav-item" v-if="loginFlag">
+          <a class="nav-link" href="javascript:void();" @click="goRegiStore">매장등록</a>
+        </li>            
         <li class="nav-item">
           <a class="nav-link disabled" href="javascript:void();" tabindex="-1" aria-disabled="true">Disabled</a>
         </li>
@@ -40,8 +46,20 @@ export default {
       loginFlag: 'getLoginFlag',
     })
   },
-  components: {
+  mounted(){
+    console.log(this.loginFlag);
   },
+  methods:{
+    goLogin(){
+      location.href='/login';
+    },
+    goRegiStore(){
+      location.href='/regi-store';
+    },
+    goStoreList(){
+      location.href='/store-list';
+    }
+  }
 }
 </script>
 

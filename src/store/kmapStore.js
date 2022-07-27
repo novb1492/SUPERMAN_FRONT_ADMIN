@@ -1,32 +1,32 @@
-import actions from '../action/kakaomapActions'
-import mutations from '../mutaion/kmapMutaions'
+import actions from '@/action/kakaomapActions'
+import mutations from '@/mutaion/kmapMutaions'
 
 
-export const kmapStore ={
+export const kmapStore = {
     namespaced: true,
     state: {
-        map:null,
-        kWidth:0,
-        kHeight:0,
-        superAndMarketMarkerArr:[],
-        ps:new window.kakao.maps.services.Places(),
-        geocoder:new window.kakao.maps.services.Geocoder(),
-        ownMarkerFlag:false,
+        map: null,
+        kWidth: 0,
+        kHeight: 0,
+        superAndMarketMarkerArr: [],
+        ps: new window.kakao.maps.services.Places(),
+        geocoder: new window.kakao.maps.services.Geocoder(),
+        ownMarkerFlag: false,
     },
     getters: {
         getMap(state) {
             return state.map;
         },
-        getSuperAndMarketMarkerArr(state){
+        getSuperAndMarketMarkerArr(state) {
             return state.superAndMarketMarkerArr;
         },
-        getPs(state){
+        getPs(state) {
             return state.ps;
         },
-        getGeocoder(state){
+        getGeocoder(state) {
             return state.geocoder;
         },
-        getOwnMarkerFlag(state){
+        getOwnMarkerFlag(state) {
             return state.ownMarkerFlag;
         }
     },

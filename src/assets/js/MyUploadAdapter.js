@@ -1,9 +1,9 @@
-export default  class MyUploadAdapter {
+export default class MyUploadAdapter {
     constructor(props) {
         // CKEditor 5's FileLoader instance.
-      this.loader = props;
-      // URL where to send files.
-      this.url = 'http://localhost:8080/auth/file/upload';
+        this.loader = props;
+        // URL where to send files.
+        this.url = 'http://localhost:8080/auth/file/upload';
     }
 
     // Starts the upload process.
@@ -13,13 +13,13 @@ export default  class MyUploadAdapter {
             this._initRequest();
             this._initListeners(resolve, reject);
             this._sendRequest();
-        } );
+        });
     }
 
     // Aborts the upload process.
     abort() {
         console.log('about');
-        if ( this.xhr ) {
+        if (this.xhr) {
             this.xhr.abort();
         }
     }
@@ -37,24 +37,24 @@ export default  class MyUploadAdapter {
     }
 
     // Initializes XMLHttpRequest listeners.
-    _initListeners( resolve, reject ) {
+    _initListeners(resolve, reject) {
         console.log('_initListeners');
 
         const xhr = this.xhr;
         const loader = this.loader;
-        const genericErrorText = 'Couldn\'t upload file:' + ` ${ loader.file.name }.`;
+        const genericErrorText = 'Couldn\'t upload file:' + ` ${loader.file.name}.`;
 
-        xhr.addEventListener( 'error', () => reject( genericErrorText ) );
-        xhr.addEventListener( 'abort', () => reject() );
-        xhr.addEventListener( 'load', () => {
+        xhr.addEventListener('error', () => reject(genericErrorText));
+        xhr.addEventListener('abort', () => reject());
+        xhr.addEventListener('load', () => {
             const response = xhr.response;
-            if ( !response || response.error ) {
-                return reject( response && response.error ? response.error.message : genericErrorText );
+            if (!response || response.error) {
+                return reject(response && response.error ? response.error.message : genericErrorText);
             }
             console.log('결과');
             console.log(response);
-            console.log('reposne: '+response.message);
-            if(response.message=='new'){
+            console.log('reposne: ' + response.message);
+            if (response.message == 'new') {
                 console.log('재용청필요함');
                 this._initRequest();
                 this._initListeners(resolve, reject);
@@ -64,17 +64,17 @@ export default  class MyUploadAdapter {
             // If the upload is successful, resolve the upload promise with an object containing
             // at least the "default" URL, pointing to the image on the server.
             resolve({
-                default: response.message
+                default: response.message[0]
             });
-        } );
+        });
 
-        if ( xhr.upload ) {
-            xhr.upload.addEventListener( 'progress', evt => {
-                if ( evt.lengthComputable ) {
+        if (xhr.upload) {
+            xhr.upload.addEventListener('progress', evt => {
+                if (evt.lengthComputable) {
                     loader.uploadTotal = evt.total;
                     loader.uploaded = evt.loaded;
                 }
-            } );
+            });
         }
     }
 
@@ -85,9 +85,9 @@ export default  class MyUploadAdapter {
         const data = new FormData();
 
         this.loader.file.then(result => {
-          data.append('upload', result);
-          this.xhr.send(data);
-          }
+            data.append('upload', result);
+            this.xhr.send(data);
+        }
         )
     }
 
