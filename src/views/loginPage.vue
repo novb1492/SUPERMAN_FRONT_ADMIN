@@ -101,8 +101,8 @@ export default {
             transports: ["usb", "nfc", "ble"],
             type: "public-key"
           }];
+          alert(cred.rawId);
           getCredentialDefaultArgs.publicKey.allowCredentials = idList;
-          this.creds=Object.entries(cred).map(x=>x.join(":")).join("\n");
           // this.$router.go();
         })
         .catch((err) => {
