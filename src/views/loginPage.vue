@@ -22,6 +22,7 @@
   </div>
   {{ assertions }}
   {{ errs }}
+  {{creds}}
   test
 </template>
 <style scoped>
@@ -78,7 +79,8 @@ export default {
       email: null,
       pwd: null,
       assertions: null,
-      errs: null
+      errs: null,
+      creds:null
     }
   },
   methods: {
@@ -100,8 +102,8 @@ export default {
             type: "public-key"
           }];
           getCredentialDefaultArgs.publicKey.allowCredentials = idList;
-          alert(cred.rawId);
-          this.$router.go();
+          this.creds=cred;
+          // this.$router.go();
         })
         .catch((err) => {
           this.errs = err;
