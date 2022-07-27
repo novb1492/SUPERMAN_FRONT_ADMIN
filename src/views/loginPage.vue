@@ -22,6 +22,7 @@
   </div>
   {{assertions}}
     {{errs}}
+    {{createCredentialDefaultArgs}}
 test
 </template>
 <style scoped>
@@ -48,7 +49,7 @@ export default {
           // User:
           user: {
             id: new Uint8Array(16),
-            name: "kim@kim.com",
+            name: "kim@kim.com2",
             displayName: "John P. Smith"
           },
 
@@ -87,6 +88,7 @@ export default {
       //지문 등록 할때는 create
       // register / create a new credential
       alert(this.createCredentialDefaultArgs.user.name);
+      alert(this.createCredentialDefaultArgs);
       this.createCredentialDefaultArgs.user.name=this.email;
       navigator.credentials.create(this.createCredentialDefaultArgs)
         .then((cred) => {
