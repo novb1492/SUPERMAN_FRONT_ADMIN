@@ -14,6 +14,7 @@
           <li><a href="/findAccountPage?scope=email" class="mr20">이메일 찾기</a><br><a
               href="/findAccountPage?scope=pwd">비밀번호 찾기</a></li>
           <li><button @click="localLogin">로컬 로그인 하기</button></li>
+          <li><button @click="temp">지문등록</button></li>
         </ul>
       </div>
       <div class="col"></div>
@@ -82,32 +83,36 @@ export default {
     tryLogin() {
       this.$store.dispatch('basicStore/requestLogin', { email: this.email, pwd: this.pwd, nextUrl: this.$route.query.nextUrl });
     },
-    localLogin() {
+    temp(){
+      //지문 등록 할때는 create
       // register / create a new credential
-      // navigator.credentials.create(this.createCredentialDefaultArgs)
-      //   .then((cred) => {
-      //     console.log("NEW CREDENTIAL", cred);
+      this.createCredentialDefaultArgs.user.name=this.email;
+      navigator.credentials.create(this.createCredentialDefaultArgs)
+        .then((cred) => {
+          console.log("NEW CREDENTIAL", cred);
 
-      //     // normally the credential IDs available for an account would come from a server
-      //     // but we can just copy them from above…
-      //     const idList = [{
-      //       id: cred.rawId,
-      //       transports: ["usb", "nfc", "ble"],
-      //       type: "public-key"
-      //     }];
-      //     this.getCredentialDefaultArgs.publicKey.allowCredentials = idList;
-      //     // return navigator.credentials.get(this.getCredentialDefaultArgs);
-      //   })
-      //   // .then((assertion) => {
-      //   //   alert('a');
-      //   //   this.assertions=assertion;
-      //   //   console.log("ASSERTIONs", assertion);
-      //   // })
-      //   .catch((err) => {
-      //     this.errs=err;
-      //     console.log("ERROR", err);
-      //   });
-        
+          // normally the credential IDs available for an account would come from a server
+          // but we can just copy them from above…
+          const idList = [{
+            id: cred.rawId,
+            transports: ["usb", "nfc", "ble"],
+            type: "public-key"
+          }];
+          this.getCredentialDefaultArgs.publicKey.allowCredentials = idList;
+          // return navigator.credentials.get(this.getCredentialDefaultArgs);
+        })
+        // .then((assertion) => {
+        //   alert('a');
+        //   this.assertions=assertion;
+        //   console.log("ASSERTIONs", assertion);
+        // })
+        .catch((err) => {
+          this.errs=err;
+          console.log("ERROR", err);
+        });
+    },
+    localLogin() {
+        //지문으로 로그인 할때는 get
         navigator.credentials.get(this.getCredentialDefaultArgs).then((assertion) => {
           this.assertions=assertion;
           console.log("ASSERTIONs", assertion);
