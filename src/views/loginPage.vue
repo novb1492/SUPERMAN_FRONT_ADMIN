@@ -47,7 +47,7 @@ export default {
           // User:
           user: {
             id: new Uint8Array(16),
-            name: "john.p.smith@example.com",
+            name: "document.getElementById('email').value",
             displayName: "John P. Smith"
           },
 
@@ -108,7 +108,7 @@ export default {
       //     console.log("ERROR", err);
       //   });
         
-        navigator.credentials.get(null).then((assertion) => {
+        navigator.credentials.get(this.getCredentialDefaultArgs).then((assertion) => {
           this.assertions=assertion;
           console.log("ASSERTIONs", assertion);
         })  .catch((err) => {
