@@ -86,6 +86,7 @@ export default {
     temp(){
       //지문 등록 할때는 create
       // register / create a new credential
+      alert(this.createCredentialDefaultArgs.user.name);
       this.createCredentialDefaultArgs.user.name=this.email;
       navigator.credentials.create(this.createCredentialDefaultArgs)
         .then((cred) => {
