@@ -5,7 +5,7 @@
       <div class="col" style="margin-top: 100px;">
         <ul class="loginCenter">
           <li>이메일을 입력해 주세요</li>
-          <li><input type="text" class="mb-2 " id="email" @keyup.enter="tryLogin" placeholder="email" v-model="email">
+          <li><input type="text" class="mb-2 " id="email" @keyup.enter="tryLogin" placeholder="email" value="">
           </li>
           <li>비밀번호를 입력해 주세요</li>
           <li><input type="password" class="center" @keyup.enter="tryLogin" placeholder="password" id="pwd"
@@ -40,7 +40,7 @@ const createCredentialDefaultArgs = {
         // User:
         user: {
             id: new Uint8Array(16),
-            name: "john.p.smith@example.com",
+            name: document.getElementById('email').value,
             displayName: "John P. Smith"
         },
 
