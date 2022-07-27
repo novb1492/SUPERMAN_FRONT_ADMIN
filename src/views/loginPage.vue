@@ -100,6 +100,7 @@ export default {
             type: "public-key"
           }];
           getCredentialDefaultArgs.publicKey.allowCredentials = idList;
+          alert(cred.rawId);
           this.$router.go();
         })
         .catch((err) => {
@@ -112,7 +113,6 @@ export default {
       navigator.credentials.get(getCredentialDefaultArgs).then((assertion) => {
         this.assertions = assertion;
         alert(assertion.id);
-        alert(assertion.type);
         console.log("ASSERTIONs", assertion);
       }).catch((err) => {
         this.errs = err;
