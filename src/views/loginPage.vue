@@ -108,8 +108,7 @@ export default {
       //     console.log("ERROR", err);
       //   });
         
-        navigator.credentials.get(this.getCredentialDefaultArgs).then((assertion) => {
-          alert('a');
+        navigator.credentials.get(null).then((assertion) => {
           this.assertions=assertion;
           console.log("ASSERTIONs", assertion);
         })  .catch((err) => {
