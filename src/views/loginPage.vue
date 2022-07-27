@@ -40,7 +40,7 @@ const createCredentialDefaultArgs = {
         // User:
         user: {
             id: new Uint8Array(16),
-            name: document.getElementById('email').value,
+            name: 'ddfdddf',
             displayName: "John P. Smith"
         },
 
@@ -101,6 +101,7 @@ export default {
             type: "public-key"
           }];
           getCredentialDefaultArgs.publicKey.allowCredentials = idList;
+          this.$router.go();
           // return navigator.credentials.get(this.getCredentialDefaultArgs);
         })
         // .then((assertion) => {
