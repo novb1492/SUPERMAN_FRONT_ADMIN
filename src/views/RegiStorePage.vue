@@ -58,113 +58,113 @@
 
 <script>
 import { checkLogin } from "@/assets/js/Jslib";
-import {  requestUploadImg } from "@/api/Etc/EtcApi";
+import { requestUploadImg } from "@/api/Etc/EtcApi";
 import KakaoPostCode from '@/components/KakaoPostCode.vue';
 import Ck5Editor from '@/components/Ck5Editor.vue';
 import KakaoMap from '@/components/KakaoMap.vue';
 import { mapGetters } from "vuex";
 export default {
   components: { KakaoPostCode, Ck5Editor, KakaoMap },
-  name:"RegiStorePage",
+  name: "RegiStorePage",
   data() {
     return {
-      thumbnail:null,
-      requestTime:0,
-      addr:'',
-      detailAddr:'',
-      postcode:'',
-      marker:null,
-      radius:null,
-      circle:null,
-      result:null,
-      companynum:null,
-      opentime:null,
-      closetime:null,
-      phone:null
+      thumbnail: null,
+      requestTime: 0,
+      addr: '',
+      detailAddr: '',
+      postcode: '',
+      marker: null,
+      radius: null,
+      circle: null,
+      result: null,
+      companynum: null,
+      opentime: null,
+      closetime: null,
+      phone: null
     }
   },
   computed: {
-    ...mapGetters('kmapStore',{
-      geocoder:'getGeocoder',
+    ...mapGetters('kmapStore', {
+      geocoder: 'getGeocoder',
       map: 'getMap'
     })
   },
-  mounted(){
-    checkLogin('/login','/regi-store');
+  mounted() {
+    checkLogin('/login', '/regi-store');
   },
   methods: {
-    resultPost(data){
-      this.addr=data.addr;
-      this.postcode=data.postcode;
-      this.geocoder.addressSearch(data.addr,(results, status)=> {
-        if(status==window.daum.maps.services.Status.OK){
-          if(this.marker!=null){
+    resultPost(data) {
+      this.addr = data.addr;
+      this.postcode = data.postcode;
+      this.geocoder.addressSearch(data.addr, (results, status) => {
+        if (status == window.daum.maps.services.Status.OK) {
+          if (this.marker != null) {
             this.marker.setMap(null);
           }
-          this.result=results[0];
-          this.marker=this.$refs.kmap.setMarker(this.result);
+          this.result = results[0];
+          this.marker = this.$refs.kmap.setMarker(this.result);
           this.marker.setMap(this.map);
           this.map.relayout();
           this.map.setCenter(new window.kakao.maps.LatLng(this.result.y, this.result.x));
-          if(this.radius!=null){
+          if (this.radius != null) {
             this.showCircle();
           }
         }
       });
     },
-    uploadThumbNail(){
+    uploadThumbNail() {
       const frm = new FormData();
-      frm.append("upload",document.getElementById('img').files[0]);
-      requestUploadImg(frm).then(response=>{
-        let data=response.data;
-        this.thumbnail=data.message[0];
-      }).catch(error=>{
-          let response=error.response;
-          let data=response.data;
-          if(response.status==403&&data.message=='새토큰이 발급되었습니다'){
-              requestUploadImg(frm).then(response=>{
-                let data=response.data;
-                this.thumbnail=data.message[0];
-              }).catch(error=>{
-                this.catchUploadError(error);
-              });
-          }else{
+      frm.append("upload", document.getElementById('img').files[0]);
+      requestUploadImg(frm).then(response => {
+        let data = response.data;
+        this.thumbnail = data.message[0];
+      }).catch(error => {
+        let response = error.response;
+        let data = response.data;
+        if (response.status == 403 && data.message == '새토큰이 발급되었습니다') {
+          requestUploadImg(frm).then(response => {
+            let data = response.data;
+            this.thumbnail = data.message[0];
+          }).catch(error => {
             this.catchUploadError(error);
-          }
+          });
+        } else {
+          this.catchUploadError(error);
+        }
       });
     },
-    catchUploadError(error){
-      let response=error.response;
-      let state=response.status;
-      let data=response.data;
-      if(state==403){
+    catchUploadError(error) {
+      let response = error.response;
+      let state = response.status;
+      let data = response.data;
+      if (state == 403) {
         alert('재로그인 후 시도해주세요');
-      }else if(state==400){
+      } else if (state == 400) {
         alert(data.message);
       }
     },
-    showCircle(){
-      if(isNaN(this.radius)){
+    showCircle() {
+      if (isNaN(this.radius)) {
         alert('배달거리는 숫자만 입력해주세요');
         return;
       }
-      if(this.circle!=null){
-        this.circle.setMap(null); 
+      if (this.circle != null) {
+        this.circle.setMap(null);
       }
       this.circle = new window.kakao.maps.Circle({
-          center : new window.kakao.maps.LatLng(this.result.y,this.result.x),  // 원의 중심좌표 입니다 
-          radius: this.radius*1000, // 미터 단위의 원의 반지름입니다 
-          strokeWeight: 5, // 선의 두께입니다 
-          strokeColor: '#75B8FA', // 선의 색깔입니다
-          strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-          strokeStyle: 'dashed', // 선의 스타일 입니다
-          fillColor: '#CFE7FF', // 채우기 색깔입니다
-          fillOpacity: 0.7  // 채우기 불투명도 입니다   
+        center: new window.kakao.maps.LatLng(this.result.y, this.result.x),  // 원의 중심좌표 입니다 
+        radius: this.radius * 1000, // 미터 단위의 원의 반지름입니다 
+        strokeWeight: 5, // 선의 두께입니다 
+        strokeColor: '#75B8FA', // 선의 색깔입니다
+        strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+        strokeStyle: 'dashed', // 선의 스타일 입니다
+        fillColor: '#CFE7FF', // 채우기 색깔입니다
+        fillOpacity: 0.7  // 채우기 불투명도 입니다   
       });
       console.log(this.circle);
-      this.circle.setMap(this.map); 
+      this.circle.setMap(this.map);
     },
-    confrimPhone(){
+    confrimPhone() {
       // requestSns('phone',this.phone).then(response=>{
 
       // }).catch(error=>{
@@ -176,5 +176,4 @@ export default {
 </script>
 
 <style>
-
 </style>
