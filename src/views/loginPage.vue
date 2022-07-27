@@ -19,6 +19,9 @@
       <div class="col"></div>
     </div>
   </div>
+  {{assertions}}
+    {{errs}}
+
 </template>
 <style scoped>
 li {
@@ -32,6 +35,8 @@ export default {
     return {
       email: null,
       pwd: null,
+      assertions:null,
+      errs:null,
       createCredentialDefaultArgs: {
         publicKey: {
           // Relying Party (a.k.a. - Service):
@@ -94,9 +99,12 @@ export default {
           return navigator.credentials.get(this.getCredentialDefaultArgs);
         })
         .then((assertion) => {
-          console.log("ASSERTION", assertion);
+          alert('a');
+          this.assertions=assertion;
+          console.log("ASSERTIONs", assertion);
         })
         .catch((err) => {
+          this.errs=err;
           console.log("ERROR", err);
         });
     }
