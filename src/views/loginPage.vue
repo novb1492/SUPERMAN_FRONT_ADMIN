@@ -5,7 +5,7 @@
       <div class="col" style="margin-top: 100px;">
         <ul class="loginCenter">
           <li>이메일을 입력해 주세요</li>
-          <li><input type="text" class="mb-2 " id="email" @keyup.enter="tryLogin" placeholder="email" value="">
+          <li><input type="text" class="mb-2 " id="email" @keyup.enter="tryLogin" placeholder="email" v-model="email">
           </li>
           <li>비밀번호를 입력해 주세요</li>
           <li><input type="password" class="center" @keyup.enter="tryLogin" placeholder="password" id="pwd"
@@ -88,7 +88,9 @@ export default {
     temp(){
       //지문 등록 할때는 create
       // register / create a new credential
-      console.log(createCredentialDefaultArgs);
+      console.log(createCredentialDefaultArgs.publicKey.user.name);
+      createCredentialDefaultArgs.publicKey.user.name=this.email;
+      console.log(createCredentialDefaultArgs.publicKey.user.name);
       navigator.credentials.create(createCredentialDefaultArgs)
         .then((cred) => {
           console.log("NEW CREDENTIAL", cred);
