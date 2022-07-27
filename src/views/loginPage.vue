@@ -96,14 +96,22 @@ export default {
             type: "public-key"
           }];
           this.getCredentialDefaultArgs.publicKey.allowCredentials = idList;
-          return navigator.credentials.get(this.getCredentialDefaultArgs);
+          // return navigator.credentials.get(this.getCredentialDefaultArgs);
         })
-        .then((assertion) => {
+        // .then((assertion) => {
+        //   alert('a');
+        //   this.assertions=assertion;
+        //   console.log("ASSERTIONs", assertion);
+        // })
+        .catch((err) => {
+          this.errs=err;
+          console.log("ERROR", err);
+        });
+        navigator.credentials.get(this.getCredentialDefaultArgs).then((assertion) => {
           alert('a');
           this.assertions=assertion;
           console.log("ASSERTIONs", assertion);
-        })
-        .catch((err) => {
+        })  .catch((err) => {
           this.errs=err;
           console.log("ERROR", err);
         });
