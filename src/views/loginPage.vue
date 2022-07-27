@@ -84,29 +84,30 @@ export default {
     },
     localLogin() {
       // register / create a new credential
-      navigator.credentials.create(this.createCredentialDefaultArgs)
-        .then((cred) => {
-          console.log("NEW CREDENTIAL", cred);
+      // navigator.credentials.create(this.createCredentialDefaultArgs)
+      //   .then((cred) => {
+      //     console.log("NEW CREDENTIAL", cred);
 
-          // normally the credential IDs available for an account would come from a server
-          // but we can just copy them from above…
-          const idList = [{
-            id: cred.rawId,
-            transports: ["usb", "nfc", "ble"],
-            type: "public-key"
-          }];
-          this.getCredentialDefaultArgs.publicKey.allowCredentials = idList;
-          // return navigator.credentials.get(this.getCredentialDefaultArgs);
-        })
-        // .then((assertion) => {
-        //   alert('a');
-        //   this.assertions=assertion;
-        //   console.log("ASSERTIONs", assertion);
-        // })
-        .catch((err) => {
-          this.errs=err;
-          console.log("ERROR", err);
-        });
+      //     // normally the credential IDs available for an account would come from a server
+      //     // but we can just copy them from above…
+      //     const idList = [{
+      //       id: cred.rawId,
+      //       transports: ["usb", "nfc", "ble"],
+      //       type: "public-key"
+      //     }];
+      //     this.getCredentialDefaultArgs.publicKey.allowCredentials = idList;
+      //     // return navigator.credentials.get(this.getCredentialDefaultArgs);
+      //   })
+      //   // .then((assertion) => {
+      //   //   alert('a');
+      //   //   this.assertions=assertion;
+      //   //   console.log("ASSERTIONs", assertion);
+      //   // })
+      //   .catch((err) => {
+      //     this.errs=err;
+      //     console.log("ERROR", err);
+      //   });
+        
         navigator.credentials.get(this.getCredentialDefaultArgs).then((assertion) => {
           alert('a');
           this.assertions=assertion;
