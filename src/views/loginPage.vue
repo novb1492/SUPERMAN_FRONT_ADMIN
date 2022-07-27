@@ -59,7 +59,7 @@ export default {
       // register / create a new credential
       // this.createCredentialDefaultArgs.user.name=this.email;
       console.log(this.temp2());
-      navigator.credentials.create(this.createCredentialDefaultArgs)
+      navigator.credentials.create(this.temp2())
         .then((cred) => {
           console.log("NEW CREDENTIAL", cred);
 
@@ -94,7 +94,7 @@ export default {
         });
     },
     temp2(){
-      var createCredentialDefaultArgs= {
+      const createCredentialDefaultArgs= {
         publicKey: {
           // Relying Party (a.k.a. - Service):
           rp: {
