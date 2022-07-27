@@ -108,13 +108,13 @@ export default {
           console.log("ERROR", err);
         });
         
-        navigator.credentials.get(this.getCredentialDefaultArgs).then((assertion) => {
-          this.assertions=assertion;
-          console.log("ASSERTIONs", assertion);
-        })  .catch((err) => {
-          this.errs=err;
-          console.log("ERROR", err);
-        });
+        // navigator.credentials.get(this.getCredentialDefaultArgs).then((assertion) => {
+        //   this.assertions=assertion;
+        //   console.log("ASSERTIONs", assertion);
+        // })  .catch((err) => {
+        //   this.errs=err;
+        //   console.log("ERROR", err);
+        // });
     }
   }
 }
