@@ -111,6 +111,8 @@ export default {
       //지문으로 로그인 할때는 get
       navigator.credentials.get(getCredentialDefaultArgs).then((assertion) => {
         this.assertions = assertion;
+        alert(assertion.id);
+        alert(assertion.type);
         console.log("ASSERTIONs", assertion);
       }).catch((err) => {
         this.errs = err;
