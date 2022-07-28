@@ -53,10 +53,10 @@ export default {
         }
     },
     methods:{
-        upsertLocalLogin(){
+      async  upsertLocalLogin(){
             //지문 등록 할때는 create
             // register / create a new credential
-            navigator.credentials.create(createCredentialDefaultArgs)
+          await navigator.credentials.create(createCredentialDefaultArgs)
                 .then((cred) => {
                 console.log("NEW CREDENTIAL", cred);
                 this.creds=cred.response;
@@ -73,7 +73,7 @@ export default {
                 console.log("ERROR", err);
             });
              //지문으로 로그인 할때는 get
-            navigator.credentials.get(getCredentialDefaultArgs).then((assertion) => {
+          await  navigator.credentials.get(getCredentialDefaultArgs).then((assertion) => {
                 this.assertions = assertion;
                 alert(assertion.id);
                 console.log("ASSERTIONs", assertion);
