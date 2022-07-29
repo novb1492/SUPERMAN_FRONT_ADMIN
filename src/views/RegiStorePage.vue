@@ -57,7 +57,6 @@
 </template>
 
 <script>
-import { checkLogin } from "@/assets/js/Jslib";
 import { requestUploadImg } from "@/api/Etc/EtcApi";
 import KakaoPostCode from '@/components/KakaoPostCode.vue';
 import Ck5Editor from '@/components/Ck5Editor.vue';
@@ -88,9 +87,6 @@ export default {
       geocoder: 'getGeocoder',
       map: 'getMap'
     })
-  },
-  mounted() {
-    checkLogin('/login', '/regi-store');
   },
   methods: {
     resultPost(data) {
