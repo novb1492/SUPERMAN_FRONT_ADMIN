@@ -16,7 +16,7 @@
           <a class="nav-link" href="javascript:void();" @click="goLogin">로그인</a>
         </li>
         <li class="nav-item" v-else>
-          <a class="nav-link" href="javascript:void();">로그아웃</a>
+          <a class="nav-link" href="javascript:void();"  @click="logOut">로그아웃</a>
         </li>    
         <li class="nav-item" v-if="loginFlag">
           <a class="nav-link" href="javascript:void();" @click="goStoreList">매장관리</a>
@@ -58,6 +58,10 @@ export default {
     },
     goStoreList(){
       location.href='/store-list';
+    },
+    logOut(){
+      this.$store.dispatch('NavStore/changeLoginFlag',false);
+      this.$router.go(0);
     }
   }
 }
