@@ -8,7 +8,7 @@
         <input type="file" id="img" class="mt-2" name="img" accept=".jpg, .png" @change="uploadThumbNail">
         <br>
         <span class="mt-2">상호</span>
-        <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" />
+        <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" v-model="name" />
         <br>
         <span>오픈시간</span>
         <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간" v-model="opentime" />
@@ -17,7 +17,7 @@
         <input type="time" class="ml135 mt-2 mb-2" id="closeTime" placeholder="마감시간" v-model="closetime" />
         <br>
         <span>간단한 가게 설명을 적어주세요</span>
-        <ck-5-editor :idName="'editor'"></ck-5-editor>
+        <ck-5-editor :idName="'editor'" ref="editor"></ck-5-editor>
       </div>
       <div class="col">
         <kakao-post-code :width="400" :height="300" ref="kpostCode" v-on:resultPost="resultPost"></kakao-post-code>
@@ -26,10 +26,11 @@
         <br>
         <span>주소</span><input type="text" class="ml135 mt-2" id="address" placeholder="주소" v-model="addr" disabled />
         <br>
-        <span>상세주소</span><input type="text" class="ml105 mt-2" id="detailAddress" placeholder="상세주소" v-model="detailAddr"/>
+        <span>상세주소</span><input type="text" class="ml105 mt-2" id="detailAddress" placeholder="상세주소"
+          v-model="detailAddr" />
         <br>
         <span>최소배달금액(원)</span>
-        <input type="text" class="ml105 mt-2" id="minPrice" placeholder="최소배달금액"  v-model="minPrice" />
+        <input type="text" class="ml105 mt-2" id="minPrice" placeholder="최소배달금액" v-model="minPrice" />
         <br>
         <span>최대배달반경(km)</span>
         <input type="text" class="ml80 mt-2" id="deliverRadius" placeholder="최대배달반경" @keyup="showCircle"
@@ -70,8 +71,10 @@ export default {
       companynum: null,
       opentime: null,
       closetime: null,
-      tel:null,
-      minPrice:null
+      tel: null,
+      minPrice: null,
+      text: null,
+      name: null
     }
   },
   computed: {
@@ -153,19 +156,31 @@ export default {
       this.circle.setMap(this.map);
     },
     regiStore() {
-      let data=JSON.stringify({
-        "thumbnail":this.thumbnail,
-        "openTime":this.opentime,
-        "closeTime":this.closetime,
-        "postcode":this.postcode,
-        "address":this.addr,
-        "detailAddress":this.detailAddr,
-        "minPrice":this.minPrice,
-        "radius":this.radius,
-        "tel":this.tel
+      let data = JSON.stringify({
+        "thumbnail": this.thumbnail,
+        "openTime": this.opentime,
+        "closeTime": this.closetime,
+        "postcode": this.postcode,
+        "address": this.addr,
+        "detailAddress": this.detailAddr,
+        "minPrice": this.minPrice,
+        "radius": this.radius,
+        "tel": this.tel,
+        "text": this.$refs.editor.getText(),
+        "name": this.name
       });
-      requestStoreInsert(data).then(response=>{
+      requestStoreInsert(data).then(response => {
         console.log(response);
+      }).catch(error => {
+        let response = error.response;
+        let data = response.data;
+        if (response.status == 403 && data.message == '새토큰이 발급되었습니다') {
+          requestUploadImg(data).then(response => {
+              console.log(response);
+          }).catch(error => {
+            this.catchUploadError(error);
+          });
+        }
       });
     }
   },

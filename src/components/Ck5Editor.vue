@@ -29,5 +29,10 @@ export default {
         console.log(error);
       })
   },
+  methods:{
+    getText(){
+      return this.editor.getData;
+    }
+  }
 }
 </script>
