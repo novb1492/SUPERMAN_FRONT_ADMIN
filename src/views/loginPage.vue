@@ -54,7 +54,6 @@ export default {
                 timeout: 120000,  // 2 minutes
                 allowCredentials: [{ type: "public-key", id: credentialId }]
             };
-
             navigator.credentials.get({ "publicKey": options })
                 .then(function (assertion) {
                     console.log(assertion);
