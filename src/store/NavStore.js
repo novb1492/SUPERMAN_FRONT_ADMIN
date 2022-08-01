@@ -12,7 +12,7 @@ export const NavStore = {
             return state.situation;
         },
         getLoginFlag(state) {
-            return state.loginFlag;
+            return JSON.parse(state.loginFlag);
         },
     },
     mutations,

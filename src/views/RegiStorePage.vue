@@ -5,15 +5,10 @@
         <h5 class="mt-2">매장을 대표하는 사진을 업로드해주세요</h5>
         <img :src="thumbnail" id="thumbnail" class="storeThumbnail">
         <br>
-        <input type="file" id="img" class="mt-2" name="img" accept=".gif, .jpg, .png" @change="uploadThumbNail">
-        <!--<br>
-        <input type="button" class="mt-2"  value="업로드"  @click="uploadThumbNail">-->
+        <input type="file" id="img" class="mt-2" name="img" accept=".jpg, .png" @change="uploadThumbNail">
         <br>
         <span class="mt-2">상호</span>
-        <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" />
-        <br>
-        <span>사업자번호(숫자만)</span>
-        <input type="text" class="ml45 mt-2" id="num" placeholder="상호" v-model="companynum" />
+        <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" v-model="name" />
         <br>
         <span>오픈시간</span>
         <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간" v-model="opentime" />
@@ -22,7 +17,7 @@
         <input type="time" class="ml135 mt-2 mb-2" id="closeTime" placeholder="마감시간" v-model="closetime" />
         <br>
         <span>간단한 가게 설명을 적어주세요</span>
-        <ck-5-editor :idName="'editor'"></ck-5-editor>
+        <ck-5-editor :idName="'editor'" ref="editor"></ck-5-editor>
       </div>
       <div class="col">
         <kakao-post-code :width="400" :height="300" ref="kpostCode" v-on:resultPost="resultPost"></kakao-post-code>
@@ -31,33 +26,30 @@
         <br>
         <span>주소</span><input type="text" class="ml135 mt-2" id="address" placeholder="주소" v-model="addr" disabled />
         <br>
-        <span>상세주소</span><input type="text" class="ml105 mt-2" id="detailAddress" placeholder="상세주소" />
+        <span>상세주소</span><input type="text" class="ml105 mt-2" id="detailAddress" placeholder="상세주소"
+          v-model="detailAddr" />
         <br>
         <span>최소배달금액(원)</span>
-        <input type="number" class="ml105 mt-2" id="minPrice" placeholder="최소배달금액" />
+        <input type="text" class="ml105 mt-2" id="minPrice" placeholder="최소배달금액" v-model="minPrice" />
         <br>
         <span>최대배달반경(km)</span>
-        <input type="number" class="ml80 mt-2" id="deliverRadius" placeholder="최대배달반경" @keyup="showCircle"
+        <input type="text" class="ml80 mt-2" id="deliverRadius" placeholder="최대배달반경" @keyup="showCircle"
           v-model="radius" />
         <br>
       </div>
       <div class="col">
         <kakao-map :width="300" :height="300" ref="kmap"></kakao-map>
-        <span>휴대폰번호</span>
-        <input type="text" class="ml80" id="phone" v-model="phone">
-        <br>
         <span>매장전화번호</span>
-        <input type="text" class="ml80 mt-2" id="tel">
+        <input type="text" class="ml80 mt-2" id="tel" v-model="tel">
         <br>
-        <input type="button" @click="confrimPhone" id="check_phone_button" class="mt-2" value="전화인증" />
-        <input type="button" value="가맹점 등록" @click="tryInsertStore">
+        <input type="button" value="가맹점 등록" @click="regiStore">
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { checkLogin } from "@/assets/js/Jslib";
+import { requestStoreInsert } from "@/api/market/MarketApi";
 import { requestUploadImg } from "@/api/Etc/EtcApi";
 import KakaoPostCode from '@/components/KakaoPostCode.vue';
 import Ck5Editor from '@/components/Ck5Editor.vue';
@@ -69,7 +61,6 @@ export default {
   data() {
     return {
       thumbnail: null,
-      requestTime: 0,
       addr: '',
       detailAddr: '',
       postcode: '',
@@ -80,7 +71,10 @@ export default {
       companynum: null,
       opentime: null,
       closetime: null,
-      phone: null
+      tel: null,
+      minPrice: null,
+      text: null,
+      name: null
     }
   },
   computed: {
@@ -88,9 +82,6 @@ export default {
       geocoder: 'getGeocoder',
       map: 'getMap'
     })
-  },
-  mounted() {
-    checkLogin('/login', '/regi-store');
   },
   methods: {
     resultPost(data) {
@@ -164,12 +155,54 @@ export default {
       console.log(this.circle);
       this.circle.setMap(this.map);
     },
-    confrimPhone() {
-      // requestSns('phone',this.phone).then(response=>{
+    regiStore() {
+      let data = JSON.stringify({
+        "thumbnail": this.thumbnail,
+        "openTime": this.opentime,
+        "closeTime": this.closetime,
+        "postcode": this.postcode,
+        "address": this.addr,
+        "detailAddress": this.detailAddr,
+        "minPrice": this.minPrice,
+        "radius": this.radius,
+        "tel": this.tel,
+        "text": this.$refs.editor.getText(),
+        "name": this.name
+      });
+      console.log(data);
+      requestStoreInsert(data).then(() => {
+        this.doneInsert();
+      }).catch(error => {
+        let response = error.response;
+        let responseData = response.data;
+        if (response.status == 403 && responseData.message == '새토큰이 발급되었습니다') {
+          requestStoreInsert(data).then(() => {
+            this.doneInsert();
+          }).catch(error => {
+            this.catchReigError(error);
+          });
+        }else{
+          this.catchReigError(error);
+        }
+      });
+    },
+    catchReigError(error) {
+      let errors = error.response.data.errors;
+      let data = error.response.data;
+      console.log(errors);
+      console.log(data.message);
+      if (errors == null || errors == undefined) {
+        alert(data.message);
+      } else {
+        for (var i in errors) {
+          alert(errors[i].defaultMessage);
+        }
+      }
 
-      // }).catch(error=>{
-
-      // });
+    },
+    doneInsert() {
+      alert('매장등록이 완료 되었습니다');
+      location.href = '/storelist?page=1&scope=&keyword=';
     }
   },
 }
