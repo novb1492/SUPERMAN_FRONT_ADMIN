@@ -169,19 +169,40 @@ export default {
         "text": this.$refs.editor.getText(),
         "name": this.name
       });
-      requestStoreInsert(data).then(response => {
-        console.log(response);
+      console.log(data);
+      requestStoreInsert(data).then(() => {
+        this.doneInsert();
       }).catch(error => {
         let response = error.response;
-        let data = response.data;
-        if (response.status == 403 && data.message == '새토큰이 발급되었습니다') {
-          requestUploadImg(data).then(response => {
-              console.log(response);
+        let responseData = response.data;
+        if (response.status == 403 && responseData.message == '새토큰이 발급되었습니다') {
+          requestStoreInsert(data).then(() => {
+            this.doneInsert();
           }).catch(error => {
-            this.catchUploadError(error);
+            this.catchReigError(error);
           });
+        }else{
+          this.catchReigError(error);
         }
       });
+    },
+    catchReigError(error) {
+      let errors = error.response.data.errors;
+      let data = error.response.data;
+      console.log(errors);
+      console.log(data.message);
+      if (errors == null || errors == undefined) {
+        alert(data.message);
+      } else {
+        for (var i in errors) {
+          alert(errors[i].defaultMessage);
+        }
+      }
+
+    },
+    doneInsert() {
+      alert('매장등록이 완료 되었습니다');
+      location.href = '/storelist?page=1&scope=&keyword=';
     }
   },
 }
