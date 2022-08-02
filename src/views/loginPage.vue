@@ -41,6 +41,9 @@ export default {
       creds:null
     }
   },
+  mounted(){
+    this.$store.dispatch('NavStore/changeSituation', 0);
+  },
   methods: {
     tryLogin() {
       this.$store.dispatch('basicStore/requestLogin', { email: this.email, pwd: this.pwd, nextUrl: this.$route.query.nextUrl });
