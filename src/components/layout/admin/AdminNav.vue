@@ -21,7 +21,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import MainNav from './MainNav.vue';
+import MainNav from '@/components/layout/admin/MainNav.vue';
 
 export default {
   components: { MainNav },

@@ -22,7 +22,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import ManageMainNav from './ManageMainNav.vue';
+import ManageMainNav from '@/components/layout/manage/ManageMainNav.vue';
 
 export default
   {

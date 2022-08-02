@@ -10,7 +10,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import ShowState from '../ShowState.vue';
+import ShowState from '@/components/layout/ShowState.vue';
 
 export default {
     name:"UserMainNav",

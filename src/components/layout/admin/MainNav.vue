@@ -3,14 +3,11 @@
     <li class="nav-item">
         <a class="nav-link" href="javascript:void();" @click="goRegiStore">매장등록</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="javascript:void();" @click="goRegiEmpl">직원등록</a>
-    </li>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import ManageMainNav from '../manage/ManageMainNav.vue';
+import ManageMainNav from '@/components/layout/manage/ManageMainNav.vue';
 
 export default {
     components: { ManageMainNav },
