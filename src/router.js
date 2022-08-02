@@ -17,7 +17,7 @@ const routes = [
     path: "/regi-store",
     component: RegiStorePage,
     beforeEnter: () => {
-      checkLogin('/login', '/regi-store','ADMIN');
+      checkLogin('/login', '/regi-store', 'ADMIN');
     }
   },
   {

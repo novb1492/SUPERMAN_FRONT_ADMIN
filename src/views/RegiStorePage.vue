@@ -83,6 +83,9 @@ export default {
       map: 'getMap'
     })
   },
+  mounted(){
+    this.$store.dispatch('NavStore/changeSituation', 0);
+  },
   methods: {
     resultPost(data) {
       this.addr = data.addr;
