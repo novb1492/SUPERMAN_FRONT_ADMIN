@@ -1,7 +1,8 @@
 export function checkLogin(failUrl, sucUrl, role) {
-    if (!sessionStorage.getItem('loginFlag')) {
+    if (!JSON.parse(sessionStorage.getItem('loginFlag'))) {
         alert('잘못된 접근입니다');
         location.href = failUrl + '?nextUrl=' + sucUrl;
+        return;
     }
     checkRole(role);
 }
