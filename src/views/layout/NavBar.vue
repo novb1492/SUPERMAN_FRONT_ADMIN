@@ -1,8 +1,6 @@
 <template>
     <AdminNav v-if="num == 1"></AdminNav>
-    <p v-else-if="num == 2">
-        managenav
-    </p>
+    <ManageNav v-else-if="num == 2"></ManageNav>
     <UserNav v-else></UserNav>
 </template>
 
