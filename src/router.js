@@ -3,7 +3,8 @@ import Home from "@/views/HelloWorld.vue";
 import loginPage from "@/views/loginPage.vue";
 import RegiStorePage from "@/views/RegiStorePage.vue";
 import MyPage from "@/views/MyPage.vue";
-import { checkLogin } from "./assets/js/Jslib";
+import { checkLogin } from "@/assets/js/Jslib";
+import RegiEmplPage from "@/views/employee/RegiEmplPage.vue";
 const routes = [
   {
     path: "/",
@@ -23,6 +24,10 @@ const routes = [
   {
     path: "/mypage",
     component: MyPage
+  },
+  {
+    path: "/regi-employee",
+    component: RegiEmplPage
   }
 ];
 

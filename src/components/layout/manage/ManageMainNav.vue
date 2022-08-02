@@ -20,8 +20,11 @@ export default {
         goStoreList() {
             location.href = "/store-list";
         },
+         goRegiEmpl(){
+            location.href='/regi-employee';
+        }
     },
-    components: { UserMainNav }
+    components: { UserMainNav },
 }
 </script>
 
