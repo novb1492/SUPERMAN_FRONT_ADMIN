@@ -1,13 +1,9 @@
 <template>
-    <p v-if="num == 1">
-        <AdminNav></AdminNav>
-    </p>
+    <AdminNav v-if="num == 1"></AdminNav>
     <p v-else-if="num == 2">
         managenav
     </p>
-    <p v-else>
-        <UserNav></UserNav>
-    </p>
+    <UserNav v-else></UserNav>
 </template>
 
 <script>
