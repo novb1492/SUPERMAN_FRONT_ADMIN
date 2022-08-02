@@ -12,7 +12,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <manage-main-nav></manage-main-nav>
+            <manage-main-nav v-if="situataion == 0"></manage-main-nav>
           </ul>
         </div>
       </div>
