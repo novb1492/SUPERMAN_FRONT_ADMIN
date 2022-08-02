@@ -8,6 +8,7 @@
 import { getRole } from '@/assets/js/Jslib'
 import AdminNav from '@/components/layout/admin/AdminNav.vue';
 import UserNav from '@/components/layout/user/UserNav.vue';
+import ManageNav from '@/components/layout/manage/ManageNav.vue';
 export default {
     name: "NavBar",
     data() {
@@ -24,7 +25,7 @@ export default {
             this.num = 2;
         }
     },
-    components: { AdminNav, UserNav }
+    components: { AdminNav, UserNav, ManageNav }
 }
 </script>
 
