@@ -22,6 +22,8 @@ export default {
         },
         logOut() {
             this.$store.dispatch('NavStore/changeLoginFlag', false);
+            localStorage.removeItem('authentication');
+            localStorage.removeItem('info');
             this.$router.go(0);
         }
     }

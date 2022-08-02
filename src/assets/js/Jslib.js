@@ -40,8 +40,12 @@ function checkUser(role) {
     }
 }
 export function getRole() {
-    let info = JSON.parse(localStorage.getItem('info'));
-    return info.role;
+    try{
+        let info = JSON.parse(localStorage.getItem('info'));
+        return info.role;
+    }catch{
+        return null;
+    }
 }
 export function setInfo(response) {
     let responseData=response.data;
