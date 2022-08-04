@@ -2,7 +2,7 @@
     <p style="margin-top: 70px;">
     <ul>
         <li v-for="(store, index) in storeList" :key="index">
-            <button @click="select(store.id)">
+            <button @click="select(store.id, store.name)">
                 <p>매장명:{{ store.name }}</p>
                 <p>주소:{{ store.address }}</p>
             </button>
@@ -12,9 +12,10 @@
     <button @click="nextStore(-1)" :disabled="first">이전</button>
     {{ nowPage }}/{{ totalPage }}
     <br>
+    선택한매장:{{storeName}}
+    <br>
     <input type="text" name="" id="" placeholder="초대할 직원의 아이디를 입력해주세요" v-model="userId">
     <button @click="selectEm">검색</button>
-
     <ul v-if="userInfo != null">
         <li>이름:{{ userInfo.firstName + userInfo.lastName }}</li>
         <li>권한:{{ userInfo.role }}</li>
@@ -35,7 +36,8 @@ export default {
             storeId: 0,
             userId: null,
             userInfo: null,
-            id: null
+            id: null,
+            storeName: null
         }
     },
     computed: {
@@ -56,8 +58,9 @@ export default {
             this.$router.push('/regi-employee?page=' + page);
             this.$store.dispatch('MarketStore/getStoreListSimple', page);
         },
-        select(storeid) {
+        select(storeid,storename) {
             this.storeId = storeid;
+            this.storeName=storename;
         },
         selectEm() {
             requestSearchMember(this.userId).then(response => {
@@ -87,6 +90,7 @@ export default {
             }
             this.userInfo = null;
             this.userId = null;
+            this.storeName=null;
         },
         doneSearch(response) {
             console.log(response);
@@ -122,9 +126,9 @@ export default {
         errorInvite(error) {
             let response = error.response;
             let data = response.data;
-            if(response.status==400){
+            if (response.status == 400) {
                 alert(data.message);
-            }else{
+            } else {
                 alert('알 수 없는 에러 발생');
             }
         }
