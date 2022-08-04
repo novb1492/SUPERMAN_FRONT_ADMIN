@@ -55,3 +55,16 @@ export function setInfo(response) {
     })
     localStorage.setItem('info',data);
 }
+export function checkNew(state,message){
+    if(state == 403 && message == '새토큰이 발급되었습니다'){
+        return true;
+    }
+    return false;
+}
+export function checkexpireLogin(state,message) {
+    if(state == 403 && message == '세션이 만료 되었습니다'){
+        alert('로그인이 만료 되었습니다')
+        return true;
+    }
+    return false;
+}
