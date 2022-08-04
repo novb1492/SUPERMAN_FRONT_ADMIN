@@ -8,7 +8,8 @@ export const MarketStore = {
         totalPage:0,
         last:false,
         first:false,
-        empty:false
+        empty:false,
+        nowPage:0
     },
     getters: {
         getStoreList(state) {
@@ -25,6 +26,9 @@ export const MarketStore = {
         },
         getEmpty(state) {
             return state.empty;
+        },
+        getNowPage(state) {
+            return state.nowPage;
         }
     },
     mutations,

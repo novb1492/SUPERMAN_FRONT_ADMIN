@@ -6,5 +6,6 @@ export default {
         state.last=data.last;
         state.first=data.first;
         state.empty=data.empty;
+        state.nowPage=data.number+1;
     },
 }
