@@ -23,7 +23,6 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            page: 1,//새로고침시 페이징 유지하지 않기위해 파라미터 대신 변수로 사용
             storeId: 0,
             userId:null
         }
@@ -38,18 +37,19 @@ export default {
         })
     },
     mounted() {
-        this.$store.dispatch('MarketStore/getStoreListSimple', this.page);
+        this.$store.dispatch('MarketStore/getStoreListSimple',this.$route.query.page);
     },
     methods: {
         nextStore(num) {
-            this.page = this.page + num;
-            this.$store.dispatch('MarketStore/getStoreListSimple', this.page);
+            let page=(this.$route.query.page*1)+num;
+            this.$router.push('/regi-employee?page='+page);
+            this.$store.dispatch('MarketStore/getStoreListSimple', page);
         },
         select(storeid) {
             this.storeId = storeid;
         },
         selectEm(){
-            this.$store.dispatch('MarketStore/getStoreListSimple', this.page);
+            // this.$store.dispatch('MarketStore/getStoreListSimple', this.page);
         }
     }
 }
