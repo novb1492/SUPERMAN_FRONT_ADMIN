@@ -19,6 +19,7 @@
         <li>이름:{{ userInfo.firstName + userInfo.lastName }}</li>
         <li>권한:{{ userInfo.role }}</li>
         <li>아이디:{{ userInfo.userId }}</li>
+        <li><button @click="invaite">초대</button></li>
     </ul>
     </p>
 </template>
@@ -27,6 +28,7 @@
 import { mapGetters } from 'vuex';
 import { requestSearchMember } from "@/api/Member/MemberApi";
 import { checkNew } from '@/assets/js/Jslib';
+import { requestInviteMember } from "@/api/market/MarketApi";
 export default {
     data() {
         return {
@@ -90,7 +92,43 @@ export default {
             console.log(response);
             this.userInfo = response.data;
             this.id = this.userInfo.id;
+        },
+        invaite() {
+            let data = JSON.stringify({
+                "storeId": this.storeId,
+                "userId": this.id
+            })
+            requestInviteMember(data).then(response => {
+                this.doneInvite(response);
+            }).catch(error => {
+                let response = error.response;
+                let data = response.data;
+                if (checkNew(response.status, data.message)) {
+                    requestInviteMember(data).then(response => {
+                        this.doneInvite(response);
+                    }).catch(error => {
+                        this.errorInvite(error);
+                    })
+                } else {
+                    this.errorInvite(error);
+                }
+            })
+        },
+        doneInvite(response) {
+            let data = response.data;
+            alert(data.message);
+            this.$router.go(0);
+        },
+        errorInvite(error) {
+            let response = error.response;
+            let data = response.data;
+            if(response.status==400){
+                alert(data.message);
+            }else{
+                alert('알 수 없는 에러 발생');
+            }
         }
+
     }
 }
 </script>
