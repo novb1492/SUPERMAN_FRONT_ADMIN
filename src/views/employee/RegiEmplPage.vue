@@ -1,28 +1,34 @@
 <template>
-    <p style="margin-top: 70px;">
-    <ul>
-        <li v-for="(store, index) in storeList" :key="index">
-            <button @click="select(store.id, store.name)">
-                <p>매장명:{{ store.name }}</p>
-                <p>주소:{{ store.address }}</p>
-            </button>
-        </li>
-    </ul>
-    <button @click="nextStore(1)" :disabled="last">다음</button>
-    <button @click="nextStore(-1)" :disabled="first">이전</button>
-    {{ nowPage }}/{{ totalPage }}
-    <br>
-    선택한매장:{{storeName}}
-    <br>
-    <input type="text" name="" id="" placeholder="초대할 직원의 아이디를 입력해주세요" v-model="userId">
-    <button @click="selectEm">검색</button>
-    <ul v-if="userInfo != null">
-        <li>이름:{{ userInfo.firstName + userInfo.lastName }}</li>
-        <li>권한:{{ userInfo.role }}</li>
-        <li>아이디:{{ userInfo.userId }}</li>
-        <li><button @click="invaite">초대</button></li>
-    </ul>
-    </p>
+    <div class="row" style="margin-top: 70px;">
+        <div class="col">
+            <ul>
+                <li v-for="(store, index) in storeList" :key="index">
+                    <button @click="select(store.id, store.name)">
+                        <p>매장명:{{ store.name }}</p>
+                        <p>주소:{{ store.address }}</p>
+                    </button>
+                </li>
+            </ul>
+            <button @click="nextStore(1)" :disabled="last">다음</button>
+            <button @click="nextStore(-1)" :disabled="first">이전</button>
+            {{ nowPage }}/{{ totalPage }}
+        </div>
+        <div class="col">
+            선택한매장:{{ storeName }}
+        </div>
+        <div class="col">
+            <input type="text" name="" id="" placeholder="초대할 직원의 아이디를 입력해주세요" v-model="userId">
+            <button @click="selectEm">검색</button>
+        </div>
+        <div class="col">
+            <ul v-if="userInfo != null">
+                <li>이름:{{ userInfo.firstName + userInfo.lastName }}</li>
+                <li>권한:{{ userInfo.role }}</li>
+                <li>아이디:{{ userInfo.userId }}</li>
+                <li><button @click="invaite">초대</button></li>
+            </ul>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -58,9 +64,9 @@ export default {
             this.$router.push('/regi-employee?page=' + page);
             this.$store.dispatch('MarketStore/getStoreListSimple', page);
         },
-        select(storeid,storename) {
+        select(storeid, storename) {
             this.storeId = storeid;
-            this.storeName=storename;
+            this.storeName = storename;
         },
         selectEm() {
             requestSearchMember(this.userId).then(response => {
@@ -90,7 +96,7 @@ export default {
             }
             this.userInfo = null;
             this.userId = null;
-            this.storeName=null;
+            this.storeName = null;
         },
         doneSearch(response) {
             console.log(response);
