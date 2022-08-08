@@ -12,8 +12,13 @@ function requestInviteMember(data) {
     setInterceptors(instance);
     return  instance.post('/admin/employee/save',data);
 }
+function requestStoreList(role,page,keyword) {
+    setInterceptors(instance);
+    return  instance.get('/'+role+'/store/list?page='+page+'&keyword='+keyword);
+}
 export {
     requestStoreInsert,
     requestStoreListAtSimple,
-    requestInviteMember
+    requestInviteMember,
+    requestStoreList
 }

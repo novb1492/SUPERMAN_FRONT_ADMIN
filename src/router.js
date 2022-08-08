@@ -5,6 +5,7 @@ import RegiStorePage from "@/views/RegiStorePage.vue";
 import MyPage from "@/views/MyPage.vue";
 import { checkLogin } from "@/assets/js/Jslib";
 import RegiEmplPage from "@/views/employee/RegiEmplPage.vue";
+import StoreListPage from "@/views/store/StoreListPage.vue";
 const routes = [
   {
     path: "/",
@@ -28,6 +29,10 @@ const routes = [
   {
     path: "/regi-employee",
     component: RegiEmplPage
+  },
+  {
+    path: "/store-list",
+    component: StoreListPage
   }
 ];
 

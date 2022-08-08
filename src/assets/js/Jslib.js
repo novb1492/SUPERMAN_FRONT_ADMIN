@@ -68,3 +68,15 @@ export function checkexpireLogin(state,message) {
     }
     return false;
 }
+export function checkParam(val) {
+    if(val==undefined||val==null||val=='undefined'||val=='null'){
+        return true;
+    }
+    return false;
+}
+export function checkPage(page) {
+    if(checkParam(page)||isNaN(page)){
+        return 1;
+    }
+    return page;
+}
