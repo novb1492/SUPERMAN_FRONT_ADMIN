@@ -55,6 +55,7 @@ import KakaoPostCode from '@/components/KakaoPostCode.vue';
 import Ck5Editor from '@/components/Ck5Editor.vue';
 import KakaoMap from '@/components/KakaoMap.vue';
 import { mapGetters } from "vuex";
+import { checkNew } from "@/assets/js/Jslib";
 export default {
   components: { KakaoPostCode, Ck5Editor, KakaoMap },
   name: "RegiStorePage",
@@ -115,7 +116,7 @@ export default {
       }).catch(error => {
         let response = error.response;
         let data = response.data;
-        if (response.status == 403 && data.message == '새토큰이 발급되었습니다') {
+        if (checkNew(response.status,data.message)) {
           requestUploadImg(frm).then(response => {
             let data = response.data;
             this.thumbnail = data.message[0];
@@ -178,7 +179,7 @@ export default {
       }).catch(error => {
         let response = error.response;
         let responseData = response.data;
-        if (response.status == 403 && responseData.message == '새토큰이 발급되었습니다') {
+        if (checkNew(response.status,responseData.message)) {
           requestStoreInsert(data).then(() => {
             this.doneInsert();
           }).catch(error => {

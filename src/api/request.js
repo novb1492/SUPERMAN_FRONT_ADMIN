@@ -1,4 +1,4 @@
-import { setToken } from '@/assets/js/Jslib';
+import { checkexpireLogin, checkNew, setToken } from '@/assets/js/Jslib';
 import axios from 'axios';
 
 export function setInterceptors(instance) {
@@ -24,8 +24,10 @@ export function setInterceptors(instance) {
       console.log(error);
       let response = error.response;
       let data = response.data;
-      if (response.status == 403 && data.message == '새토큰이 발급되었습니다') {
+      if (checkNew(response.status,data.message)) {
         setToken(response);
+      }else if(checkexpireLogin(response.status,data.message)){
+        location.href='/login?nextUrl='+location.href;
       }
       return Promise.reject(error);
     },
