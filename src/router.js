@@ -24,15 +24,24 @@ const routes = [
   },
   {
     path: "/mypage",
-    component: MyPage
+    component: MyPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/mypage', 'USER');
+    }
   },
   {
     path: "/regi-employee",
-    component: RegiEmplPage
+    component: RegiEmplPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/regi-employee', 'MANAGE');
+    }
   },
   {
     path: "/store-list",
-    component: StoreListPage
+    component: StoreListPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/store-list', 'USER');
+    }
   }
 ];
 
