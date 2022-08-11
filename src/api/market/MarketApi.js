@@ -16,9 +16,14 @@ function requestStoreList(role,page,keyword,category) {
     setInterceptors(instance);
     return  instance.get('/store/list?page='+page+'&keyword='+keyword+'&category='+category);
 }
+function requestStoreInfo(id) {
+    setInterceptors(instance);
+    return  instance.get('/store/'+id);
+}
 export {
     requestStoreInsert,
     requestStoreListAtSimple,
     requestInviteMember,
-    requestStoreList
+    requestStoreList,
+    requestStoreInfo
 }
