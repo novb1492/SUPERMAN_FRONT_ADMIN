@@ -5,6 +5,7 @@ import RegiStorePage from "@/views/RegiStorePage.vue";
 import MyPage from "@/views/MyPage.vue";
 import { checkLogin } from "@/assets/js/Jslib";
 import RegiEmplPage from "@/views/employee/RegiEmplPage.vue";
+import StoreListPage from "@/views/store/StoreListPage.vue";
 const routes = [
   {
     path: "/",
@@ -23,11 +24,24 @@ const routes = [
   },
   {
     path: "/mypage",
-    component: MyPage
+    component: MyPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/mypage', 'USER');
+    }
   },
   {
     path: "/regi-employee",
-    component: RegiEmplPage
+    component: RegiEmplPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/regi-employee', 'MANAGE');
+    }
+  },
+  {
+    path: "/store-list",
+    component: StoreListPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/store-list', 'USER');
+    }
   }
 ];
 

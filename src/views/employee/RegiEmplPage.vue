@@ -34,7 +34,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { requestSearchMember } from "@/api/Member/MemberApi";
-import { checkNew } from '@/assets/js/Jslib';
+import { checkNew, checkPage } from '@/assets/js/Jslib';
 import { requestInviteMember } from "@/api/market/MarketApi";
 export default {
     data() {
@@ -56,7 +56,8 @@ export default {
         })
     },
     mounted() {
-        this.$store.dispatch('MarketStore/getStoreListSimple', this.$route.query.page);
+        let page=checkPage(this.$route.query.page);
+        this.$store.dispatch('MarketStore/getStoreListSimple', page);
     },
     methods: {
         nextStore(num) {

@@ -23,7 +23,7 @@ export default {
     components: { ShowState },
     methods: {
         goStoreList() {
-            location.href = '/store-list';
+            location.href = '/store-list?page=1';
         },
     }
 }

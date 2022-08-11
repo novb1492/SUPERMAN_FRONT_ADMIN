@@ -6,6 +6,7 @@ export const NavStore = {
     state: {
         situation: 0,
         loginFlag: sessionStorage.getItem('loginFlag'),
+        info:localStorage.getItem('info')
     },
     getters: {
         getSituation(state) {
@@ -14,6 +15,9 @@ export const NavStore = {
         getLoginFlag(state) {
             return JSON.parse(state.loginFlag);
         },
+        getRole(state) {
+            return JSON.parse(state.info).role;
+        }
     },
     mutations,
     actions

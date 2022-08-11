@@ -68,3 +68,22 @@ export function checkexpireLogin(state,message) {
     }
     return false;
 }
+export function checkParam(val) {
+    if(val==undefined||val==null||val=='undefined'||val=='null'){
+        return true;
+    }
+    return false;
+}
+export function checkPage(page) {
+    if(checkParam(page)||isNaN(page)){
+        return 1;
+    }
+    return page;
+}
+export function failGetStoreList(error){
+    let response=error.response;
+    alert(response.data.message);
+}
+export function changeUrl(url){
+    history.pushState("https://10.150.189.220:3030"+url);
+}

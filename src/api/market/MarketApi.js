@@ -6,14 +6,19 @@ function requestStoreInsert(data) {
 }
 function requestStoreListAtSimple(page) {
     setInterceptors(instance);
-    return  instance.get('/admin/store/regi/list?page='+page);
+    return  instance.get('/manage/store/regi/list?page='+page);
 }
 function requestInviteMember(data) {
     setInterceptors(instance);
     return  instance.post('/admin/employee/save',data);
 }
+function requestStoreList(role,page,keyword,category) {
+    setInterceptors(instance);
+    return  instance.get('/store/list?page='+page+'&keyword='+keyword+'&category='+category);
+}
 export {
     requestStoreInsert,
     requestStoreListAtSimple,
-    requestInviteMember
+    requestInviteMember,
+    requestStoreList
 }
