@@ -105,17 +105,17 @@ export default {
             this.id = this.userInfo.id;
         },
         invaite() {
-            let data = JSON.stringify({
+            let requestDate = JSON.stringify({
                 "storeId": this.storeId,
                 "userId": this.id
             })
-            requestInviteMember(data).then(response => {
+            requestInviteMember(requestDate).then(response => {
                 this.doneInvite(response);
             }).catch(error => {
                 let response = error.response;
                 let data = response.data;
                 if (checkNew(response.status, data.message)) {
-                    requestInviteMember(data).then(response => {
+                    requestInviteMember(requestDate).then(response => {
                         this.doneInvite(response);
                     }).catch(error => {
                         this.errorInvite(error);

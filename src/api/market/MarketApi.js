@@ -10,7 +10,7 @@ function requestStoreListAtSimple(page) {
 }
 function requestInviteMember(data) {
     setInterceptors(instance);
-    return  instance.post('/admin/employee/save',data);
+    return  instance.post('/manage/employee/save',data);
 }
 function requestStoreList(role,page,keyword,category) {
     setInterceptors(instance);
