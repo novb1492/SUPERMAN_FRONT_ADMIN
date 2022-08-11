@@ -1,5 +1,5 @@
 import { requestStoreListAtSimple,requestStoreList } from "@/api/market/MarketApi"
-import { checkNew, failGetStoreList } from "@/assets/js/Jslib";
+import {  checkNew, failGetStoreList } from "@/assets/js/Jslib";
 
 export default {
     getStoreListSimple(context,page) {

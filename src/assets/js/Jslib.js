@@ -84,3 +84,6 @@ export function failGetStoreList(error){
     let response=error.response;
     alert(response.data.message);
 }
+export function changeUrl(url){
+    history.pushState("https://10.150.189.220:3030"+url);
+}
