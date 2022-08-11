@@ -14,7 +14,7 @@ function requestInviteMember(data) {
 }
 function requestStoreList(role,page,keyword,category) {
     setInterceptors(instance);
-    return  instance.get('/'+role+'/store/list?page='+page+'&keyword='+keyword+'&category='+category);
+    return  instance.get('/store/list?page='+page+'&keyword='+keyword+'&category='+category);
 }
 export {
     requestStoreInsert,
