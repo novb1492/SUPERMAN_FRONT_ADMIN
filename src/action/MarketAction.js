@@ -1,5 +1,5 @@
 import { requestStoreListAtSimple,requestStoreList } from "@/api/market/MarketApi"
-import { checkNew } from "@/assets/js/Jslib";
+import { checkNew, failGetStoreList } from "@/assets/js/Jslib";
 
 export default {
     getStoreListSimple(context,page) {
@@ -24,20 +24,22 @@ export default {
         let role=payload.role;
         let page=payload.page;
         let keyword=payload.keyword;
-        requestStoreList(role,page,keyword).then(response=>{
+        let category=payload.category;
+        requestStoreList(role,page,keyword,category).then(response=>{
             context.commit('changeStoreList',response.data);
         }).catch(error=>{
             let response=error.response;
             let responseData=response.data;
             if (checkNew(response.status,responseData.message)) {
-                requestStoreList(role,page,keyword).then(response => {
+                requestStoreList(role,page,keyword,category).then(response => {
                     context.commit('changeStoreList',response.data);
-                }).catch(() => {
-                    alert('정보를 불러오는데 실패했습니다');
+                }).catch(error => {
+                    failGetStoreList(error);
                 });
               }else{
-                alert('정보를 불러오는데 실패했습니다');
+                failGetStoreList(error);
               }
         });
-    }
+    },
+  
 }

@@ -80,3 +80,7 @@ export function checkPage(page) {
     }
     return page;
 }
+export function failGetStoreList(error){
+    let response=error.response;
+    alert(response.data.message);
+}
