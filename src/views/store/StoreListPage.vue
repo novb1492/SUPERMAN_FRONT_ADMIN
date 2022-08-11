@@ -114,7 +114,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 ul li {list-style-type: none; float: left;}
 
 .container {
