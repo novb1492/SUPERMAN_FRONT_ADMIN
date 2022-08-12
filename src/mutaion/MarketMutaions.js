@@ -7,4 +7,7 @@ export default {
         state.empty=data.empty;
         state.nowPage=data.number+1;
     },
+    changeStoreInfo(state,data){
+        state.storeInfo=data;
+    }
 }

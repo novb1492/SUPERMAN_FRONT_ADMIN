@@ -1,40 +1,16 @@
 <template>
     <div style="margin-top: 70px;">
-        fdfd
+        <StoreDetail :flag="true"></StoreDetail>
     </div>
 </template>
 
 <script>
-import { requestStoreInfo } from '@/api/market/MarketApi'
-import { checkNew } from '@/assets/js/Jslib';
+import StoreDetail from '@/components/store/StoreDetail.vue';
 export default {
     mounted() {
-        let id = this.$route.query.id;
-        requestStoreInfo(id).then(response => {
-            this.doneGetInfo(response);
-        }).catch(error => {
-            let response = error.response;
-            let data = response.data;
-            if (checkNew(response.status, data.message)) {
-                requestStoreInfo(id).then(response => {
-                    this.doneGetInfo(response)
-                }).catch(error => {
-                    this.errorGet(error);
-                })
-            } else {
-                this.errorGet(error);
-
-            }
-        });
+        this.$store.dispatch('MarketStore/getStoreInfo', {id:this.$route.query.id});
     },
-    methods:{
-        doneGetInfo(response){
-            console.log(response);
-        },
-        errorGet(error){
-            console.log(error);
-        }
-    }
+    components: { StoreDetail }
 }
 </script>
 
