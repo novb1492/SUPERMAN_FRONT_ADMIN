@@ -68,6 +68,9 @@ export default {
     },
     setThumbnail(context,value){
         context.commit('changeThumbNail', value);
+    },
+    setOpentime(context,value){
+        context.commit('changeOpentime', value);
     }
 
 }

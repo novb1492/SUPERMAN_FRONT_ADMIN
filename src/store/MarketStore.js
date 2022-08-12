@@ -5,11 +5,11 @@ export const MarketStore = {
     namespaced: true,
     state: {
         storeList: [],
-        totalPage:0,
-        last:false,
-        first:false,
-        empty:false,
-        nowPage:0,
+        totalPage: 0,
+        last: false,
+        first: false,
+        empty: false,
+        nowPage: 0,
         thumbnail: null,
         addr: '',
         detailAddr: '',
@@ -21,7 +21,8 @@ export const MarketStore = {
         minPrice: null,
         text: null,
         name: null,
-        storeId: null
+        storeId: null,
+        radius: null
     },
     getters: {
         getStoreList(state) {
@@ -42,45 +43,48 @@ export const MarketStore = {
         getNowPage(state) {
             return state.nowPage;
         },
-        getStoreInfo(state){
+        getStoreInfo(state) {
             return state.storeInfo;
         },
-        getThumbnail(state){
+        getThumbnail(state) {
             return state.thumbnail;
         },
-        getAddr(state){
+        getAddr(state) {
             return state.addr;
         },
-        getDetailAddr(state){
+        getDetailAddr(state) {
             return state.detailAddr;
         },
-        getPostcode(state){
+        getPostcode(state) {
             return state.postcode;
         },
-        getCompanynum(state){
+        getCompanynum(state) {
             return state.companynum;
         },
-        getOpentime(state){
+        getOpentime(state) {
             return state.opentime;
         },
-        getClosetime(state){
+        getClosetime(state) {
             return state.closetime;
         },
-        getTel(state){
+        getTel(state) {
             return state.tel;
         },
-        getMinPrice(state){
+        getMinPrice(state) {
             return state.minPrice;
         },
-        getText(state){
+        getText(state) {
             return state.text;
         },
-        getName(state){
+        getName(state) {
             return state.name;
         },
-        getStoreId(state){
+        getStoreId(state) {
             return state.storeId;
-        }        
+        },
+        getRadius(state) {
+            return state.radius;
+        }
     },
     mutations,
     actions

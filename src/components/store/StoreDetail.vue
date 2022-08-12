@@ -11,10 +11,12 @@
                 :value="name" />
             <br>
             <span>오픈시간</span>
-            <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간" v-model="opentime" />
+            <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간"
+                @input="setOpentime($event.target.value)" :value="opentime" />
             <br>
             <span>마감시간</span>
-            <input type="time" class="ml135 mt-2 mb-2" id="closeTime" placeholder="마감시간" v-model="closetime" />
+            <input type="time" class="ml135 mt-2 mb-2" id="closeTime" placeholder="마감시간"
+                @input="setClosetime($event.target.value)" :value="closetime" />
             <br>
             <span>간단한 가게 설명을 적어주세요</span>
             <ck-5-editor :idName="'editor'" ref="editor"></ck-5-editor>
@@ -28,22 +30,23 @@
                 disabled />
             <br>
             <span>상세주소</span><input type="text" class="ml105 mt-2" id="detailAddress" placeholder="상세주소"
-                v-model="detailAddr" />
+                @input="setDetailAddr($event.target.value)" :value="detailAddr" />
             <br>
             <span>최소배달금액(원)</span>
-            <input type="text" class="ml105 mt-2" id="minPrice" placeholder="최소배달금액" v-model="minPrice" />
+            <input type="text" class="ml105 mt-2" id="minPrice" placeholder="최소배달금액"
+                @input="setMinPrice($event.target.value)" :value="minPrice" />
             <br>
             <span>최대배달반경(km)</span>
             <input type="text" class="ml80 mt-2" id="deliverRadius" placeholder="최대배달반경" @keyup="showCircle"
-                v-model="radius" />
+                @input="setRadius($event.target.value)" :value="radius" />
             <br>
         </div>
         <div class="col">
             <kakao-map :width="300" :height="300" ref="kmap"></kakao-map>
             <span>매장전화번호</span>
-            <input type="text" class="ml80 mt-2" id="tel" v-model="tel">
+            <input type="text" class="ml80 mt-2" id="tel" @input="setTel($event.target.value)" :value="tel">
             <br>
-            <input type="button" value="가맹점 등록" @click="regiStore" v-if="flag">
+            <input type="button" value="가맹점 등록" @click="regiStore">
         </div>
     </div>
 </template>
@@ -67,7 +70,6 @@ export default {
             // detailAddr: '',
             // postcode: '',
             marker: null,
-            radius: null,
             circle: null,
             result: null,
             // companynum: null,
@@ -97,7 +99,9 @@ export default {
             minPrice: 'getMinPrice',
             text: 'getText',
             name: 'getName',
-            storeId: 'getStoreId'
+            storeId: 'getStoreId',
+            radius: 'getRadius'
+
         })
 
     },
@@ -114,7 +118,8 @@ export default {
             setMinPrice: 'setMinPrice',
             setText: 'setText',
             setName: 'setName',
-            setStoreId: 'setStoreId'
+            setStoreId: 'setStoreId',
+            setRadius:'setRadius'
         }),
         resultPost(data) {
             this.addr = data.addr;

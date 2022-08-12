@@ -15,5 +15,11 @@ export default {
     },
     changeThumbNail(state,value){
         state.thumbnail=value;
+    },
+    changeName(state,value){
+        state.name=value;
+    },
+    changeOpentime(state,value){
+        state.opentime=value;
     }
 }
