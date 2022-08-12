@@ -7,7 +7,8 @@
             <input type="file" id="img" class="mt-2" name="img" accept=".jpg, .png" @change="uploadThumbNail">
             <br>
             <span class="mt-2">상호</span>
-            <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" v-model="addr" />
+            <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" @input="setName($event.target.value)"
+                :value="name" />
             <br>
             <span>오픈시간</span>
             <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간" v-model="opentime" />
@@ -53,29 +54,30 @@ import { requestUploadImg } from "@/api/Etc/EtcApi";
 import KakaoPostCode from '@/components/KakaoPostCode.vue';
 import Ck5Editor from '@/components/Ck5Editor.vue';
 import KakaoMap from '@/components/KakaoMap.vue';
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 import { checkNew } from "@/assets/js/Jslib";
 export default {
-    props: ['flag','storeInfo'],
+    props: ['flag', 'storeInfo'],
     components: { KakaoPostCode, Ck5Editor, KakaoMap },
     name: "RegiStorePage",
     data() {
         return {
-            thumbnail: null,
-            detailAddr: '',
-            postcode: '',
+            // thumbnail: null,
+            // addr: '',
+            // detailAddr: '',
+            // postcode: '',
             marker: null,
             radius: null,
             circle: null,
             result: null,
-            companynum: null,
-            opentime: null,
-            closetime: null,
-            tel: null,
-            minPrice: null,
-            text: null,
-            name: null,
-            storeId: null,
+            // companynum: null,
+            // opentime: null,
+            // closetime: null,
+            // tel: null,
+            // minPrice: null,
+            // text: null,
+            // name: null,
+            // storeId: null,
         }
     },
     computed: {
@@ -84,11 +86,36 @@ export default {
             map: 'getMap'
         }),
         ...mapGetters('MarketStore', {
-            addr: 'getAddr'
+            thumbnail: 'getThumbnail',
+            addr: 'getAddr',
+            detailAddr: 'getDetailAddr',
+            postcode: 'getPostcode',
+            companynum: 'getCompanynum',
+            opentime: 'getOpentime',
+            closetime: 'getClosetime',
+            tel: 'getTel',
+            minPrice: 'getMinPrice',
+            text: 'getText',
+            name: 'getName',
+            storeId: 'getStoreId'
         })
 
     },
     methods: {
+        ...mapActions('MarketStore', {
+            setThumbnail: 'setThumbnail',
+            setAddr: 'setAddr',
+            setDetailAddr: 'setDetailAddr',
+            setPostcode: 'setPostcode',
+            setCompanynum: 'setCompanynum',
+            setOpentime: 'setOpentime',
+            setClosetime: 'setClosetime',
+            setTel: 'setTel',
+            setMinPrice: 'setMinPrice',
+            setText: 'setText',
+            setName: 'setName',
+            setStoreId: 'setStoreId'
+        }),
         resultPost(data) {
             this.addr = data.addr;
             this.postcode = data.postcode;
@@ -113,14 +140,14 @@ export default {
             frm.append("upload", document.getElementById('img').files[0]);
             requestUploadImg(frm).then(response => {
                 let data = response.data;
-                this.thumbnail = data.message[0];
+                this.setThumbnail(data.message[0]);
             }).catch(error => {
                 let response = error.response;
                 let data = response.data;
                 if (checkNew(response.status, data.message)) {
                     requestUploadImg(frm).then(response => {
                         let data = response.data;
-                        this.thumbnail = data.message[0];
+                        this.setThumbnail(data.message[0]);
                     }).catch(error => {
                         this.catchUploadError(error);
                     });

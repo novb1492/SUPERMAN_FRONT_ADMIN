@@ -59,6 +59,15 @@ export default {
                 getInfoError(error);
             }
         });
+    },
+    setAddr(context,value){
+        context.commit('changeAddr', value);
+    },
+    setName(context,value){
+        context.commit('changeName', value);
+    },
+    setThumbnail(context,value){
+        context.commit('changeThumbNail', value);
     }
 
 }

@@ -10,15 +10,10 @@ export const MarketStore = {
         first:false,
         empty:false,
         nowPage:0,
-        storeInfo:null,
         thumbnail: null,
         addr: '',
         detailAddr: '',
         postcode: '',
-        marker: null,
-        radius: null,
-        circle: null,
-        result: null,
         companynum: null,
         opentime: null,
         closetime: null,
@@ -50,9 +45,42 @@ export const MarketStore = {
         getStoreInfo(state){
             return state.storeInfo;
         },
+        getThumbnail(state){
+            return state.thumbnail;
+        },
         getAddr(state){
             return state.addr;
-        }
+        },
+        getDetailAddr(state){
+            return state.detailAddr;
+        },
+        getPostcode(state){
+            return state.postcode;
+        },
+        getCompanynum(state){
+            return state.companynum;
+        },
+        getOpentime(state){
+            return state.opentime;
+        },
+        getClosetime(state){
+            return state.closetime;
+        },
+        getTel(state){
+            return state.tel;
+        },
+        getMinPrice(state){
+            return state.minPrice;
+        },
+        getText(state){
+            return state.text;
+        },
+        getName(state){
+            return state.name;
+        },
+        getStoreId(state){
+            return state.storeId;
+        }        
     },
     mutations,
     actions
