@@ -70,6 +70,10 @@ export default {
             //watch를 이용해 값 변환감지를 한뒤 부여해준다
             //이렇게하는 이유는 에디터 호출이 값이 들어가기 전에 끝난다
             this.$refs.editor.setText(this.text);
+            let data=new Object;
+            data.addr=this.addr;
+            data.postcode=this.postcode;
+            this.resultPost(data);
         }
     },
     data() {
