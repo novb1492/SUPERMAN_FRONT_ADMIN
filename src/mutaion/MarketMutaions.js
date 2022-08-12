@@ -13,13 +13,43 @@ export default {
     changeAddr(state, addr) {
         state.addr = addr;
     },
-    changeThumbNail(state,value){
+    changeThumbNail(state, value) {
+        state.thumbnail = value;
+    },
+    changeName(state, value) {
+        state.name = value;
+    },
+    changeOpentime(state, value) {
+        state.opentime = value;
+    },
+    changeThumbnail(state,value) {
         state.thumbnail=value;
     },
-    changeName(state,value){
-        state.name=value;
+    changeDetailAddr(state,value) {
+        state.detailAddr=value;
     },
-    changeOpentime(state,value){
-        state.opentime=value;
+    changePostcode(state,value) {
+        state.postcode=value;
+    },
+    changeCompanynum(state,value) {
+        state.companynum=value;
+    },
+    changeClosetime(state,value) {
+        state.closetime=value;
+    },
+    changeTel(state,value) {
+        state.tel=value;
+    },
+    changeMinPrice(state,value) {
+        state.minPrice=value;
+    },
+    changeText(state,value) {
+        state.text=value;
+    },
+    changeStoreId(state,value) {
+        state.storeId=value;
+    },
+    changeRadius(state,value) {
+        state.radius=value;
     }
 }

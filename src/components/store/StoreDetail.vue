@@ -122,8 +122,8 @@ export default {
             setRadius:'setRadius'
         }),
         resultPost(data) {
-            this.addr = data.addr;
-            this.postcode = data.postcode;
+            this.setAddr(data.addr);
+            this.setPostcode(data.postcode);
             this.geocoder.addressSearch(data.addr, (results, status) => {
                 if (status == window.daum.maps.services.Status.OK) {
                     if (this.marker != null) {
@@ -239,7 +239,7 @@ export default {
         },
         doneInsert() {
             alert('매장등록이 완료 되었습니다');
-            location.href = '/storelist?page=1&scope=&keyword=';
+            location.href = '/store-list?page=1';
         }
     },
 }

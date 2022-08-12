@@ -43,9 +43,6 @@ export const MarketStore = {
         getNowPage(state) {
             return state.nowPage;
         },
-        getStoreInfo(state) {
-            return state.storeInfo;
-        },
         getThumbnail(state) {
             return state.thumbnail;
         },

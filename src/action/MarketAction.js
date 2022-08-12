@@ -71,6 +71,33 @@ export default {
     },
     setOpentime(context,value){
         context.commit('changeOpentime', value);
+    },
+    setDetailAddr(context,value) {
+        context.commit('changeDetailAddr', value);
+    },
+    setPostcode(context,value) {
+        context.commit('changePostcode', value);
+    },
+    setCompanynum(context,value) {
+        context.commit('changeCompanynum', value);
+    },
+    setClosetime(context,value) {
+        context.commit('changeClosetime', value);
+    },
+    setTel(context,value) {
+        context.commit('changeTel', value);
+    },
+    setMinPrice(context,value) {
+        context.commit('changeMinPrice', value);
+    },
+    setText(context,value) {
+        context.commit('changeText', value);
+    },
+    setStoreId(context,value) {
+        context.commit('changeStoreId', value);
+    },
+    setRadius(context,value) {
+        context.commit('changeRadius', value);
     }
 
 }
