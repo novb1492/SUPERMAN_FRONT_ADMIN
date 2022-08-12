@@ -3,6 +3,7 @@
 </template>
 <script>
 import MyUploadAdapter from "@/assets/js/MyUploadAdapter.js";
+import { markRaw } from 'vue';
 
 function MyCustomUploadAdapterPlugin(editor) {
   editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
@@ -25,7 +26,7 @@ export default {
       .then(newEditor => {
         console.log('Editor was initialized', newEditor);
         console.log(newEditor.getData());
-        this.editor = newEditor;
+       this.editor = markRaw(newEditor);
 
       })
       .catch(error => {
