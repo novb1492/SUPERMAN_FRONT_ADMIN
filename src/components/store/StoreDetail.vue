@@ -7,7 +7,7 @@
             <input type="file" id="img" class="mt-2" name="img" accept=".jpg, .png" @change="uploadThumbNail">
             <br>
             <span class="mt-2">상호</span>
-            <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" v-model="name" />
+            <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" v-model="addr" />
             <br>
             <span>오픈시간</span>
             <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간" v-model="opentime" />
@@ -56,13 +56,12 @@ import KakaoMap from '@/components/KakaoMap.vue';
 import { mapGetters } from "vuex";
 import { checkNew } from "@/assets/js/Jslib";
 export default {
-    props: ['flag'],
+    props: ['flag','storeInfo'],
     components: { KakaoPostCode, Ck5Editor, KakaoMap },
     name: "RegiStorePage",
     data() {
         return {
             thumbnail: null,
-            addr: '',
             detailAddr: '',
             postcode: '',
             marker: null,
@@ -76,7 +75,7 @@ export default {
             minPrice: null,
             text: null,
             name: null,
-            storeId: null
+            storeId: null,
         }
     },
     computed: {
@@ -85,11 +84,9 @@ export default {
             map: 'getMap'
         }),
         ...mapGetters('MarketStore', {
-            storeInfo: 'getStoreInfo'
+            addr: 'getAddr'
         })
-    },
-    mounted() {
-        this.$store.dispatch('NavStore/changeSituation', 0);
+
     },
     methods: {
         resultPost(data) {

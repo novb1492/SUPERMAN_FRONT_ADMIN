@@ -74,7 +74,7 @@ export default {
             "category": category
         });
         this.$store.dispatch('MarketStore/getStoreByRole', data);
-
+        this.$store.dispatch('NavStore/changeSituation', 0);
     },
     methods: {
         goDetailPage(storeId) {
@@ -115,17 +115,20 @@ export default {
 </script>
 
 <style scoped>
-ul li {list-style-type: none; float: left;}
+ul li {
+    list-style-type: none;
+    float: left;
+}
 
 .container {
-    
+
     display: flex;
     flex-direction: column;
     margin: 0;
 }
 
 .pagingContainer {
-    
+
     display: flex;
     flex-direction: column;
     padding: 3rem;
@@ -134,9 +137,8 @@ ul li {list-style-type: none; float: left;}
 }
 
 .pagingbox {
-    
+
     margin-bottom: 1em;
 
 }
-
 </style>

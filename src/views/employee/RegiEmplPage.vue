@@ -56,8 +56,11 @@ export default {
         })
     },
     mounted() {
-        let page=checkPage(this.$route.query.page);
+        let page = checkPage(this.$route.query.page);
         this.$store.dispatch('MarketStore/getStoreListSimple', page);
+
+        this.$store.dispatch('NavStore/changeSituation', 0);
+
     },
     methods: {
         nextStore(num) {

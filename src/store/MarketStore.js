@@ -10,7 +10,23 @@ export const MarketStore = {
         first:false,
         empty:false,
         nowPage:0,
-        storeInfo:null
+        storeInfo:null,
+        thumbnail: null,
+        addr: '',
+        detailAddr: '',
+        postcode: '',
+        marker: null,
+        radius: null,
+        circle: null,
+        result: null,
+        companynum: null,
+        opentime: null,
+        closetime: null,
+        tel: null,
+        minPrice: null,
+        text: null,
+        name: null,
+        storeId: null
     },
     getters: {
         getStoreList(state) {
@@ -33,6 +49,9 @@ export const MarketStore = {
         },
         getStoreInfo(state){
             return state.storeInfo;
+        },
+        getAddr(state){
+            return state.addr;
         }
     },
     mutations,
