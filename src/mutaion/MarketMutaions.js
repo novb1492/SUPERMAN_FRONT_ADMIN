@@ -7,9 +7,6 @@ export default {
         state.empty = data.empty;
         state.nowPage = data.number + 1;
     },
-    changeStoreInfo(state, data) {
-        state.storeInfo = data;
-    },
     changeAddr(state, addr) {
         state.addr = addr;
     },
@@ -21,9 +18,6 @@ export default {
     },
     changeOpentime(state, value) {
         state.opentime = value;
-    },
-    changeThumbnail(state,value) {
-        state.thumbnail=value;
     },
     changeDetailAddr(state,value) {
         state.detailAddr=value;
@@ -51,5 +45,20 @@ export default {
     },
     changeRadius(state,value) {
         state.radius=value;
+    },
+    changeStoreInfo(state,data){
+        state.addr = data.address;
+        state.thumbnail = data.thumbNail;
+        state.name = data.name;
+        state.opentime = data.openTime;
+        state.detailAddr=data.detailAddress;
+        state.postcode=data.postcode;
+        state.closetime=data.closeTime;
+        state.tel=data.tel;
+        state.minPrice=data.minOrderPrice;
+        state.text=data.text;
+        state.storeId=data.id;
+        state.radius=data.maxDeliverRadius;
+
     }
 }

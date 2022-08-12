@@ -8,7 +8,7 @@
             <br>
             <span class="mt-2">상호</span>
             <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" @input="setName($event.target.value)"
-                :value="name" />
+                :value="name"  />
             <br>
             <span>오픈시간</span>
             <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간"
@@ -65,21 +65,9 @@ export default {
     name: "RegiStorePage",
     data() {
         return {
-            // thumbnail: null,
-            // addr: '',
-            // detailAddr: '',
-            // postcode: '',
             marker: null,
             circle: null,
             result: null,
-            // companynum: null,
-            // opentime: null,
-            // closetime: null,
-            // tel: null,
-            // minPrice: null,
-            // text: null,
-            // name: null,
-            // storeId: null,
         }
     },
     computed: {

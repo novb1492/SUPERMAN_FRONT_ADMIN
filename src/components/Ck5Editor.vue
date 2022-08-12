@@ -25,9 +25,7 @@ export default {
       })
       .then(newEditor => {
         console.log('Editor was initialized', newEditor);
-        console.log(newEditor.getData());
-       this.editor = markRaw(newEditor);
-
+        this.editor = markRaw(newEditor);
       })
       .catch(error => {
         console.log(error);
@@ -37,6 +35,9 @@ export default {
   methods:{
     getText(){
       return this.editor.getData();
+    },
+    setText(text){
+      this.editor.setData(text);
     }
   }
 }
