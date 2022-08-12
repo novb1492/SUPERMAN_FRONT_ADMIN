@@ -7,7 +7,7 @@
 <script>
 import StoreDetail from '@/components/store/StoreDetail.vue';
 export default {
-    mounted() {
+    beforeCreate() {
         this.$store.dispatch('MarketStore/getStoreInfo', {id:this.$route.query.id});
         this.$store.dispatch('NavStore/changeSituation', 0);
     },

@@ -8,7 +8,7 @@
             <br>
             <span class="mt-2">상호</span>
             <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" @input="setName($event.target.value)"
-                :value="name"  />
+                :value="name" />
             <br>
             <span>오픈시간</span>
             <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간"
@@ -19,7 +19,8 @@
                 @input="setClosetime($event.target.value)" :value="closetime" />
             <br>
             <span>간단한 가게 설명을 적어주세요</span>
-            <ck-5-editor :idName="'editor'" ref="editor"></ck-5-editor>
+            <ck-5-editor :idName="'editor'" ref="editor">
+            </ck-5-editor>
         </div>
         <div class="col">
             <kakao-post-code :width="400" :height="300" ref="kpostCode" v-on:resultPost="resultPost"></kakao-post-code>
@@ -63,6 +64,14 @@ export default {
     props: ['flag', 'storeInfo'],
     components: { KakaoPostCode, Ck5Editor, KakaoMap },
     name: "RegiStorePage",
+    watch: {
+        'randDone'() {
+            //에디터에 값이 미리 있어야 하므로 
+            //watch를 이용해 값 변환감지를 한뒤 부여해준다
+            //이렇게하는 이유는 에디터 호출이 값이 들어가기 전에 끝난다
+            this.$refs.editor.setText(this.text);
+        }
+    },
     data() {
         return {
             marker: null,
@@ -88,8 +97,8 @@ export default {
             text: 'getText',
             name: 'getName',
             storeId: 'getStoreId',
-            radius: 'getRadius'
-
+            radius: 'getRadius',
+            randDone: 'getRandDone'
         })
 
     },
@@ -107,7 +116,7 @@ export default {
             setText: 'setText',
             setName: 'setName',
             setStoreId: 'setStoreId',
-            setRadius:'setRadius'
+            setRadius: 'setRadius'
         }),
         resultPost(data) {
             this.setAddr(data.addr);

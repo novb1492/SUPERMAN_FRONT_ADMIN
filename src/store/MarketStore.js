@@ -22,9 +22,13 @@ export const MarketStore = {
         text: null,
         name: null,
         storeId: null,
-        radius: null
+        radius: null,
+        randDone:false,
     },
     getters: {
+        getRandDone(state) {
+            return state.randDone;
+        },
         getStoreList(state) {
             return state.storeList;
         },

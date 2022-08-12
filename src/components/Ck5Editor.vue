@@ -11,7 +11,7 @@ function MyCustomUploadAdapterPlugin(editor) {
   };
 }
 export default {
-  props: ['idName'],
+  props: ['idName','text'],
   name: 'Ck5Editor',
   data() {
     return {

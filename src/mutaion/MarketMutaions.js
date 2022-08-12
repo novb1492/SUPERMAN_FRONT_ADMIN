@@ -59,6 +59,6 @@ export default {
         state.text=data.text;
         state.storeId=data.id;
         state.radius=data.maxDeliverRadius;
-
+        state.randDone=true;
     }
 }
