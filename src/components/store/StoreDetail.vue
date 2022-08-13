@@ -283,7 +283,8 @@ export default {
                 "radius": this.radius,
                 "tel": this.tel,
                 "text": this.$refs.editor.getText(),
-                "name": this.name
+                "name": this.name,
+                "companyNum":this.companynum
             });
             console.log(data);
             requestStoreInsert(data).then(() => {
