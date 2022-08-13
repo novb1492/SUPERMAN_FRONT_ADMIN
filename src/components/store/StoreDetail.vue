@@ -8,15 +8,24 @@
             <br>
             <span class="mt-2">상호</span>
             <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" @input="setName($event.target.value)"
-                :value="name" />
+                :value="name" :disabled="flag" />
+            <button id="storeNameTry" @click="activate('storeName')">수정</button>
+            <button id="storeNameConfrim" hidden>확인</button>
+            <button id="storeNameCancle" hidden @click="activateCancle('storeName')">취소</button>
             <br>
             <span>오픈시간</span>
             <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간"
-                @input="setOpentime($event.target.value)" :value="opentime" />
+                @input="setOpentime($event.target.value)" :value="opentime" :disabled="flag" />
+            <button id="openTimeTry" @click="activate('openTime')">수정</button>
+            <button id="openTimeConfrim" hidden>확인</button>
+            <button id="openTimeCancle" @click="activateCancle('openTime')" hidden>취소</button>
             <br>
             <span>마감시간</span>
             <input type="time" class="ml135 mt-2 mb-2" id="closeTime" placeholder="마감시간"
-                @input="setClosetime($event.target.value)" :value="closetime" />
+                @input="setClosetime($event.target.value)" :value="closetime" :disabled="flag" />
+            <button id="closeTimeTry" @click="activate('closeTime')">수정</button>
+            <button id="closeTimeConfrim" hidden>확인</button>
+            <button id="closeTimeCancle" @click="activateCancle('closeTime')" hidden>취소</button>
             <br>
             <span>간단한 가게 설명을 적어주세요</span>
             <ck-5-editor :idName="'editor'" ref="editor">
@@ -31,23 +40,36 @@
                 disabled />
             <br>
             <span>상세주소</span><input type="text" class="ml105 mt-2" id="detailAddress" placeholder="상세주소"
-                @input="setDetailAddr($event.target.value)" :value="detailAddr" />
+                @input="setDetailAddr($event.target.value)" :value="detailAddr" :disabled="flag" />
+            <button id="detailAddressTry" @click="activate('detailAddress')">수정</button>
+            <button id="detailAddressConfrim" hidden>확인</button>
+            <button id="detailAddressCancle" @click="activateCancle('detailAddress')" hidden>취소</button>
             <br>
             <span>최소배달금액(원)</span>
             <input type="text" class="ml105 mt-2" id="minPrice" placeholder="최소배달금액"
-                @input="setMinPrice($event.target.value)" :value="minPrice" />
+                @input="setMinPrice($event.target.value)" :value="minPrice" :disabled="flag" />
+            <button id="minPriceTry" @click="activate('minPrice')">수정</button>
+            <button id="minPriceConfrim" hidden>확인</button>
+            <button id="minPriceCancle" @click="activateCancle('minPrice')" hidden>취소</button>
             <br>
             <span>최대배달반경(km)</span>
             <input type="text" class="ml80 mt-2" id="deliverRadius" placeholder="최대배달반경" @keyup="showCircle"
-                @input="setRadius($event.target.value)" :value="radius" />
+                @input="setRadius($event.target.value)" :value="radius" :disabled="flag" />
+            <button id="deliverRadiusTry" @click="activate('deliverRadius')">수정</button>
+            <button id="deliverRadiusConfrim" hidden>확인</button>
+            <button id="deliverRadiusCancle" @click="activateCancle('deliverRadius')" hidden>취소</button>
             <br>
         </div>
         <div class="col">
             <kakao-map :width="300" :height="300" ref="kmap"></kakao-map>
             <span>매장전화번호</span>
-            <input type="text" class="ml80 mt-2" id="tel" @input="setTel($event.target.value)" :value="tel">
+            <input type="text" class="ml80 mt-2" id="tel" @input="setTel($event.target.value)" :value="tel"
+                :disabled="flag">
+            <button id="telTry" @click="activate('tel')">수정</button>
+            <button id="telConfrim" hidden>확인</button>
+            <button id="telCancle" @click="activateCancle('tel')" hidden>취소</button>
             <br>
-            <input type="button" value="가맹점 등록" @click="regiStore">
+            <input type="button" value="가맹점 등록" @click="regiStore" v-if="flag == false">
         </div>
     </div>
 </template>
@@ -70,9 +92,9 @@ export default {
             //watch를 이용해 값 변환감지를 한뒤 부여해준다
             //이렇게하는 이유는 에디터 호출이 값이 들어가기 전에 끝난다
             this.$refs.editor.setText(this.text);
-            let data=new Object;
-            data.addr=this.addr;
-            data.postcode=this.postcode;
+            let data = new Object;
+            data.addr = this.addr;
+            data.postcode = this.postcode;
             this.resultPost(data);
         }
     },
@@ -81,6 +103,7 @@ export default {
             marker: null,
             circle: null,
             result: null,
+            originVal: null
         }
     },
     computed: {
@@ -103,10 +126,65 @@ export default {
             storeId: 'getStoreId',
             radius: 'getRadius',
             randDone: 'getRandDone'
+        }),
+        ...mapGetters('NavStore', {
+            role: 'getRole'
         })
 
     },
     methods: {
+        activate(kind) {
+            if (kind === 'storeName') {
+                this.originVal = this.name;
+            } else if (kind === 'openTime') {
+                this.originVal = this.opentime;
+            } else if (kind === 'closeTime') {
+                this.originVal = this.closetime;
+            } else if (kind === 'detailAddress') {
+                this.originVal = this.detailAddr;
+            } else if (kind === 'minPrice') {
+                this.originVal = this.minPrice;
+            } else if (kind === 'deliverRadius') {
+                this.originVal = this.radius;
+            } else if (kind === 'tel') {
+                this.originVal = this.tel;
+            }
+            /**
+             * 변수 많이 만들기 싫어서 dom접근 했습니다
+             * **/
+            document.getElementById(kind + 'Try').hidden = true;
+            document.getElementById(kind + 'Confrim').hidden = false;
+            document.getElementById(kind + 'Cancle').hidden = false;
+            document.getElementById(kind).disabled = false;
+
+
+        },
+        activateCancle(kind) {
+            if (kind == 'storeName') {
+                this.setName(this.originVal);
+            } else if (kind === 'openTime') {
+                this.setOpentime(this.originVal);
+            } else if (kind === 'closeTime') {
+                this.setClosetime(this.originVal);
+            } else if (kind === 'detailAddress') {
+                this.setDetailAddr(this.originVal);
+            } else if (kind === 'minPrice') {
+                this.setMinPrice(this.originVal);
+            } else if (kind === 'deliverRadius') {
+                this.setRadius(this.originVal);
+            } else if (kind === 'tel') {
+                this.setTel(this.originVal);
+            }
+            /**
+            * 변수 많이 만들기 싫어서 dom접근 했습니다
+            * **/
+            document.getElementById(kind + 'Try').hidden = false;
+            document.getElementById(kind + 'Confrim').hidden = true;
+            document.getElementById(kind + 'Cancle').hidden = true;
+            document.getElementById(kind).disabled = true;
+
+
+        },
         ...mapActions('MarketStore', {
             setThumbnail: 'setThumbnail',
             setAddr: 'setAddr',
