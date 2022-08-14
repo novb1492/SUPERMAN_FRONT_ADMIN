@@ -13,6 +13,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <user-main-nav v-if="situataion == 0"></user-main-nav>
+            <UserStoreNav v-if="situataion==1"></UserStoreNav>
           </ul>
         </div>
       </div>
@@ -23,10 +24,11 @@
 <script>
 import { mapGetters } from 'vuex';
 import UserMainNav from '@/components/layout/user/UserMainNav.vue';
+import UserStoreNav from './UserStoreNav.vue';
 
 export default
   {
-    components: { UserMainNav },
+    components: { UserMainNav, UserStoreNav },
     name: 'UserNav',
     computed: {
       ...mapGetters('NavStore', {

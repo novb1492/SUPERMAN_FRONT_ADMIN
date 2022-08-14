@@ -13,6 +13,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <manage-main-nav v-if="situataion == 0"></manage-main-nav>
+            <ManageStoreNav v-if="situataion==1"></ManageStoreNav>
           </ul>
         </div>
       </div>
@@ -23,10 +24,11 @@
 <script>
 import { mapGetters } from 'vuex';
 import ManageMainNav from '@/components/layout/manage/ManageMainNav.vue';
+import ManageStoreNav from './ManageStoreNav.vue';
 
 export default
   {
-    components: { ManageMainNav },
+    components: { ManageMainNav, ManageStoreNav },
     name: 'ManageNav',
     computed: {
       ...mapGetters('NavStore', {

@@ -12,6 +12,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <AdminMainNav v-if="situataion==0"></AdminMainNav>
+            <AdminStoreNav  v-if="situataion==1"></AdminStoreNav>
           </ul>
         </div>
       </div>
@@ -22,6 +23,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import AdminMainNav from './AdminMainNav.vue';
+import AdminStoreNav from './AdminStoreNav.vue';
 
 export default {
     name: 'AdminNav',
@@ -30,7 +32,7 @@ export default {
             situataion: "getSituation",
         })
     },
-    components: { AdminMainNav }
+    components: { AdminMainNav, AdminStoreNav }
 }
 </script>
 
