@@ -20,10 +20,15 @@ function requestStoreInfo(id) {
     setInterceptors(instance);
     return  instance.get('/store/'+id);
 }
+function requestCompanyNumInsert(data) {
+    setInterceptors(instance);
+    return  instance.post('/admin/company/save',data);
+}
 export {
     requestStoreInsert,
     requestStoreListAtSimple,
     requestInviteMember,
     requestStoreList,
-    requestStoreInfo
+    requestStoreInfo,
+    requestCompanyNumInsert
 }

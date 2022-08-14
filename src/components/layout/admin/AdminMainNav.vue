@@ -12,7 +12,7 @@ import CompanyNav from '../mainMenu/CompanyNav.vue';
 import ShowState from '../ShowState.vue';
 
 export default {
-    name: "App",
+    name: "AdminMainNav",
     components: { StoreNav, EmployeeNav, CompanyNav, ShowState }
 }
 </script>

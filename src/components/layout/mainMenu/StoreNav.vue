@@ -15,7 +15,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
-    name:"UserMainNav",
+    name:"StoreNav",
     computed: {
         ...mapGetters("NavStore", {
             role:'getRole'

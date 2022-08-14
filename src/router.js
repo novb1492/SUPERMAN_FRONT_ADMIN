@@ -7,6 +7,7 @@ import { checkLogin, getParam } from "@/assets/js/Jslib";
 import RegiEmplPage from "@/views/employee/RegiEmplPage.vue";
 import StoreListPage from "@/views/store/StoreListPage.vue";
 import StoreDetailPage from "@/views/store/StoreDetailPage.vue";
+import RegiCompanyPage from "@/views/company/RegiCompanyPage.vue";
 const routes = [
   {
     path: "/",
@@ -49,6 +50,13 @@ const routes = [
     component: StoreDetailPage,
     beforeEnter: () => {
       checkLogin('/login', '/store-detail?id='+getParam('id'), 'USER');
+    }
+  },
+  {
+    path: "/regi-companynum",
+    component: RegiCompanyPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/regi-companynum', 'ADMIN');
     }
   }
 ];
