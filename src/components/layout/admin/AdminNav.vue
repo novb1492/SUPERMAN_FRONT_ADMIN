@@ -11,7 +11,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <AdminMainNav></AdminMainNav>
+            <AdminMainNav v-if="situataion==0"></AdminMainNav>
           </ul>
         </div>
       </div>
