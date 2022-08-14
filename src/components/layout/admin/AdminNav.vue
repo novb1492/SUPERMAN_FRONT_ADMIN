@@ -11,7 +11,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <main-nav v-if="situataion == 0"></main-nav>
+            <AdminMainNav></AdminMainNav>
           </ul>
         </div>
       </div>
@@ -21,17 +21,16 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import MainNav from '@/components/layout/admin/MainNav.vue';
+import AdminMainNav from './AdminMainNav.vue';
 
 export default {
-  components: { MainNav },
-  name:
-    MainNav,
-  computed: {
-    ...mapGetters('NavStore', {
-      situataion: 'getSituation',
-    })
-  }
+    name: 'AdminNav',
+    computed: {
+        ...mapGetters("NavStore", {
+            situataion: "getSituation",
+        })
+    },
+    components: { AdminMainNav }
 }
 </script>
 

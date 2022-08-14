@@ -16,7 +16,11 @@ export const NavStore = {
             return JSON.parse(state.loginFlag);
         },
         getRole(state) {
-            return JSON.parse(state.info).role;
+            try{
+                return JSON.parse(state.info).role;
+            }catch{
+                return null;
+            }
         }
     },
     mutations,
