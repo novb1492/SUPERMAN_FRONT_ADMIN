@@ -10,7 +10,7 @@ import EmployeeNav from '../mainMenu/EmployeeNav.vue';
 import ShowState from '../ShowState.vue';
 
 export default {
-    name: "App",
+    name: "ManageMainNav",
     components: { StoreNav, EmployeeNav, ShowState }
 }
 </script>

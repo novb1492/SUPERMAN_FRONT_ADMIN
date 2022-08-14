@@ -8,7 +8,7 @@ import StoreNav from '../mainMenu/StoreNav.vue';
 import ShowState from '../ShowState.vue';
 
 export default {
-    name: "App",
+    name: "UserMainNav",
     components: { StoreNav, ShowState }
 }
 </script>
