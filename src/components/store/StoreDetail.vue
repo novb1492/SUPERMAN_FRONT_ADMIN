@@ -9,21 +9,21 @@
             <span class="mt-2">상호</span>
             <input type="text" class="ml135 mt-2" id="storeName" placeholder="상호" @input="setName($event.target.value)"
                 :value="name" :disabled="flag" />
-            <button id="storeNameTry" @click="activate('storeName')">수정</button>
+            <button id="storeNameTry" @click="activate('storeName')" v-if="flag">수정</button>
             <button id="storeNameConfrim" hidden>확인</button>
             <button id="storeNameCancle" hidden @click="activateCancle('storeName')">취소</button>
             <br>
             <span>오픈시간</span>
             <input type="time" class="ml135 mt-2" id="openTime" placeholder="오픈시간"
                 @input="setOpentime($event.target.value)" :value="opentime" :disabled="flag" />
-            <button id="openTimeTry" @click="activate('openTime')">수정</button>
+            <button id="openTimeTry" @click="activate('openTime')" v-if="flag">수정</button>
             <button id="openTimeConfrim" hidden>확인</button>
             <button id="openTimeCancle" @click="activateCancle('openTime')" hidden>취소</button>
             <br>
             <span>마감시간</span>
             <input type="time" class="ml135 mt-2 mb-2" id="closeTime" placeholder="마감시간"
                 @input="setClosetime($event.target.value)" :value="closetime" :disabled="flag" />
-            <button id="closeTimeTry" @click="activate('closeTime')">수정</button>
+            <button id="closeTimeTry" @click="activate('closeTime')" v-if="flag">수정</button>
             <button id="closeTimeConfrim" hidden>확인</button>
             <button id="closeTimeCancle" @click="activateCancle('closeTime')" hidden>취소</button>
             <br>
@@ -41,21 +41,21 @@
             <br>
             <span>상세주소</span><input type="text" class="ml105 mt-2" id="detailAddress" placeholder="상세주소"
                 @input="setDetailAddr($event.target.value)" :value="detailAddr" :disabled="flag" />
-            <button id="detailAddressTry" @click="activate('detailAddress')">수정</button>
+            <button id="detailAddressTry" @click="activate('detailAddress')" v-if="flag">수정</button>
             <button id="detailAddressConfrim" hidden>확인</button>
             <button id="detailAddressCancle" @click="activateCancle('detailAddress')" hidden>취소</button>
             <br>
             <span>최소배달금액(원)</span>
             <input type="text" class="ml105 mt-2" id="minPrice" placeholder="최소배달금액"
                 @input="setMinPrice($event.target.value)" :value="minPrice" :disabled="flag" />
-            <button id="minPriceTry" @click="activate('minPrice')">수정</button>
+            <button id="minPriceTry" @click="activate('minPrice')" v-if="flag">수정</button>
             <button id="minPriceConfrim" hidden>확인</button>
             <button id="minPriceCancle" @click="activateCancle('minPrice')" hidden>취소</button>
             <br>
             <span>최대배달반경(km)</span>
             <input type="text" class="ml80 mt-2" id="deliverRadius" placeholder="최대배달반경" @keyup="showCircle"
                 @input="setRadius($event.target.value)" :value="radius" :disabled="flag" />
-            <button id="deliverRadiusTry" @click="activate('deliverRadius')">수정</button>
+            <button id="deliverRadiusTry" @click="activate('deliverRadius')" v-if="flag">수정</button>
             <button id="deliverRadiusConfrim" hidden>확인</button>
             <button id="deliverRadiusCancle" @click="activateCancle('deliverRadius')" hidden>취소</button>
             <br>
@@ -65,10 +65,16 @@
             <span>매장전화번호</span>
             <input type="text" class="ml80 mt-2" id="tel" @input="setTel($event.target.value)" :value="tel"
                 :disabled="flag">
-            <button id="telTry" @click="activate('tel')">수정</button>
+            <button id="telTry" @click="activate('tel')" v-if="flag">수정</button>
             <button id="telConfrim" hidden>확인</button>
             <button id="telCancle" @click="activateCancle('tel')" hidden>취소</button>
             <br>
+            <span>사업자번호</span>
+            <input type="text" class="ml80 mt-2" id="companynum" @input="setCompanynum($event.target.value)"
+                :value="companynum" :disabled="flag">
+            <button id="companynumTry" @click="activate('companynum')" v-if="flag">수정</button>
+            <button id="companynumConfrim" hidden>확인</button>
+            <button id="companynumCancle" @click="activateCancle('companynum')" hidden>취소</button>
             <input type="button" value="가맹점 등록" @click="regiStore" v-if="flag == false">
         </div>
     </div>
@@ -148,6 +154,8 @@ export default {
                 this.originVal = this.radius;
             } else if (kind === 'tel') {
                 this.originVal = this.tel;
+            } else if (kind === 'companynum') {
+                this.originVal = this.companynum;
             }
             /**
              * 변수 많이 만들기 싫어서 dom접근 했습니다
@@ -174,6 +182,8 @@ export default {
                 this.setRadius(this.originVal);
             } else if (kind === 'tel') {
                 this.setTel(this.originVal);
+            } else if (kind === 'companynum') {
+                this.setCompanynum(this.originVal);
             }
             /**
             * 변수 많이 만들기 싫어서 dom접근 했습니다
@@ -284,7 +294,7 @@ export default {
                 "tel": this.tel,
                 "text": this.$refs.editor.getText(),
                 "name": this.name,
-                "companyNum":this.companynum
+                "companyNum": this.companynum
             });
             console.log(data);
             requestStoreInsert(data).then(() => {
