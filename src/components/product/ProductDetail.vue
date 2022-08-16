@@ -1,7 +1,8 @@
 <template>
     fdfd
+    {{categorys}}
+
 </template>
-{{categorys}}
 <script>
 import { mapActions, mapGetters } from 'vuex';
 

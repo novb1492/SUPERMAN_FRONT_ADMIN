@@ -20,7 +20,7 @@ export default {
     }
 }
 function getDone(context,data) {
-    context.commit('setCategorys', data.categorys);
+    context.commit('setCategorys', data);
 }
 function errorGet(error) {
     let response = error.response;
