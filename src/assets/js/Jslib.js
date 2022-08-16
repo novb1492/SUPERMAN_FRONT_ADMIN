@@ -40,63 +40,77 @@ function checkUser(role) {
     }
 }
 export function getRole() {
-    try{
+    try {
         let info = JSON.parse(localStorage.getItem('info'));
         return info.role;
-    }catch{
+    } catch {
         return null;
     }
 }
 export function setInfo(response) {
-    let responseData=response.data;
-    let data=JSON.stringify({
-        "id":responseData.id,
-        "role":responseData.role
+    let responseData = response.data;
+    let data = JSON.stringify({
+        "id": responseData.id,
+        "role": responseData.role
     })
-    localStorage.setItem('info',data);
+    localStorage.setItem('info', data);
 }
-export function checkNew(state,message){
-    if(state == 403 && message == newTokenMessage()){
+export function checkNew(state, message) {
+    if (state == 403 && message == newTokenMessage()) {
         return true;
     }
     return false;
 }
-export function checkexpireLogin(state,message) {
-    if(state == 403 && message == '세션이 만료 되었습니다'){
+export function checkexpireLogin(state, message) {
+    if (state == 403 && message == '세션이 만료 되었습니다') {
         alert('로그인이 만료 되었습니다')
         return true;
     }
     return false;
 }
 export function checkParam(val) {
-    if(val==undefined||val==null||val=='undefined'||val=='null'){
+    if (val == undefined || val == null || val == 'undefined' || val == 'null') {
         return true;
     }
     return false;
 }
 export function checkPage(page) {
-    if(checkParam(page)||isNaN(page)){
+    if (checkParam(page) || isNaN(page)) {
         return 1;
     }
     return page;
 }
-export function failGetStoreList(error){
-    let response=error.response;
+export function failGetStoreList(error) {
+    let response = error.response;
     alert(response.data.message);
 }
-export function changeUrl(url){
-    history.pushState("https://10.150.189.220:3030"+url);
+export function changeUrl(url) {
+    history.pushState("https://10.150.189.220:3030" + url);
 }
 export function getParam(sname) {
     var params = location.search.substr(location.search.indexOf("?") + 1);
     var sval = "";
     params = params.split("&");
     for (var i = 0; i < params.length; i++) {
-       var temp = params[i].split("=");
+        var temp = params[i].split("=");
         if ([temp[0]] == sname) { sval = temp[1]; }
     }
     return sval;
 }
 export function newTokenMessage() {
     return '새토큰이 발급되었습니다';
+}
+export function show400ErrorList(error) {
+    let errors = error.response.data.errors;
+    let data = error.response.data;
+    console.log(errors);
+    console.log(data.message);
+    if (errors == null || errors == undefined) {
+        alert(data.message);
+    } else {
+        for (var i in errors) {
+            alert(errors[i].defaultMessage);
+        }
+    }
+
 }

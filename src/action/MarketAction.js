@@ -1,5 +1,5 @@
 import { requestStoreListAtSimple, requestStoreList, requestStoreInfo } from "@/api/market/MarketApi"
-import { checkNew, failGetStoreList } from "@/assets/js/Jslib";
+import { checkNew, failGetStoreList, show400ErrorList } from "@/assets/js/Jslib";
 
 export default {
     getStoreListSimple(context, page) {
@@ -106,5 +106,9 @@ function doneGetInfo(response, context) {
 }
 function getInfoError(error) {
     let response = error.response;
+    if(response.status==400){
+        show400ErrorList(error);
+        return;
+    }
     alert(response.data.message);
 }

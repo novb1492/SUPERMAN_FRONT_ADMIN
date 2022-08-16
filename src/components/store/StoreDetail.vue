@@ -87,7 +87,7 @@ import KakaoPostCode from '@/components/KakaoPostCode.vue';
 import Ck5Editor from '@/components/Ck5Editor.vue';
 import KakaoMap from '@/components/KakaoMap.vue';
 import { mapActions, mapGetters } from "vuex";
-import { checkNew } from "@/assets/js/Jslib";
+import { checkNew, show400ErrorList } from "@/assets/js/Jslib";
 export default {
     props: ['flag', 'storeInfo'],
     components: { KakaoPostCode, Ck5Editor, KakaoMap },
@@ -314,18 +314,10 @@ export default {
             });
         },
         catchReigError(error) {
-            let errors = error.response.data.errors;
-            let data = error.response.data;
-            console.log(errors);
-            console.log(data.message);
-            if (errors == null || errors == undefined) {
-                alert(data.message);
-            } else {
-                for (var i in errors) {
-                    alert(errors[i].defaultMessage);
-                }
+            let response = error.response;
+            if (response.status == 400) {
+                show400ErrorList(error);
             }
-
         },
         doneInsert() {
             alert('매장등록이 완료 되었습니다');
