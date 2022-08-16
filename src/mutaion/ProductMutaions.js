@@ -31,5 +31,8 @@ export default {
     },
     setEventCount(state,value){
         state.eventCount=value;
+    },
+    setEventCancleCount(state,value){
+        state.eventCancleCount=value;
     }
 }

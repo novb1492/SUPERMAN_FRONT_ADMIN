@@ -14,7 +14,8 @@ export const ProductStore = {
         events:[],
         categorys:null,
         eventFlag:false,
-        eventCount:0
+        eventCount:0,
+        eventCancleCount:0
     },
     getters: {
         getName(state) {
@@ -49,6 +50,9 @@ export const ProductStore = {
         },
         getEventCount(state){
             return state.eventCount;
+        },
+        getEventCancleCount(state){
+            return state.eventCancleCount;
         }
     },
     actions,
