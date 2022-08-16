@@ -34,7 +34,7 @@ export default {
             eventFlag: 'getEventFlag',
             eventCount: 'getEventCount',
             events: 'getEvents',
-            eventCancleCount:'getEventCancleCount'
+            eventCancleCount: 'getEventCancleCount'
         }),
     },
     methods: {
@@ -42,7 +42,7 @@ export default {
             setEvents: 'setEvents',
             setEventCount: 'setEventCount',
             setEventFlag: 'setEventFlag',
-            setEventCancleCount:'setEventCancleCount'
+            setEventCancleCount: 'setEventCancleCount'
         }),
         save() {
             this.flag = true;
@@ -51,7 +51,8 @@ export default {
             event.startDate = this.startDate;
             event.endDate = this.endDate;
             event.name = this.eventName;
-            let eventArr=[];
+            event.price=this.eventPrice;
+            let eventArr = [];
             eventArr = this.events;
             let flag2 = false;
             for (var i in eventArr) {
@@ -73,27 +74,26 @@ export default {
         },
         cancle() {
             document.getElementById('eventInfor' + this.index).hidden = true;
-           let count=this.eventCount;
-           let cancleCount=this.eventCancleCount+1;
-           alert(count-cancleCount);
-           if(count-cancleCount<=0){
-            this.setEventFlag(false);
-            this.setEventCount(0);
-            this.setEventCancleCount(0);
-            this.setEvents([]);
-           }else{
-            this.setEventCancleCount(cancleCount);
-            let eventArr = this.events;
-            for (var i in eventArr) {
-                if (eventArr[i].key == this.index) {
-                    eventArr[i] = [];
-                    this.setEvents(eventArr);
-                    return;
+            let count = this.eventCount;
+            let cancleCount = this.eventCancleCount + 1;
+            if (count - cancleCount <= 0) {
+                this.setEventFlag(false);
+                this.setEventCount(0);
+                this.setEventCancleCount(0);
+                this.setEvents([]);
+            } else {
+                this.setEventCancleCount(cancleCount);
+                let eventArr = this.events;
+                for (var i in eventArr) {
+                    if (eventArr[i].key == this.index) {
+                        eventArr[i] = [];
+                        this.setEvents(eventArr);
+                        return;
+                    }
                 }
             }
-           }
-           
-            
+
+
         }
     }
 
