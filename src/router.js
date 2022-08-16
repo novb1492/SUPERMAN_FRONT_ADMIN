@@ -8,6 +8,7 @@ import RegiEmplPage from "@/views/employee/RegiEmplPage.vue";
 import StoreListPage from "@/views/store/StoreListPage.vue";
 import StoreDetailPage from "@/views/store/StoreDetailPage.vue";
 import RegiCompanyPage from "@/views/company/RegiCompanyPage.vue";
+import RegiProductPage from "@/views/product/RegiProductPage.vue";
 const routes = [
   {
     path: "/",
@@ -57,6 +58,13 @@ const routes = [
     component: RegiCompanyPage,
     beforeEnter: () => {
       checkLogin('/login', '/regi-companynum', 'ADMIN');
+    }
+  },
+  {
+    path: "/regi-product",
+    component: RegiProductPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/regi-product', 'MANGE');
     }
   }
 ];
