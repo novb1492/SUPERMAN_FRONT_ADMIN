@@ -9,12 +9,12 @@
     <div class="originArea">
         <span>원산지</span>
         <br>
-        <input type="text">
+        <input type="text" @input="setOrigin($event.target.value)" :value="origin">
     </div>
     <div class="nameArea">
         <span>상품이름</span>
         <br>
-        <input type="text">
+        <input type="text" @input="setProduct($event.target.value)" :value="tel">
     </div>
     <div class="priceArea">
         <span>가격</span>
@@ -49,10 +49,11 @@
         </span>
         <ProductEvent v-for="(n, index) in eventCount" :key="index" :index="index"></ProductEvent>
     </div>
+    <button @click="save">상품등록</button>
 </template>
 <script>
 import { requestUploadImg } from '@/api/Etc/EtcApi';
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 import { checkNew } from '@/assets/js/Jslib';
 import Ck5Editor from '../Ck5Editor.vue';
 import ProductEvent from './ProductEvent.vue';
@@ -64,7 +65,12 @@ export default {
             categorys: "getCategorys",
             productImgPath: "getProductImgPath",
             eventFlag: 'getEventFlag',
-            eventCount: 'getEventCount'
+            eventCount: 'getEventCount',
+            events: 'getEvents',
+            name: 'getName',
+            origin: 'getOrigin',
+            price: 'getPrice',
+            category: 'getCategory'
         }),
     },
     data() {
@@ -77,11 +83,18 @@ export default {
     },
     methods: {
         ...mapActions("ProductStore", {
-            requestGetCategorys: "requestGetCategorys",
+            requestGetCategorys: "requestGetCategorys"
+        }),
+        ...mapMutations("ProductStore",{
             setProductImgPath: "setProductImgPath",
             setEventFlag: 'setEventFlag',
-            setEventCount: 'setEventCount'
+            setEventCount: 'setEventCount',
+            setEvents: 'setEvents',
+            setEventCancleCount: 'setEventCancleCount'
         }),
+        save() {
+
+        },
         uploadThumbNail() {
             const frm = new FormData();
             frm.append("upload", document.getElementById("img").files[0]);
@@ -113,10 +126,12 @@ export default {
             } else {
                 this.setEventFlag(false);
                 this.setEventCount(0);
+                this.setEventCancleCount(0);
+                this.setEvents([]);
             }
         },
         plus() {
-            let count=this.eventCount+1;
+            let count = this.eventCount + 1;
             this.setEventCount(count);
         }
     },

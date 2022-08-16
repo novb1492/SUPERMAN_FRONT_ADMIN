@@ -17,21 +17,6 @@ export default {
                 errorGet(error);
             }
         });
-    },
-    setProductImgPath(context,value){
-        context.commit('setProductImgPath', value);
-    },
-    setEventFlag(context,value){
-        context.commit('setEventFlag', value);
-    },
-    setEventCount(context,value){
-        context.commit('setEventCount', value);
-    },
-    setEvents(context,value){
-        context.commit('setEvents', value);
-    },
-    setEventCancleCount(context,value){
-        context.commit('setEventCancleCount', value);
     }
 }
 function getDone(context,data) {

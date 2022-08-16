@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 
 
@@ -38,10 +38,11 @@ export default {
         }),
     },
     methods: {
-        ...mapActions("ProductStore", {
-            setEvents: 'setEvents',
-            setEventCount: 'setEventCount',
+        ...mapMutations("ProductStore",{
+            setProductImgPath: "setProductImgPath",
             setEventFlag: 'setEventFlag',
+            setEventCount: 'setEventCount',
+            setEvents: 'setEvents',
             setEventCancleCount: 'setEventCancleCount'
         }),
         save() {
