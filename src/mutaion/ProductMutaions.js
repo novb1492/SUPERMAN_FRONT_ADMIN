@@ -25,5 +25,11 @@ export default {
     },
     setCategorys(state,value) {
         state.categorys=value;
+    },
+    setEventFlag(state,value){
+        state.eventFlag=value;
+    },
+    setEventCount(state,value){
+        state.eventCount=value;
     }
 }

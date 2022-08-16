@@ -13,6 +13,8 @@ export const ProductStore = {
         storeId:null,
         events:[],
         categorys:null,
+        eventFlag:false,
+        eventCount:0
     },
     getters: {
         getName(state) {
@@ -42,6 +44,12 @@ export const ProductStore = {
         getCategorys(state) {
             return state.categorys;
         },
+        getEventFlag(state){
+            return state.eventFlag;
+        },
+        getEventCount(state){
+            return state.eventCount;
+        }
     },
     actions,
     mutations,
