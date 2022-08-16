@@ -64,7 +64,7 @@ const routes = [
     path: "/regi-product",
     component: RegiProductPage,
     beforeEnter: () => {
-      checkLogin('/login', '/regi-product', 'MANGE');
+      checkLogin('/login', '/regi-product?storeid='+getParam('storeid'), 'MANGE');
     }
   }
 ];

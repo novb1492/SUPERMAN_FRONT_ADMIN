@@ -14,14 +14,14 @@
     <div class="nameArea">
         <span>상품이름</span>
         <br>
-        <input type="text" @input="setProduct($event.target.value)" :value="tel">
+        <input type="text" @input="setName($event.target.value)" :value="name">
     </div>
     <div class="priceArea">
         <span>가격</span>
         <br>
-        <input type="text" placeholder="단위문자는,입니다">
+        <input type="text" placeholder="단위문자는,입니다" @input="setPrice($event.target.value)" :value="price">
     </div>
-    <Ck5Editor :idName="'productText'"></Ck5Editor>
+    <Ck5Editor :idName="'productText'" ref="editor"></Ck5Editor>
     <div class="categoryArea" v-if="flag == false">
         <select name="pets" id="pet-select" v-model="category">
             <option :value="cate.id" v-for="(cate, index) in categorys" :key="index">
@@ -70,12 +70,12 @@ export default {
             name: 'getName',
             origin: 'getOrigin',
             price: 'getPrice',
-            category: 'getCategory'
+            introduce:'getIntroduce'
         }),
     },
     data() {
         return {
-            num: 0,
+            category:null,
         }
     },
     mounted() {
@@ -85,15 +85,28 @@ export default {
         ...mapActions("ProductStore", {
             requestGetCategorys: "requestGetCategorys"
         }),
-        ...mapMutations("ProductStore",{
+        ...mapMutations("ProductStore", {
             setProductImgPath: "setProductImgPath",
             setEventFlag: 'setEventFlag',
             setEventCount: 'setEventCount',
             setEvents: 'setEvents',
-            setEventCancleCount: 'setEventCancleCount'
+            setEventCancleCount: 'setEventCancleCount',
+            setOrigin:'setOrigin',
+            setName:'setName',
+            setPrice:'setPrice'
         }),
         save() {
-
+            let data = JSON.stringify({
+                "category":this.category,
+                "origin":this.origin,
+                "introduce":this.$refs.editor.getText(),
+                "productImgPath":this.productImgPath,
+                "price":this.price,
+                "name":this.name,
+                "id":this.$route.query.storeid,
+                "events":this.events
+            });
+            this.$store.dispatch('ProductStore/requestProductSave', data);
         },
         uploadThumbNail() {
             const frm = new FormData();

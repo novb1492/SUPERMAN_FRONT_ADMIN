@@ -1,8 +1,8 @@
 <template>
     <div :id="'eventInfor' + index" class="eventInfor">
-        이벤트시작일<input type="date" v-model="startDate" :disabled="flag" />
+        이벤트시작일<input type="datetime-local" v-model="startDate" :disabled="flag" />
         <br>
-        이벤트종료일<input type="date" v-model="endDate" :disabled="flag" />
+        이벤트종료일<input type="datetime-local" v-model="endDate" :disabled="flag" />
         <br>
         이벤트이름<input type="text" v-model="eventName" :disabled="flag" />
         <br>
