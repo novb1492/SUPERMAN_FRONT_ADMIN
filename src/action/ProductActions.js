@@ -26,6 +26,9 @@ export default {
     },
     setEventCount(context,value){
         context.commit('setEventCount', value);
+    },
+    setEvents(context,value){
+        context.commit('setEvents', value);
     }
 }
 function getDone(context,data) {

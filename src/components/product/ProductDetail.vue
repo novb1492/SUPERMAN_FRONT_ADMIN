@@ -47,7 +47,7 @@
         <span v-else>
             진행함<input type="checkbox" value="1" id="eventCheck" class="eventCheck" @change="doEvent">
         </span>
-        <ProductEvent v-for="(n, index) in eventCount" :key="index"></ProductEvent>
+        <ProductEvent v-for="(n, index) in eventCount" :key="index" :index="index"></ProductEvent>
     </div>
 </template>
 <script>
