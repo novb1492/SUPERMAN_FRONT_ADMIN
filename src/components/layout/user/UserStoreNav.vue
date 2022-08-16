@@ -6,8 +6,8 @@
 </template>
 
 <script>
-import OrderNav from '@/components/layout/storeManu/OrderNav.vue';
-import DeliverNav from "@/components/layout/storeManu/DeliverNav.vue";
+import OrderNav from '@/components/layout/storeMenu/OrderNav.vue';
+import DeliverNav from "@/components/layout/storeMenu/DeliverNav.vue";
 import ShowState from '../ShowState.vue';
 import ProductNav from '../storeMenu/ProductNav.vue';
 export default {
