@@ -5,7 +5,7 @@
             직원관리
         </a>
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="javascript:void();" @click="goRegiEmpl" v-if="role=='ADMIN'">직원등록</a></li>
+            <li><a class="dropdown-item" href="javascript:void();" @click="goRegiEmpl" v-if="role=='ADMIN' ||role=='MANAGE'">직원등록</a></li>
             <li><a class="dropdown-item" href="javascript:void();" @click="goRegiEmpl">직원조회</a></li>
         </ul>
     </li>
