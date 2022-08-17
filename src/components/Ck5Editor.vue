@@ -4,6 +4,7 @@
 <script>
 import MyUploadAdapter from "@/assets/js/MyUploadAdapter.js";
 import { markRaw } from 'vue';
+import { checkParam } from '@/assets/js/Jslib';
 
 function MyCustomUploadAdapterPlugin(editor) {
   editor.plugins.get('FileRepository').createUploadAdapter = (loader) => {
@@ -37,6 +38,9 @@ export default {
       return this.editor.getData();
     },
     setText(text){
+      if(checkParam(text)){
+        text='';
+      }
       this.editor.setData(text);
     }
   }
