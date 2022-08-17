@@ -114,3 +114,9 @@ export function show400ErrorList(error) {
     }
 
 }
+export function showStoreInfo(arr,storeName,changeShowMarketInfo) {
+    let data=new Object;
+    data.addr = arr;
+    data.name = storeName;
+    changeShowMarketInfo(data);
+}

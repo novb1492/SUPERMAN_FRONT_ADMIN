@@ -6,7 +6,8 @@ export const NavStore = {
     state: {
         situation: 0,
         loginFlag: sessionStorage.getItem('loginFlag'),
-        info:localStorage.getItem('info')
+        info:localStorage.getItem('info'),
+        showMarketInfo:null,
     },
     getters: {
         getSituation(state) {
@@ -21,6 +22,9 @@ export const NavStore = {
             }catch{
                 return null;
             }
+        },
+        getShowMarketInfo(state){
+            return state.showMarketInfo;
         }
     },
     mutations,

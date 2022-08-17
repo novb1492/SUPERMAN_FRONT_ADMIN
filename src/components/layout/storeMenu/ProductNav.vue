@@ -25,10 +25,10 @@ export default {
     },
     methods:{
         goRegiProduct(){
-            location.href='/regi-product?storeid='+this.$route.query.id;
+            location.href='/regi-product?storeid='+this.$route.query.id+'&storeName='+this.$route.query.storeName+'&addr='+this.$route.query.addr;
         },
         goProductList(){
-            location.href='/product-list?page=1&category=all&storeid='+this.$route.query.id;
+            location.href='/product-list?page=1&category=all&storeid='+this.$route.query.id+'&storeName='+this.$route.query.storeName+'&addr='+this.$route.query.addr;
         }
     }
 }

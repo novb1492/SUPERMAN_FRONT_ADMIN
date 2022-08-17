@@ -5,4 +5,7 @@ export default {
     changeLoginFlag(state, data) {
         sessionStorage.setItem('loginFlag', data);
     },
+    changeShowMarketInfo(state,data){
+        state.showMarketInfo=data;
+    }
 }
