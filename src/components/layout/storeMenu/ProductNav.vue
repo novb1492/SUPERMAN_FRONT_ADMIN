@@ -7,7 +7,7 @@
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="javascript:void();" @click="goRegiProduct" v-if="role != 'USER'">상품등록</a>
             </li>
-            <li><a class="dropdown-item" href="javascript:void();" @click="goStoreList">상품조회</a></li>
+            <li><a class="dropdown-item" href="javascript:void();" @click="goProductList">상품조회</a></li>
         </ul>
     </li>
 </template>
@@ -26,6 +26,9 @@ export default {
     methods:{
         goRegiProduct(){
             location.href='/regi-product?storeid='+this.$route.query.id;
+        },
+        goProductList(){
+            location.href='/product-list?page=1&category=all&storeid='+this.$route.query.id;
         }
     }
 }

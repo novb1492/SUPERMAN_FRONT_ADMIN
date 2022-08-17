@@ -87,7 +87,7 @@ export default {
                 let eventArr = this.events;
                 for (var i in eventArr) {
                     if (eventArr[i].key == this.index) {
-                        eventArr[i] = [];
+                        eventArr.splice(i,1);
                         this.setEvents(eventArr);
                         return;
                     }
