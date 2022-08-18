@@ -24,8 +24,8 @@
   </div>
   <div class="pagingContainer">
     <div class="pagingbox">
-      <button @click="nextStore(1)" :disabled="last">다음</button>
-      <button @click="nextStore(-1)" :disabled="first">이전</button>
+      <button @click="nextProduct(1)" :disabled="last">다음</button>
+      <button @click="nextProduct(-1)" :disabled="first">이전</button>
     </div>
     <div class="pagingbox">
       {{ nowPage }}/{{ totalPage }}
@@ -47,10 +47,7 @@ import { mapGetters, mapMutations } from 'vuex';
 export default {
   mounted() {
     this.$store.dispatch('NavStore/changeSituation', 1);
-    let url = '/user/product/list/' + this.$route.query.storeid + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.page;
-    let changeUrl='/product-list?storeid=' + this.$route.query.storeid + '&page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.page;
-    this.$store.dispatch('basicStore/getInfolist', {url:url,changeUrl:changeUrl,router:this.$router});
-    showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
+    this.requestGet();
   },
   computed: {
     ...mapGetters('basicStore', {
@@ -61,22 +58,32 @@ export default {
       totalPage: 'getTotalPage'
     })
   },
+  watch: {
+    '$route'() {
+      this.requestGet();
+    }
+  },
   methods: {
+    requestGet() {
+      let url = '/user/product/list/' + this.$route.query.storeid + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.page;
+      let changeUrl = '/product-list?storeid=' + this.$route.query.storeid + '&page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.page;
+      this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl });
+      showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
+    },
     ...mapMutations("NavStore", {
       changeShowMarketInfo: "changeShowMarketInfo",
     }),
-    nextStore(num) {
+    nextProduct(num) {
       let page = (this.$route.query.page * 1) + num;
       let keyword = this.getKeyword();
       let category = this.$route.query.category;
-      let url = '/user/product/list/' + this.$route.query.storeid + '?page=' + page + '&category=' + category + '&val=' + keyword;
-      let changeUrl='/product-list?storeid=' + this.$route.query.storeid + '&page=' + page + '&category=' + category + '&val=' + keyword;
-      this.$store.dispatch('basicStore/getInfolist', {url:url,changeUrl:changeUrl,router:this.$router});
+      let changeUrl = '/product-list?storeid=' + this.$route.query.storeid + '&page=' + page + '&category=' + category + '&val=' + keyword + '&addr=' + this.$route.query.addr + '&storeName=' + this.$route.query.storeName;
+      this.$router.push(changeUrl);
     },
     getKeyword() {
       let keyword = null;
-      if (!checkParam(this.$route.query.keyword)) {
-        keyword = this.$route.query.keyword;
+      if (!checkParam(this.$route.query.val)) {
+        keyword = this.$route.query.val;
       }
       return keyword;
     },

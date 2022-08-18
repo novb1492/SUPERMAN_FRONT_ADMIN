@@ -46,6 +46,11 @@ export default {
             storeName: null
         }
     },
+    watch: {
+        '$route'() {
+            this.requestGet();
+        }
+    },
     computed: {
         ...mapGetters('basicStore', {
             infoList: 'getInfoList',
@@ -56,21 +61,20 @@ export default {
         })
     },
     mounted() {
-        let page = checkPage(this.$route.query.page);
-        let url = '/manage/store/regi/list?page=' + page;
-        let changeUrl = '/regi-employee?page=' + page;
-        this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl, router: this.$router });
-        this.$store.dispatch('NavStore/changeSituation', 0);
-
+        this.requestGet();
     },
     methods: {
-        nextStore(num) {
-            let page = (this.$route.query.page * 1) + num;
+        requestGet() {
+            let page = checkPage(this.$route.query.page);
             let url = '/manage/store/regi/list?page=' + page;
             let changeUrl = '/regi-employee?page=' + page;
-            this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl, router: this.$router });
+            this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl });
             this.$store.dispatch('NavStore/changeSituation', 0);
-
+        },
+        nextStore(num) {
+            let page = (this.$route.query.page * 1) + num;
+            let changeUrl = '/regi-employee?page=' + page;
+            this.$router.push(changeUrl);
         },
         select(storeid, storename) {
             this.storeId = storeid;

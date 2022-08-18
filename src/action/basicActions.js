@@ -27,13 +27,13 @@ export default {
     },
     getInfolist(context, payload) {
         requestListInfo(payload.url).then(response => {
-            getDone(context,payload,response);
+            getDone(context,response);
         }).catch(error => {
             let response = error.response;
             let responseData = response.data;
             if (checkNew(response.status, responseData.message)) {
                 requestListInfo(payload.url).then(response => {
-                    getDone(context,payload,response);
+                    getDone(context,response);
                 }).catch(() => {
                     alert('정보를 불러오는데 실패했습니다');
                 });
@@ -43,7 +43,6 @@ export default {
         });
     }
 }
-function getDone(context,payload,response) {
-    payload.router.push(payload.changeUrl);
+function getDone(context,response) {
     context.commit('changePaginList', response.data);
 }

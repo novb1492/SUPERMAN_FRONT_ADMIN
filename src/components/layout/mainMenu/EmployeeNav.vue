@@ -22,7 +22,7 @@ export default {
     },
     methods: {
          goRegiEmpl(){
-            location.href='/regi-employee';
+            location.href='/regi-employee?page=1';
         }
     },
 }

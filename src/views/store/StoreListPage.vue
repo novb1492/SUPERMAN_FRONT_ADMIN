@@ -48,7 +48,13 @@ export default {
     data() {
         return {
             category: 'name',
-            keyword: null
+            keyword: null,
+            flag:true
+        }
+    },
+    watch: {
+        '$route'() {
+            this.requestGet();
         }
     },
     computed: {
@@ -64,15 +70,18 @@ export default {
         })
     },
     mounted() {
-        let keyword = this.getKeyword();
-        let category = this.$route.query.category;
-        let page = checkPage(this.$route.query.page);
-        let url = '/store/list?page=' + page + '&keyword=' + keyword + '&category=' + category;
-        let changeUrl = '/store-list?page=' + page + '&keyword=' + keyword + '&category=' + category;
-        this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl, router: this.$router });
-        this.$store.dispatch('NavStore/changeSituation', 0);
+        this.requestGet();
     },
     methods: {
+        requestGet() {
+            let keyword = this.getKeyword();
+            let category = this.$route.query.category;
+            let page = checkPage(this.$route.query.page);
+            let url = '/store/list?page=' + page + '&keyword=' + keyword + '&category=' + category;
+            let changeUrl = '/store-list?page=' + page + '&keyword=' + keyword + '&category=' + category;
+            this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl});
+            this.$store.dispatch('NavStore/changeSituation', 0);
+        },
         goDetailPage(storeId) {
             location.href = '/store-detail?storeid=' + storeId;
         },
@@ -80,9 +89,8 @@ export default {
             let page = (this.$route.query.page * 1) + num;
             let keyword = this.getKeyword();
             let category = this.$route.query.category;
-            let url = '/store/list?page=' + page + '&keyword=' + keyword + '&category=' + category;
             let changeUrl = '/store-list?page=' + page + '&keyword=' + keyword + '&category=' + category;
-            this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl, router: this.$router });
+            this.$router.push(changeUrl);
         },
         getKeyword() {
             let keyword = null;
@@ -92,9 +100,8 @@ export default {
             return keyword;
         },
         search() {
-            let url = '/store/list?page=1&keyword=' + this.keyword + '&category=' + this.category;
             let changeUrl = '/store-list?page=1&keyword=' + this.keyword + '&category=' + this.category;
-            this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl, router: this.$router });
+            this.$router.push(changeUrl);        
         }
     }
 }
