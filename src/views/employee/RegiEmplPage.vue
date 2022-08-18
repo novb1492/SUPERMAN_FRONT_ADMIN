@@ -2,7 +2,7 @@
     <div class="row" style="margin-top: 70px;">
         <div class="col">
             <ul>
-                <li v-for="(store, index) in storeList" :key="index">
+                <li v-for="(store, index) in infoList" :key="index">
                     <button @click="select(store.id, store.name)">
                         <p>매장명:{{ store.name }}</p>
                         <p>주소:{{ store.address }}</p>
@@ -47,8 +47,8 @@ export default {
         }
     },
     computed: {
-        ...mapGetters('MarketStore', {
-            storeList: 'getStoreList',
+        ...mapGetters('basicStore', {
+            infoList: 'getInfoList',
             last: 'getLast',
             first: 'getFirst',
             nowPage: 'getNowPage',
@@ -57,16 +57,20 @@ export default {
     },
     mounted() {
         let page = checkPage(this.$route.query.page);
-        this.$store.dispatch('MarketStore/getStoreListSimple', page);
-
+        let url = '/manage/store/regi/list?page=' + page;
+        let changeUrl = '/regi-employee?page=' + page;
+        this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl, router: this.$router });
         this.$store.dispatch('NavStore/changeSituation', 0);
 
     },
     methods: {
         nextStore(num) {
             let page = (this.$route.query.page * 1) + num;
-            this.$router.push('/regi-employee?page=' + page);
-            this.$store.dispatch('MarketStore/getStoreListSimple', page);
+            let url = '/manage/store/regi/list?page=' + page;
+            let changeUrl = '/regi-employee?page=' + page;
+            this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl, router: this.$router });
+            this.$store.dispatch('NavStore/changeSituation', 0);
+
         },
         select(storeid, storename) {
             this.storeId = storeid;
