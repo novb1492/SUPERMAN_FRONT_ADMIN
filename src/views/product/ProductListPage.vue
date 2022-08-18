@@ -32,8 +32,9 @@
     </div>
     <div class="pagingbox">
       <select name="pets" id="pet-select" v-model="category">
-        <option value="name">이름</option>
-        <option value="addr">주소</option>
+        <option :value="cate.id" v-for="(cate, index) in categorys" :key="index">
+          {{ cate.name }}
+        </option>
       </select>
       <input type="text" v-model="keyword">
       <input type="button" value="검색" @click="search" />
@@ -43,11 +44,18 @@
 
 <script>
 import { checkParam, showStoreInfo } from '@/assets/js/Jslib';
-import { mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
   mounted() {
     this.$store.dispatch('NavStore/changeSituation', 1);
     this.requestGet();
+    this.requestGetCategorys();
+  },
+  data() {
+    return {
+      category: null,
+      keyword:null
+    }
   },
   computed: {
     ...mapGetters('basicStore', {
@@ -56,6 +64,9 @@ export default {
       first: 'getFirst',
       nowPage: 'getNowPage',
       totalPage: 'getTotalPage'
+    }),
+    ...mapGetters("ProductStore", {
+      categorys: "getCategorys"
     })
   },
   watch: {
@@ -63,9 +74,20 @@ export default {
       this.requestGet();
     }
   },
+
   methods: {
+    search() {
+      let page = 1;
+      let keyword = this.keyword;
+      let category = this.category;
+      let changeUrl = '/product-list?storeid=' + this.$route.query.storeid + '&page=' + page + '&category=' + category + '&val=' + keyword + '&addr=' + this.$route.query.addr + '&storeName=' + this.$route.query.storeName;
+      this.$router.push(changeUrl);
+    },
+    ...mapActions("ProductStore", {
+      requestGetCategorys: "requestGetCategorys"
+    }),
     requestGet() {
-      let url = '/user/product/list/' + this.$route.query.storeid + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.page;
+      let url = '/user/product/list/' + this.$route.query.storeid + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.val;
       this.$store.dispatch('basicStore/getInfolist', { url: url });
       showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
     },
