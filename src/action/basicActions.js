@@ -1,6 +1,6 @@
 import { requestListInfo } from "@/api/Etc/EtcApi";
 import {requestLogin  } from "@/api/login/loginApi";
-import {  setToken,setInfo, checkNew} from "@/assets/js/Jslib";
+import {  setToken,setInfo, checkNew, show400ErrorList} from "@/assets/js/Jslib";
 export default {
     requestLogin(context,payload) {
         console.log(payload);
@@ -35,15 +35,24 @@ export default {
             if (checkNew(response.status, responseData.message)) {
                 requestListInfo(payload.url).then(response => {
                     getDone(context,response);
-                }).catch(() => {
-                    alert('정보를 불러오는데 실패했습니다');
+                }).catch(error => {
+                    errorGet(error);
                 });
             } else {
-                alert('정보를 불러오는데 실패했습니다');
+                errorGet(error);
             }
         });
     }
 }
 function getDone(context,response) {
     context.commit('changePaginList', response.data);
+}
+function errorGet(error) {
+    let response = error.response;
+    if(response.status==400){
+        show400ErrorList(error);
+        return;
+    }
+    alert('정보를 불러오는데 실패했습니다');
+    
 }
