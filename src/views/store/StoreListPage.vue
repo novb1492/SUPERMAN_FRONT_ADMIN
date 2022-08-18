@@ -78,8 +78,17 @@ export default {
             let category = this.$route.query.category;
             let page = checkPage(this.$route.query.page);
             let url = '/store/list?page=' + page + '&keyword=' + keyword + '&category=' + category;
+            this.showSearchInfoIfHave(keyword,category);
             this.$store.dispatch('basicStore/getInfolist', { url: url});
             this.$store.dispatch('NavStore/changeSituation', 0);
+        },
+        showSearchInfoIfHave(keyword,category){
+            if(!checkParam(keyword)){
+                this.keyword=keyword;
+            }
+            if(!checkParam(category)){
+                this.category=category;
+            }
         },
         goDetailPage(storeId) {
             location.href = '/store-detail?storeid=' + storeId;
