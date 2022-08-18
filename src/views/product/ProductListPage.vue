@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { checkParam, showStoreInfo } from '@/assets/js/Jslib';
+import { checkParam } from '@/assets/js/Jslib';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
   mounted() {
@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       category: null,
-      keyword:null
+      keyword: null
     }
   },
   computed: {
@@ -89,7 +89,15 @@ export default {
     requestGet() {
       let url = '/user/product/list/' + this.$route.query.storeid + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.val;
       this.$store.dispatch('basicStore/getInfolist', { url: url });
-      showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
+      this.showSearchInfoIfHave(this.$route.query.val, this.$route.query.category);
+    },
+    showSearchInfoIfHave(keyword, category) {
+      if (!checkParam(keyword)) {
+        this.keyword = keyword;
+      }
+      if (!checkParam(category)) {
+        this.category = category;
+      }
     },
     ...mapMutations("NavStore", {
       changeShowMarketInfo: "changeShowMarketInfo",
