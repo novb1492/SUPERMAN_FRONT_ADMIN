@@ -66,8 +66,7 @@ export default {
   methods: {
     requestGet() {
       let url = '/user/product/list/' + this.$route.query.storeid + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.page;
-      let changeUrl = '/product-list?storeid=' + this.$route.query.storeid + '&page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.page;
-      this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl });
+      this.$store.dispatch('basicStore/getInfolist', { url: url });
       showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
     },
     ...mapMutations("NavStore", {

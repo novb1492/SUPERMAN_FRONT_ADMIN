@@ -67,8 +67,7 @@ export default {
         requestGet() {
             let page = checkPage(this.$route.query.page);
             let url = '/manage/store/regi/list?page=' + page;
-            let changeUrl = '/regi-employee?page=' + page;
-            this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl });
+            this.$store.dispatch('basicStore/getInfolist', { url: url });
             this.$store.dispatch('NavStore/changeSituation', 0);
         },
         nextStore(num) {

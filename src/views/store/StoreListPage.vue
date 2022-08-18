@@ -78,8 +78,7 @@ export default {
             let category = this.$route.query.category;
             let page = checkPage(this.$route.query.page);
             let url = '/store/list?page=' + page + '&keyword=' + keyword + '&category=' + category;
-            let changeUrl = '/store-list?page=' + page + '&keyword=' + keyword + '&category=' + category;
-            this.$store.dispatch('basicStore/getInfolist', { url: url, changeUrl: changeUrl});
+            this.$store.dispatch('basicStore/getInfolist', { url: url});
             this.$store.dispatch('NavStore/changeSituation', 0);
         },
         goDetailPage(storeId) {
