@@ -76,7 +76,7 @@ const routes = [
       if(checkParam(category)){
         category='0';
       }
-      checkLogin('/login', '/product-list*page=1&category='+category+'&storeid='+getParam('storeid'), 'USER');
+      checkLogin('/login', '/product-list*page=1^category='+category+'^storeid='+getParam('storeid'), 'USER');
     }
   }
 ];
