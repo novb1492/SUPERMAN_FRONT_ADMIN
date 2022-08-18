@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         goDetailPage(storeId) {
-            location.href = '/store-detail?id=' + storeId;
+            location.href = '/store-detail?storeid=' + storeId;
         },
         nextStore(num) {
             let page = (this.$route.query.page * 1) + num;

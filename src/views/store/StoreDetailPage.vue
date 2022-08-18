@@ -8,7 +8,7 @@
 import StoreDetail from '@/components/store/StoreDetail.vue';
 export default {
     beforeCreate() {
-        this.$store.dispatch('MarketStore/getStoreInfo', { id: this.$route.query.id });
+        this.$store.dispatch('MarketStore/getStoreInfo', { id: this.$route.query.storeid });
         this.$store.dispatch('NavStore/changeSituation', 1);
     },
     components: { StoreDetail }

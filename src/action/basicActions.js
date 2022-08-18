@@ -1,5 +1,6 @@
+import { requestListInfo } from "@/api/Etc/EtcApi";
 import {requestLogin  } from "@/api/login/loginApi";
-import {  setToken,setInfo} from "@/assets/js/Jslib";
+import {  setToken,setInfo, checkNew} from "@/assets/js/Jslib";
 export default {
     requestLogin(context,payload) {
         console.log(payload);
@@ -22,6 +23,23 @@ export default {
             let resposne=error.response;
             let data=resposne.data.data;
             alert(data.message);
+        });
+    },
+    getInfolist(context, url) {
+        requestListInfo(url).then(response => {
+            context.commit('changePaginList', response.data);
+        }).catch(error => {
+            let response = error.response;
+            let responseData = response.data;
+            if (checkNew(response.status, responseData.message)) {
+                requestListInfo(url).then(response => {
+                    context.commit('changePaginList', response.data);
+                }).catch(() => {
+                    alert('정보를 불러오는데 실패했습니다');
+                });
+            } else {
+                alert('정보를 불러오는데 실패했습니다');
+            }
         });
     }
 }
