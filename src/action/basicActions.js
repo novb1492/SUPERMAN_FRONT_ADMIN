@@ -18,7 +18,8 @@ export default {
                 location.href='/';
                 return;
             }
-            location.href=nextUrl;
+            let url=nextUrl.replace('*','?');
+            location.href=url.replaceAll('^','&');
         }).catch(error=>{
             let resposne=error.response;
             let data=resposne.data.data;
