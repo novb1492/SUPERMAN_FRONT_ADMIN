@@ -48,7 +48,8 @@ export default {
   mounted() {
     this.$store.dispatch('NavStore/changeSituation', 1);
     let url = '/user/product/list/' + this.$route.query.storeid + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.page;
-    this.$store.dispatch('basicStore/getInfolist', url);
+    let changeUrl='/product-list?storeid=' + this.$route.query.storeid + '&page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.page;
+    this.$store.dispatch('basicStore/getInfolist', {url:url,changeUrl:changeUrl,router:this.$router});
     showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
   },
   computed: {
@@ -69,8 +70,8 @@ export default {
       let keyword = this.getKeyword();
       let category = this.$route.query.category;
       let url = '/user/product/list/' + this.$route.query.storeid + '?page=' + page + '&category=' + category + '&val=' + keyword;
-      this.$router.push('/product-list?storeid=' + this.$route.query.storeid + '&page=' + page + '&category=' + category + '&val=' + keyword);
-      this.$store.dispatch('basicStore/getInfolist', url);
+      let changeUrl='/product-list?storeid=' + this.$route.query.storeid + '&page=' + page + '&category=' + category + '&val=' + keyword;
+      this.$store.dispatch('basicStore/getInfolist', {url:url,changeUrl:changeUrl,router:this.$router});
     },
     getKeyword() {
       let keyword = null;

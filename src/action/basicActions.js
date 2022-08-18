@@ -25,15 +25,15 @@ export default {
             alert(data.message);
         });
     },
-    getInfolist(context, url) {
-        requestListInfo(url).then(response => {
-            context.commit('changePaginList', response.data);
+    getInfolist(context, payload) {
+        requestListInfo(payload.url).then(response => {
+            getDone(context,payload,response);
         }).catch(error => {
             let response = error.response;
             let responseData = response.data;
             if (checkNew(response.status, responseData.message)) {
-                requestListInfo(url).then(response => {
-                    context.commit('changePaginList', response.data);
+                requestListInfo(payload.url).then(response => {
+                    getDone(context,payload,response);
                 }).catch(() => {
                     alert('정보를 불러오는데 실패했습니다');
                 });
@@ -42,4 +42,8 @@ export default {
             }
         });
     }
+}
+function getDone(context,payload,response) {
+    payload.router.push(payload.changeUrl);
+    context.commit('changePaginList', response.data);
 }
