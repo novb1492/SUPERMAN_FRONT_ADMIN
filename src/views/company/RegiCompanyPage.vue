@@ -29,6 +29,9 @@ export default {
       date: null
     }
   },
+  mounted(){
+    this.$store.dispatch('NavStore/changeSituation', 0);
+  },
   methods: {
     tryInsert() {
       let requestdata = JSON.stringify({

@@ -70,6 +70,7 @@ export default {
         })
     },
     mounted() {
+        this.$store.dispatch('NavStore/changeSituation', 0);
         this.requestGet();
     },
     methods: {
@@ -80,7 +81,6 @@ export default {
             let url = '/store/list?page=' + page + '&keyword=' + keyword + '&category=' + category;
             this.showSearchInfoIfHave(keyword,category);
             this.$store.dispatch('basicStore/getInfolist', { url: url});
-            this.$store.dispatch('NavStore/changeSituation', 0);
         },
         showSearchInfoIfHave(keyword,category){
             if(!checkParam(keyword)){

@@ -61,6 +61,7 @@ export default {
         })
     },
     mounted() {
+        this.$store.dispatch('NavStore/changeSituation', 0);
         this.requestGet();
     },
     methods: {
@@ -68,7 +69,6 @@ export default {
             let page = checkPage(this.$route.query.page);
             let url = '/manage/store/regi/list?page=' + page;
             this.$store.dispatch('basicStore/getInfolist', { url: url });
-            this.$store.dispatch('NavStore/changeSituation', 0);
         },
         nextStore(num) {
             let page = (this.$route.query.page * 1) + num;
