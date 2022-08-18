@@ -43,11 +43,12 @@
 </template>
 
 <script>
-import { checkParam } from '@/assets/js/Jslib';
+import { checkParam, showStoreInfo } from '@/assets/js/Jslib';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
   mounted() {
     this.$store.dispatch('NavStore/changeSituation', 1);
+    showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
     this.requestGet();
     this.requestGetCategorys();
   },
