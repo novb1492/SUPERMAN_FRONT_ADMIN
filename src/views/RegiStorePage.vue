@@ -11,6 +11,7 @@ export default {
     name: "RegiStorePage",
     mounted() {
         this.$store.dispatch("NavStore/changeSituation", 0);
+        this.$store.dispatch('MarketStore/requestGetCompanyNumAll');
     },
     components: { StoreDetail }
 }

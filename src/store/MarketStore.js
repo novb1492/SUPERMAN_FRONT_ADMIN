@@ -18,8 +18,12 @@ export const MarketStore = {
         storeId: null,
         radius: null,
         randDone:false,
+        companynums:[]
     },
     getters: {
+        getCompanynums(state) {
+            return state.companynums;
+        },
         getRandDone(state) {
             return state.randDone;
         },

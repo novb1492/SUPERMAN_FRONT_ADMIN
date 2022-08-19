@@ -70,8 +70,11 @@
             <button id="telCancle" @click="activateCancle('tel')" hidden>취소</button>
             <br>
             <span>사업자번호</span>
-            <input type="text" class="ml80 mt-2" id="companynum" @input="setCompanynum($event.target.value)"
-                :value="companynum" :disabled="flag">
+            <select name="pets" id="pet-select" @input="setCompanynum($event.target.value)" :value="companynum" :disabled="flag">
+                <option :value="company.id" v-for="(company, index) in companynums" :key="index">
+                    {{ company.companyNum }}
+                </option>
+            </select>
             <button id="companynumTry" @click="activate('companynum')" v-if="flag">수정</button>
             <button id="companynumConfrim" hidden>확인</button>
             <button id="companynumCancle" @click="activateCancle('companynum')" hidden>취소</button>
@@ -103,7 +106,7 @@ export default {
             data.addr = this.addr;
             data.postcode = this.postcode;
             this.resultPost(data);
-            showStoreInfo(this.addr,this.name, this.changeShowMarketInfo);
+            showStoreInfo(this.addr, this.name, this.changeShowMarketInfo);
         }
     },
     data() {
@@ -133,7 +136,8 @@ export default {
             name: 'getName',
             storeId: 'getStoreId',
             radius: 'getRadius',
-            randDone: 'getRandDone'
+            randDone: 'getRandDone',
+            companynums: 'getCompanynums'
         }),
         ...mapGetters('NavStore', {
             role: 'getRole'
@@ -143,6 +147,9 @@ export default {
     methods: {
         ...mapMutations("NavStore", {
             changeShowMarketInfo: "changeShowMarketInfo",
+        }),
+        ...mapActions("MarketStore", {
+            requestGetCompanyNumAll: 'requestGetCompanyNumAll'
         }),
         activate(kind) {
             if (kind === 'storeName') {
@@ -283,7 +290,6 @@ export default {
                 fillColor: '#CFE7FF', // 채우기 색깔입니다
                 fillOpacity: 0.7  // 채우기 불투명도 입니다   
             });
-            console.log(this.circle);
             this.circle.setMap(this.map);
         },
         regiStore() {
@@ -301,7 +307,6 @@ export default {
                 "name": this.name,
                 "companyNum": this.companynum
             });
-            console.log(data);
             requestStoreInsert(data).then(() => {
                 this.doneInsert();
             }).catch(error => {

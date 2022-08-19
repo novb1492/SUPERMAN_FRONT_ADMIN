@@ -53,5 +53,10 @@ export default {
         state.radius=data.maxDeliverRadius;
         state.companynum=data.companyNum;
         state.randDone=true;
-    }
+        state.companynums=data.companyNums;
+    },
+    changeCompanynums(state,value) {
+        state.companynums=value;
+    },
+    
 }
