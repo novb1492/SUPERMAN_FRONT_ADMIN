@@ -10,6 +10,7 @@ import StoreDetailPage from "@/views/store/StoreDetailPage.vue";
 import RegiCompanyPage from "@/views/company/RegiCompanyPage.vue";
 import RegiProductPage from "@/views/product/RegiProductPage.vue";
 import ProductListPage from "@/views/product/ProductListPage.vue";
+import CompanyListPage from "@/views/company/CompanyListPage.vue";
 const routes = [
   {
     path: "/",
@@ -44,14 +45,14 @@ const routes = [
     path: "/store-list",
     component: StoreListPage,
     beforeEnter: () => {
-      checkLogin('/login', '/store-list*page=1^category='+getParam('category')+'^keyword='+getParam('keyword'), 'USER');
+      checkLogin('/login', '/store-list*page='+getParam('page')+'^category='+getParam('category')+'^keyword='+getParam('keyword'), 'USER');
     }
   },
   {
     path: "/store-detail",
     component: StoreDetailPage,
     beforeEnter: () => {
-      checkLogin('/login', '/store-detail*id='+getParam('id'), 'USER');
+      checkLogin('/login', '/store-detail*id='+getParam('id')+ '^storeName=' + getParam('storeName') + '^addr=' + getParam('addr'), 'USER');
     }
   },
   {
@@ -76,18 +77,14 @@ const routes = [
       if(checkParam(category)){
         category='0';
       }
-      checkLogin('/login', '/product-list*page=1^category='+category+'^storeid='+getParam('storeid'), 'USER');
+      checkLogin('/login', '/product-list*page='+getParam('page')+'^category='+category+'^storeid='+getParam('storeid')+ '^storeName=' + getParam('storeName') + '^addr=' + getParam('addr'), 'USER');
     }
   },
   {
-    path: "/product-list",
-    component: ProductListPage,
+    path: "/company-list",
+    component: CompanyListPage,
     beforeEnter: () => {
-      let category=getParam('category');
-      if(checkParam(category)){
-        category='all';
-      }
-      checkLogin('/login', '/product-list?page=1&category='+category+'&storeid='+getParam('storeid'), 'USER');
+      checkLogin('/login', '/company-list?page='+getParam('page')+'&category='+getParam('category')+'&keyword='+getParam('keyword'), 'ADMIN');
     }
   }
 ];

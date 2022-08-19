@@ -25,7 +25,7 @@ export default {
             location.href = '/regi-companynum';
         },
         goRegiComapnyNumList() {
-            location.href = '/regi-companynum?page=1';
+            location.href = '/company-list?page=1';
 
         }
     }
