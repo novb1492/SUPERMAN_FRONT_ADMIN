@@ -1,4 +1,4 @@
-import {  requestStoreInfo } from "@/api/market/MarketApi"
+import {  requestStoreInfo,requestGetCompanyNumAll } from "@/api/market/MarketApi"
 import { checkNew, show400ErrorList } from "@/assets/js/Jslib";
 
 export default {
@@ -59,8 +59,28 @@ export default {
     },
     setRadius(context,value) {
         context.commit('changeRadius', value);
-    }
-
+    },
+    requestGetCompanyNumAll(context){
+        requestGetCompanyNumAll().then(response=>{
+            doneGetCnAl(response,context);
+        }).catch(error=>{
+            let response = error.response;
+            let data = response.data;
+            if (checkNew(response.status, data.message)) {
+                requestGetCompanyNumAll().then(response => {
+                    doneGetCnAl(response,context);
+                }).catch(error => {
+                    getInfoError(error);
+                });
+            }
+            else {
+                getInfoError(error);
+            }
+        })
+    },
+}
+function doneGetCnAl(response, context) {
+    context.commit('changeCompanynums', response.data);
 }
 function doneGetInfo(response, context) {
     context.commit('changeStoreInfo', response.data);

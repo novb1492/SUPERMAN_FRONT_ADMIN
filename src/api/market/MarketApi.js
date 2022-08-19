@@ -16,9 +16,14 @@ function requestCompanyNumInsert(data) {
     setInterceptors(instance);
     return  instance.post('/admin/company/save',data);
 }
+function requestGetCompanyNumAll(){
+    setInterceptors(instance);
+    return  instance.get('/admin/company/list/all');
+}
 export {
     requestStoreInsert,
     requestInviteMember,
     requestStoreInfo,
-    requestCompanyNumInsert
+    requestCompanyNumInsert,
+    requestGetCompanyNumAll
 }
