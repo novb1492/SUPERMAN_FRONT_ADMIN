@@ -78,6 +78,17 @@ const routes = [
       }
       checkLogin('/login', '/product-list*page=1^category='+category+'^storeid='+getParam('storeid'), 'USER');
     }
+  },
+  {
+    path: "/product-list",
+    component: ProductListPage,
+    beforeEnter: () => {
+      let category=getParam('category');
+      if(checkParam(category)){
+        category='all';
+      }
+      checkLogin('/login', '/product-list?page=1&category='+category+'&storeid='+getParam('storeid'), 'USER');
+    }
   }
 ];
 
