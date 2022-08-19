@@ -47,7 +47,7 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            category: 'name',
+            category: null,
             keyword: null,
             flag:true
         }
@@ -97,8 +97,7 @@ export default {
             let page = (this.$route.query.page * 1) + num;
             let keyword = this.getKeyword();
             let category = this.$route.query.category;
-            let changeUrl = '/store-list?page=' + page + '&keyword=' + keyword + '&category=' + category;
-            this.$router.push(changeUrl);
+            this.changeUrl(page,keyword,category);
         },
         getKeyword() {
             let keyword = null;
@@ -108,8 +107,11 @@ export default {
             return keyword;
         },
         search() {
-            let changeUrl = '/store-list?page=1&keyword=' + this.keyword + '&category=' + this.category;
-            this.$router.push(changeUrl);        
+            this.changeUrl(1,this.keyword,this.category);    
+        },
+        changeUrl(page,keyword,category){
+            let changeUrl = '/store-list?page='+page+'&keyword=' + keyword + '&category=' + category;
+            this.$router.push(changeUrl);    
         }
     }
 }

@@ -81,8 +81,7 @@ export default {
       let page = 1;
       let keyword = this.keyword;
       let category = this.category;
-      let changeUrl = '/product-list?storeid=' + this.$route.query.storeid + '&page=' + page + '&category=' + category + '&val=' + keyword + '&addr=' + this.$route.query.addr + '&storeName=' + this.$route.query.storeName;
-      this.$router.push(changeUrl);
+      this.changeUrl(page,keyword,category);
     },
     ...mapActions("ProductStore", {
       requestGetCategorys: "requestGetCategorys"
@@ -107,8 +106,7 @@ export default {
       let page = (this.$route.query.page * 1) + num;
       let keyword = this.getKeyword();
       let category = this.$route.query.category;
-      let changeUrl = '/product-list?storeid=' + this.$route.query.storeid + '&page=' + page + '&category=' + category + '&val=' + keyword + '&addr=' + this.$route.query.addr + '&storeName=' + this.$route.query.storeName;
-      this.$router.push(changeUrl);
+      this.changeUrl(page,keyword,category);
     },
     getKeyword() {
       let keyword = null;
@@ -117,6 +115,10 @@ export default {
       }
       return keyword;
     },
+    changeUrl(page,keyword,category){
+      let changeUrl = '/product-list?storeid=' + this.$route.query.storeid + '&page=' + page + '&category=' + category + '&val=' + keyword + '&addr=' + this.$route.query.addr + '&storeName=' + this.$route.query.storeName;
+      this.$router.push(changeUrl);
+    }
   },
 }
 </script>
