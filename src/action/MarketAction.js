@@ -1,46 +1,7 @@
-import { requestStoreListAtSimple, requestStoreList, requestStoreInfo } from "@/api/market/MarketApi"
-import { checkNew, failGetStoreList, show400ErrorList } from "@/assets/js/Jslib";
+import {  requestStoreInfo } from "@/api/market/MarketApi"
+import { checkNew, show400ErrorList } from "@/assets/js/Jslib";
 
 export default {
-    getStoreListSimple(context, page) {
-        requestStoreListAtSimple(page).then(response => {
-            context.commit('changeStoreList', response.data);
-        }).catch(error => {
-            let response = error.response;
-            let responseData = response.data;
-            if (checkNew(response.status, responseData.message)) {
-                requestStoreListAtSimple(page).then(response => {
-                    context.commit('changeStoreList', response.data);
-                }).catch(() => {
-                    alert('정보를 불러오는데 실패했습니다');
-                });
-            } else {
-                alert('정보를 불러오는데 실패했습니다');
-            }
-        });
-    },
-    getStoreByRole(context, payload) {
-        payload = JSON.parse(payload);
-        let role = payload.role;
-        let page = payload.page;
-        let keyword = payload.keyword;
-        let category = payload.category;
-        requestStoreList(role, page, keyword, category).then(response => {
-            context.commit('changeStoreList', response.data);
-        }).catch(error => {
-            let response = error.response;
-            let responseData = response.data;
-            if (checkNew(response.status, responseData.message)) {
-                requestStoreList(role, page, keyword, category).then(response => {
-                    context.commit('changeStoreList', response.data);
-                }).catch(error => {
-                    failGetStoreList(error);
-                });
-            } else {
-                failGetStoreList(error);
-            }
-        });
-    },
     getStoreInfo(context, payload) {
         let id = payload.id;
         requestStoreInfo(id).then(response => {

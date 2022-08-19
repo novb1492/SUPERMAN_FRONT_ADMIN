@@ -37,21 +37,21 @@ const routes = [
     path: "/regi-employee",
     component: RegiEmplPage,
     beforeEnter: () => {
-      checkLogin('/login', '/regi-employee', 'MANAGE');
+      checkLogin('/login', '/regi-employee*page='+getParam('page'), 'MANAGE');
     }
   },
   {
     path: "/store-list",
     component: StoreListPage,
     beforeEnter: () => {
-      checkLogin('/login', '/store-list', 'USER');
+      checkLogin('/login', '/store-list*page=1^category='+getParam('category')+'^keyword='+getParam('keyword'), 'USER');
     }
   },
   {
     path: "/store-detail",
     component: StoreDetailPage,
     beforeEnter: () => {
-      checkLogin('/login', '/store-detail?id='+getParam('id'), 'USER');
+      checkLogin('/login', '/store-detail*id='+getParam('id'), 'USER');
     }
   },
   {
@@ -65,7 +65,18 @@ const routes = [
     path: "/regi-product",
     component: RegiProductPage,
     beforeEnter: () => {
-      checkLogin('/login', '/regi-product?storeid='+getParam('storeid'), 'MANGE');
+      checkLogin('/login', '/regi-product*storeid='+getParam('storeid'), 'MANGE');
+    }
+  },
+  {
+    path: "/product-list",
+    component: ProductListPage,
+    beforeEnter: () => {
+      let category=getParam('category');
+      if(checkParam(category)){
+        category='0';
+      }
+      checkLogin('/login', '/product-list*page=1^category='+category+'^storeid='+getParam('storeid'), 'USER');
     }
   },
   {

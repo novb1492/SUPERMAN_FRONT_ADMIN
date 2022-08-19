@@ -5,6 +5,7 @@
     <ProductNav></ProductNav>
     <EmployeeNav></EmployeeNav>
     <SalesNav></SalesNav>
+    <StoreInfo></StoreInfo>
 </template>
 
 <script>
@@ -14,8 +15,9 @@ import SalesNav from "@/components/layout/storeMenu/SalesNav.vue";
 import ShowState from '../ShowState.vue';
 import ProductNav from '../storeMenu/ProductNav.vue';
 import EmployeeNav from '../mainMenu/EmployeeNav.vue';
+import StoreInfo from '../storeMenu/StoreInfo.vue';
 export default {
     name: "AdminStoreNav",
-    components: { OrderNav, DeliverNav, SalesNav, ShowState, ProductNav, EmployeeNav }
+    components: { OrderNav, DeliverNav, SalesNav, ShowState, ProductNav, EmployeeNav, StoreInfo },
 }
 </script>

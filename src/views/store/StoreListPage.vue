@@ -1,7 +1,7 @@
 <template>
     <div style="margin-top: 70px;" class="container">
         <ul v-if="totalPage > 0">
-            <li v-for="(store, index) in storeList" :key="index">
+            <li v-for="(store, index) in infoList" :key="index">
                 <a href="javascript:void();" @click="goDetailPage(store.id)">
                     <img :src="store.imgPath" />
                     <p>매장명:{{ store.name }}</p>
@@ -47,13 +47,19 @@ import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
-            category: 'name',
-            keyword: null
+            category: null,
+            keyword: null,
+            flag:true
+        }
+    },
+    watch: {
+        '$route'() {
+            this.requestGet();
         }
     },
     computed: {
-        ...mapGetters('MarketStore', {
-            storeList: 'getStoreList',
+        ...mapGetters('basicStore', {
+            infoList: 'getInfoList',
             last: 'getLast',
             first: 'getFirst',
             nowPage: 'getNowPage',
@@ -64,34 +70,34 @@ export default {
         })
     },
     mounted() {
-        let keyword = this.getKeyword();
-        let category = this.$route.query.category;
-        let page = checkPage(this.$route.query.page);
-        let data = JSON.stringify({
-            "role": this.role,
-            "page": page,
-            "keyword": keyword,
-            "category": category
-        });
-        this.$store.dispatch('MarketStore/getStoreByRole', data);
         this.$store.dispatch('NavStore/changeSituation', 0);
+        this.requestGet();
     },
     methods: {
+        requestGet() {
+            let keyword = this.getKeyword();
+            let category = this.$route.query.category;
+            let page = checkPage(this.$route.query.page);
+            let url = '/store/list?page=' + page + '&keyword=' + keyword + '&category=' + category;
+            this.showSearchInfoIfHave(keyword,category);
+            this.$store.dispatch('basicStore/getInfolist', { url: url});
+        },
+        showSearchInfoIfHave(keyword,category){
+            if(!checkParam(keyword)){
+                this.keyword=keyword;
+            }
+            if(!checkParam(category)){
+                this.category=category;
+            }
+        },
         goDetailPage(storeId) {
-            location.href = '/store-detail?id=' + storeId;
+            location.href = '/store-detail?storeid=' + storeId;
         },
         nextStore(num) {
             let page = (this.$route.query.page * 1) + num;
             let keyword = this.getKeyword();
             let category = this.$route.query.category;
-            let data = JSON.stringify({
-                "role": this.role,
-                "page": page,
-                "keyword": keyword,
-                "category": category
-            });
-            this.$router.push('/store-list?page=' + page + '&keyword=' + keyword + '&category=' + category);
-            this.$store.dispatch('MarketStore/getStoreByRole', data);
+            this.changeUrl(page,keyword,category);
         },
         getKeyword() {
             let keyword = null;
@@ -101,14 +107,11 @@ export default {
             return keyword;
         },
         search() {
-            let data = JSON.stringify({
-                "role": this.role,
-                "page": 1,
-                "keyword": this.keyword,
-                "category": this.category
-            });
-            this.$router.push('/store-list?page=' + 1 + '&keyword=' + this.keyword + '&category=' + this.category);
-            this.$store.dispatch('MarketStore/getStoreByRole', data);
+            this.changeUrl(1,this.keyword,this.category);    
+        },
+        changeUrl(page,keyword,category){
+            let changeUrl = '/store-list?page='+page+'&keyword=' + keyword + '&category=' + category;
+            this.$router.push(changeUrl);    
         }
     }
 }

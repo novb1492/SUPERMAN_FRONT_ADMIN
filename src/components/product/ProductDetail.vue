@@ -54,7 +54,7 @@
 <script>
 import { requestUploadImg } from '@/api/Etc/EtcApi';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
-import { checkNew } from '@/assets/js/Jslib';
+import { checkNew, showStoreInfo } from '@/assets/js/Jslib';
 import Ck5Editor from '../Ck5Editor.vue';
 import ProductEvent from './ProductEvent.vue';
 
@@ -70,18 +70,22 @@ export default {
             name: 'getName',
             origin: 'getOrigin',
             price: 'getPrice',
-            introduce:'getIntroduce'
+            introduce: 'getIntroduce'
         }),
     },
     data() {
         return {
-            category:null,
+            category: null,
         }
     },
     mounted() {
         this.requestGetCategorys();
+        showStoreInfo(this.$route.query.addr,this.$route.query.storeName, this.changeShowMarketInfo);
     },
     methods: {
+        ...mapMutations("NavStore", {
+            changeShowMarketInfo: "changeShowMarketInfo",
+        }),
         ...mapActions("ProductStore", {
             requestGetCategorys: "requestGetCategorys"
         }),
@@ -91,20 +95,20 @@ export default {
             setEventCount: 'setEventCount',
             setEvents: 'setEvents',
             setEventCancleCount: 'setEventCancleCount',
-            setOrigin:'setOrigin',
-            setName:'setName',
-            setPrice:'setPrice'
+            setOrigin: 'setOrigin',
+            setName: 'setName',
+            setPrice: 'setPrice'
         }),
         save() {
             let data = JSON.stringify({
-                "category":this.category,
-                "origin":this.origin,
-                "introduce":this.$refs.editor.getText(),
-                "productImgPath":this.productImgPath,
-                "price":this.price,
-                "name":this.name,
-                "id":this.$route.query.storeid,
-                "events":this.events
+                "category": this.category,
+                "origin": this.origin,
+                "introduce": this.$refs.editor.getText(),
+                "productImgPath": this.productImgPath,
+                "price": this.price,
+                "name": this.name,
+                "id": this.$route.query.storeid,
+                "events": this.events
             });
             console.log(data);
             this.$store.dispatch('ProductStore/requestProductSave', data);

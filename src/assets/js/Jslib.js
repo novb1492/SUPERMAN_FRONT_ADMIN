@@ -30,11 +30,13 @@ function go403Page() {
     location.href = '/no-permission';
 }
 function checkManage(role) {
+    //여기role 해당 페이지의 role
     if (role == 'ADMIN') {
         go403Page();
     }
 }
 function checkUser(role) {
+    //여기role 해당 페이지의 role
     if (role == 'ADMIN' || role == 'MANAGE') {
         go403Page();
     }
@@ -113,4 +115,10 @@ export function show400ErrorList(error) {
         }
     }
 
+}
+export function showStoreInfo(arr,storeName,changeShowMarketInfo) {
+    let data=new Object;
+    data.addr = arr;
+    data.name = storeName;
+    changeShowMarketInfo(data);
 }
