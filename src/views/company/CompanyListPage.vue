@@ -1,7 +1,7 @@
 <template>
     <div style="margin-top: 70px;">
         <div v-for="(company, index) in infoList" :key="index" >
-            <CompanyDetail :companyinfo="company" :flag="false" :key="componentKey"></CompanyDetail>
+            <CompanyDetail :companyinfo="company" :flag="false" :key="company.id"></CompanyDetail>
         </div>
         <div class="pagingContainer">
             <div class="pagingbox">
@@ -57,9 +57,6 @@ export default {
 
     },
     methods: {
-        forceRerender() {
-            this.componentKey += 1;
-        },
         changeKey(num) {
             this.key = num + this.key;
         },
@@ -69,7 +66,6 @@ export default {
             let page = checkPage(this.$route.query.page);
             let url = '/admin/company/list?page=' + page + '&keyword=' + keyword + '&category=' + category;
             this.$store.dispatch('basicStore/getInfolist', { url: url });
-            this.forceRerender();
         },
         nextStore(num) {
             let page = (this.$route.query.page * 1) + num;
