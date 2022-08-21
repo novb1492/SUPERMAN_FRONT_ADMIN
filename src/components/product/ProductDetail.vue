@@ -19,7 +19,7 @@
     <div class="priceArea">
         <span>가격</span>
         <br>
-        <input type="text" placeholder="단위문자는,입니다" @input="setPrice($event.target.value)" :value="price">
+        <input type="text" placeholder="숫자만 입력해주세요" @input="setPrice($event.target.value)" :value="price">
     </div>
     <Ck5Editor :idName="'productText'" ref="editor"></Ck5Editor>
     <div class="categoryArea" v-if="flag == false">

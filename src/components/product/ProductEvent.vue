@@ -6,7 +6,7 @@
         <br>
         이벤트이름<input type="text" v-model="eventName" :disabled="flag" />
         <br>
-        이벤트가격<input type="text" v-model="eventPrice" :disabled="flag" />
+        이벤트가격<input type="text" placeholder="숫자만 입력해주세요" v-model="eventPrice" :disabled="flag" />
         <button @click="save" :disabled="flag">확인</button>
         <button @click="update" :disabled="!flag">수정</button>
         <button @click="cancle">삭제</button>
