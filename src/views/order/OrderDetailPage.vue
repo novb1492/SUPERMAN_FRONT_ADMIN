@@ -7,7 +7,10 @@
             <p>가격:{{info.price}}원</p>
             <p>개수:{{info.totalCount}}</p>
             <p>이벤트:{{info.eventName}}</p>
-            <button @click="refund(info.id)" :disabled="state==10">환불</button>
+            <button :id="info.id+'try'" @click="update(info.id)" :disabled="state==10">환불/부분환불</button>
+            <button :id="info.id+'refund'" @click="refound(info.id)" hidden>결제취소</button>
+            <button :id="info.id+'cancle'" @click="cancle(info.id)" hidden>취소</button>
+            <p v-if="info.state==10">환불된 제품입니다</p>
         </div>
         <div>
             <div>결제정보</div>
@@ -54,6 +57,16 @@ export default {
         });
     },
     methods: {
+        cancle(id){
+            document.getElementById(id+'try').hidden=false;
+            document.getElementById(id+'cancle').hidden=true;
+            document.getElementById(id+'refund').hidden=true;
+        },
+        update(id){
+            document.getElementById(id+'try').hidden=true;
+            document.getElementById(id+'cancle').hidden=false;
+            document.getElementById(id+'refund').hidden=false;
+        },
         refund(id){
             if(confirm('주문번호:'+id+'을 환불하시겠습니까?')){
                 alert('a');
