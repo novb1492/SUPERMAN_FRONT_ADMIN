@@ -72,7 +72,7 @@ export default {
     },
     methods: {
         goDetailPage(cardId){
-            alert(cardId);
+            location.href='/order-detail?paymentid='+cardId+'&page='+this.$route.query.page+'&&storeid='+this.$route.query.storeid+'&storeName='+this.$route.query.storeName+'&addr='+this.$route.query.addr+'&periodFlag='+this.$route.query.periodFlag;
         },
         requestGet() {
             let url = '/order/list/' + this.$route.query.storeid + '/' + this.$route.query.state + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&keyword=' + this.$route.query.keyword+'&periodFlag='+this.$route.query.periodFlag;
