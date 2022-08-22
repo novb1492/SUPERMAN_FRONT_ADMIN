@@ -101,7 +101,7 @@ const routes = [
     path: "/order-detail",
     component: OrderDetailPage,
     beforeEnter: () => {
-      checkLogin('/login', '/order-detail*paymentid='+getParam('cardId')+'^page='+getParam('page')+'^storeid='+getParam('storeid')+'^storeName='+getParam('storeName')+'^addr='+getParam('addr')+'^periodFlag='+getParam('periodFlag'), 'USER');
+      checkLogin('/login', '/order-detail*state='+getParam('state')+'^paymentid='+getParam('cardId')+'^page='+getParam('page')+'^storeid='+getParam('storeid')+'^storeName='+getParam('storeName')+'^addr='+getParam('addr')+'^periodFlag='+getParam('periodFlag'), 'USER');
     }
   }
 ];

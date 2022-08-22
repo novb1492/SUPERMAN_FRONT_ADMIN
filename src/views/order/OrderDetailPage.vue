@@ -1,16 +1,21 @@
 <template>
     <div style="margin-top: 70px;">
         <div v-for="(info, index) in infoArr" :key="index">
-            {{info}}
             <img :src="info.productImgPath" alt="" srcset="">
             <p>주문번호:{{info.id}}</p>
             <p>상품이름:{{info.productName}}</p>
             <p>가격:{{info.price}}원</p>
             <p>개수:{{info.totalCount}}</p>
             <p>이벤트:{{info.eventName}}</p>
-            <button @click="refund(info.id)">환불</button>
+            <button @click="refund(info.id)" :disabled="state==10">환불</button>
         </div>
-        주문 총금액:{{totalPrice}}
+        <div>
+            <div>결제정보</div>
+             <p> 주문 총금액:{{payment.totalPrice}}</p>
+             <p>카드사 이름:{{payment.bankName}}</p>
+             <p>카드번호:{{payment.cardNum}}</p> 
+        </div>
+        
     </div>
 </template>
 
@@ -24,7 +29,8 @@ export default {
             cardId: this.$route.query.paymentid,
             storeId: this.$route.query.storeid,
             infoArr:[],
-            totalPrice:0
+            payment:'',
+            state:this.$route.query.state
         }
     },
     mounted() {
@@ -57,8 +63,9 @@ export default {
             changeShowMarketInfo: "changeShowMarketInfo",
         }),
         getDone(data) {
-            this.infoArr=data;
-            // this.totalPrice=this.infoArr[0].
+            console.log(data.selectForOrderDto.cardNum);
+            this.infoArr=data.selectDtos;
+            this.payment=data.selectForOrderDto;
         },
         errorGet(error) {
             let response = error.response;
