@@ -11,6 +11,8 @@ import RegiCompanyPage from "@/views/company/RegiCompanyPage.vue";
 import RegiProductPage from "@/views/product/RegiProductPage.vue";
 import ProductListPage from "@/views/product/ProductListPage.vue";
 import CompanyListPage from "@/views/company/CompanyListPage.vue";
+import OrderListPage from "@/views/order/OrderListPage.vue";
+
 const routes = [
   {
     path: "/",
@@ -85,6 +87,13 @@ const routes = [
     component: CompanyListPage,
     beforeEnter: () => {
       checkLogin('/login', '/company-list?page='+getParam('page')+'&category='+getParam('category')+'&keyword='+getParam('keyword'), 'ADMIN');
+    }
+  },
+  {
+    path: "/order-list",
+    component: OrderListPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/order-list*state='+getParam('state')+'^page='+getParam('page')+'^category='+getParam('category')+'^storeid='+getParam('storeid')+ '^storeName=' + getParam('storeName') + '^addr=' + getParam('addr')+'^periodFlag='+getParam('periodFlag'), 'USER');
     }
   }
 ];
