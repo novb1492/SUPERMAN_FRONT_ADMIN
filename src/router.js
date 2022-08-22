@@ -12,6 +12,7 @@ import RegiProductPage from "@/views/product/RegiProductPage.vue";
 import ProductListPage from "@/views/product/ProductListPage.vue";
 import CompanyListPage from "@/views/company/CompanyListPage.vue";
 import OrderListPage from "@/views/order/OrderListPage.vue";
+import OrderDetailPage from "@/views/order/OrderDetailPage.vue";
 
 const routes = [
   {
@@ -86,7 +87,7 @@ const routes = [
     path: "/company-list",
     component: CompanyListPage,
     beforeEnter: () => {
-      checkLogin('/login', '/company-list?page='+getParam('page')+'&category='+getParam('category')+'&keyword='+getParam('keyword'), 'ADMIN');
+      checkLogin('/login', '/company-list?page='+getParam('page')+'^category='+getParam('category')+'^keyword='+getParam('keyword'), 'ADMIN');
     }
   },
   {
@@ -94,6 +95,13 @@ const routes = [
     component: OrderListPage,
     beforeEnter: () => {
       checkLogin('/login', '/order-list*state='+getParam('state')+'^page='+getParam('page')+'^category='+getParam('category')+'^storeid='+getParam('storeid')+ '^storeName=' + getParam('storeName') + '^addr=' + getParam('addr')+'^periodFlag='+getParam('periodFlag'), 'USER');
+    }
+  },
+  {
+    path: "/order-detail",
+    component: OrderDetailPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/order-detail*state='+getParam('state')+'^paymentid='+getParam('cardId')+'^page='+getParam('page')+'^storeid='+getParam('storeid')+'^storeName='+getParam('storeName')+'^addr='+getParam('addr')+'^periodFlag='+getParam('periodFlag'), 'USER');
     }
   }
 ];
