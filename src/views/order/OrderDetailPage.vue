@@ -9,7 +9,6 @@
             <p>이벤트:{{ info.eventName }}</p>
             <button :id="info.id + 'try'" @click="update(info.id)"
                 :disabled="state == 10 || info.state == 127">부분환불</button>
-            <p>환불 개수</p>
             <input type="number" :id="info.id + 'count'" v-model="cancleCount" :min="1" :max="info.totalCount" hidden>
             <button :id="info.id + 'refund'" @click="refund(info.id)" hidden>결제취소</button>
             <button :id="info.id + 'cancle'" @click="cancle(info.id)" hidden>취소</button>
@@ -26,7 +25,7 @@
 </template>
 
 <script>
-import { requestGetByCardId, requestRefund } from "@/api/order/OrderApi";
+import { requestGetByCardId, requestRefund, requestRefundAll } from "@/api/order/OrderApi";
 import { checkNew, show400ErrorList, showStoreInfo } from '@/assets/js/Jslib';
 import { mapMutations } from "vuex";
 export default {
@@ -61,7 +60,21 @@ export default {
     },
     methods: {
         refndAll() {
-
+            requestRefundAll(this.cardId).then(response => {
+                this.refundDone(response.data);
+            }).catch(error => {
+                let response = error.response;
+                let responseData = response.data;
+                if (checkNew(response.status, responseData.message)) {
+                    requestRefundAll(this.cardId).then(response => {
+                        this.refundDone(response.data);
+                    }).catch(error => {
+                        this.errorRefund(error);
+                    });
+                } else {
+                    this.errorRefund(error);
+                }
+            })
         },
         cancle(id) {
             document.getElementById(id + 'try').hidden = false;
@@ -118,7 +131,7 @@ export default {
             }
             alert(response.data.message);
         },
-        errorRefund(error){
+        errorRefund(error) {
             let response = error.response;
             if (response.status == 400) {
                 show400ErrorList(error);

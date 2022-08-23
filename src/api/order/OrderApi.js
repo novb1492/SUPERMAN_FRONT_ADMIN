@@ -8,7 +8,12 @@ function requestRefund(data) {
     setInterceptors(instance);
     return  instance.post('/payment/cancle',data);
 }
+function requestRefundAll(data) {
+    setInterceptors(instance);
+    return  instance.post('/payment/cancle/all/'+data);
+}
 export {
     requestGetByCardId,
-    requestRefund
+    requestRefund,
+    requestRefundAll
 }
