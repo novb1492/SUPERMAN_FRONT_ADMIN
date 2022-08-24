@@ -1,5 +1,7 @@
 <template>
-  <kakao-map :width="1000" :height="1000" :resizeWidth="1000" :resizeHeight="1000"></kakao-map>
+  <div style="margin-top: 70px;"></div>
+  <button @click="test">배달시작</button>
+
   <!-- 인코딩 euc-kr 필수 -->
   <form name="mobileweb" method="post" accept-charset="euc-kr">
     <!--*************************필수 세팅 부분************************************-->
@@ -23,23 +25,23 @@
     <input type="button" name="pay" value="결제" @click="on_pay">
   </form>
   <input type="button" value="결제취소" @click="cancel" />
-  {{kgResponse}}
+  {{ kgResponse }}
 </template>
 
 <script>
 import { getParam } from "@/assets/js/Jslib";
-import KakaoMap from "@/components/KakaoMap.vue"
 export default {
-  components: { KakaoMap },
   name: 'HelloWorld',
   data() {
     return {
-      kgResponse: null
+      kgResponse: null,
+      websocket: null
     }
   },
   mounted() {
     this.tt = navigator.userAgent;
     this.$store.dispatch('NavStore/changeSituation', 0);
+    this.connect();
   },
   methods: {
     cancel() {
@@ -55,6 +57,36 @@ export default {
       myform.target = "_self";
       myform.submit();
     },
+    connect() {
+      this.websocket = new WebSocket("ws://localhost:8080/ws/deliver?roomid=4");
+      this.websocket.onopen = e => {
+        console.log(e);
+        // var options2 = {
+        //   enableHighAccuracy: true,
+        //   timeout: 5000,
+        //   maximumAge: 0
+        // };
+        // navigator.geolocation.watchPosition(this.success,this.error,options2);
+
+      };
+      this.websocket.onmessage = function (event) {
+        console.log(event.data);
+      };
+      this.websocket.onerror = function (error) {
+        console.log(error);
+      }.bind(this);
+      this.websocket.onclose = function (event) {
+        console.log(event);
+      }.bind(this);
+    },
+    test() {
+      let data = JSON.stringify({
+        "x": 100,
+        "y": 20,
+        "roomid": 4
+      })
+      this.websocket.send(data);
+    }
   }
 }
 </script>
