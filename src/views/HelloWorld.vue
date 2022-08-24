@@ -1,6 +1,8 @@
 <template>
   <div style="margin-top: 70px;"></div>
   <button @click="test">배달시작</button>
+  <button @click="connect2">손님이배달조회</button>
+  <button @click="success2">배달위치전송</button>
 
   <!-- 인코딩 euc-kr 필수 -->
   <form name="mobileweb" method="post" accept-charset="euc-kr">
@@ -35,7 +37,8 @@ export default {
   data() {
     return {
       kgResponse: null,
-      websocket: null
+      websocket: null,
+      websocket2: null
     }
   },
   mounted() {
@@ -58,16 +61,10 @@ export default {
       myform.submit();
     },
     connect() {
-      this.websocket = new WebSocket("ws://localhost:8080/ws/deliver?roomid=4");
+      this.websocket = new WebSocket("ws://localhost:8080/ws/deliver?roomid=4&role=ADMIN");
       this.websocket.onopen = e => {
         console.log(e);
-        // var options2 = {
-        //   enableHighAccuracy: true,
-        //   timeout: 5000,
-        //   maximumAge: 0
-        // };
-        // navigator.geolocation.watchPosition(this.success,this.error,options2);
-
+        //추후 검증 로직 추가
       };
       this.websocket.onmessage = function (event) {
         console.log(event.data);
@@ -79,13 +76,60 @@ export default {
         console.log(event);
       }.bind(this);
     },
+    connect2() {
+      this.websocket2 = new WebSocket("ws://localhost:8080/ws/deliver?roomid=4&role=USER");
+      this.websocket2.onopen = e => {
+        console.log(e);
+        //추후 검증 로직 추가
+      };
+      this.websocket2.onmessage = function (event) {
+        console.log(event.data);
+      };
+      this.websocket2.onerror = function (error) {
+        console.log(error);
+      }.bind(this);
+      this.websocket2.onclose = function (event) {
+        console.log(event);
+      }.bind(this);
+    },
     test() {
+      var options2 = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0
+      };
+      navigator.geolocation.watchPosition(this.success, this.error, options2);
+      // let data = JSON.stringify({
+      //   "x": 100,
+      //   "y": 20,
+      //   "roomid": 4
+      // })
+      // this.websocket.send(data);
+    },
+    success(position) {
+      var lat = position.coords.latitude;// 위도
+      var lon = position.coords.longitude; // 경도
       let data = JSON.stringify({
-        "x": 100,
-        "y": 20,
+        "latitude": lat,
+        "longitude": lon,
         "roomid": 4
       })
+
       this.websocket.send(data);
+    },
+    success2() {
+      var lat =100
+      var lon = 200
+      let data = JSON.stringify({
+        "latitude": lat,
+        "longitude": lon,
+        "roomid": 4
+      })
+
+      this.websocket.send(data);
+    },
+    error() {
+      alert('위치정보를 가져올 수 없습니다');
     }
   }
 }
