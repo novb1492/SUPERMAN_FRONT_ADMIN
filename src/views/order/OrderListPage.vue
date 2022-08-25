@@ -14,6 +14,7 @@
                     </a>
                     <input type="checkbox" :id="info.cardId + 'check'" @click="toArr(info.cardId)">
                 </li>
+                <button @click="makeDeliverRoom" :disabled="flag">배달방 생성</button>
             </ul>
             <p v-else>
                 검색결과가 없습니다
@@ -44,14 +45,17 @@
 </template>
 
 <script>
-import { checkParam, showStoreInfo } from '@/assets/js/Jslib';
+import { checkNew, checkParam, show400ErrorList, showStoreInfo } from '@/assets/js/Jslib';
 import { mapGetters, mapMutations } from 'vuex';
+import { requestSave } from "@/api/deliver/DeliverApi";
 export default {
     data() {
         return {
             category: null,
             keyword: null,
-            deliverArr: []
+            deliverArr: [],
+            storeid: this.$route.query.storeid,
+            flag: true
         }
     },
     mounted() {
@@ -80,7 +84,7 @@ export default {
                     let index = this.deliverArr.indexOf(cardId);
                     if (index >= 0) {
                         document.getElementById(cardId + 'check').checked = true;
-                    }else{
+                    } else {
                         document.getElementById(cardId + 'check').checked = false;
                     }
                 }
@@ -88,12 +92,50 @@ export default {
         }
     },
     methods: {
+        makeDeliverRoom() {
+            let data = JSON.stringify({
+                "cardIds": this.deliverArr,
+                "storeId": this.storeid
+            })
+            console.log(data);
+            requestSave(data).then(response => {
+                this.insertDone(response.data);
+            }).catch(error => {
+                let response = error.response;
+                let responseData = response.data;
+                if (checkNew(response.status, responseData.message)) {
+                    requestSave(data).then(response => {
+                        this.insertDone(response.data);
+                    }).catch(error => {
+                        this.errorInsert(error);
+                    });
+                } else {
+                    this.errorInsert(error);
+                }
+            })
+        },
+        insertDone(data) {
+            alert(data.message);
+        },
+        errorInsert(error) {
+            let response = error.response;
+            if (response.status == 400) {
+                show400ErrorList(error);
+                return;
+            }
+            alert('정보를 불러오는데 실패했습니다');
+        },
         toArr(cardId) {
             let index = this.deliverArr.indexOf(cardId);
             if (index < 0) {
                 this.deliverArr[this.deliverArr.length] = cardId;
             } else {
                 this.deliverArr.splice(index, 1);
+            }
+            if (this.deliverArr.length > 0) {
+                this.flag = false;
+            } else {
+                this.flag = true;
             }
         },
         goDetailPage(cardId) {
