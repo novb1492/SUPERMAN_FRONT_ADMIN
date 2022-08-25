@@ -79,7 +79,6 @@ export default {
                     let cardId = this.inforList[i].cardId;
                     let index = this.deliverArr.indexOf(cardId);
                     if (index >= 0) {
-                        console.log(this.deliverArr);
                         document.getElementById(cardId + 'check').checked = true;
                     }else{
                         document.getElementById(cardId + 'check').checked = false;
