@@ -21,7 +21,7 @@
         </div>
         <div class="pagingContainer">
             <div class="pagingbox">
-                <button @click="nextOrder(1)">다음</button>
+                <button @click="nextOrder(1)" :disabled="last">다음</button>
                 <button @click="nextOrder(-1)" :disabled="first">이전</button>
             </div>
             <div class="pagingbox">
