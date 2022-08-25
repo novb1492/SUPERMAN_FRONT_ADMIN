@@ -12,9 +12,9 @@
                         }}</p>
                         <p>주문자전화번호:{{ info.orderOwnPhone }}</p>
                     </a>
-                    <input type="checkbox" :id="info.cardId + 'check'" @click="toArr(info.cardId)">
+                    <input type="checkbox" :value="info.cardId" v-model="deliverArr">
                 </li>
-                <button @click="makeDeliverRoom" :disabled="flag">배달방 생성</button>
+                <button @click="makeDeliverRoom" :disabled="deliverArr.length==0">배달방 생성</button>
             </ul>
             <p v-else>
                 검색결과가 없습니다
@@ -45,9 +45,10 @@
 </template>
 
 <script>
-import { checkNew, checkParam, show400ErrorList, showStoreInfo } from '@/assets/js/Jslib';
+import {  checkNew, checkParam, show400ErrorList, showStoreInfo } from '@/assets/js/Jslib';
 import { mapGetters, mapMutations } from 'vuex';
-import { requestSave } from "@/api/deliver/DeliverApi";
+import { requestSave } from '@/api/product/ProductApi';
+// import { requestSave } from "@/api/deliver/DeliverApi";
 export default {
     data() {
         return {
@@ -76,19 +77,6 @@ export default {
         '$route'() {
             this.requestGet();
 
-        },
-        'inforList'() {
-            this.$nextTick(() => {
-                for (var i in this.inforList) {
-                    let cardId = this.inforList[i].cardId;
-                    let index = this.deliverArr.indexOf(cardId);
-                    if (index >= 0) {
-                        document.getElementById(cardId + 'check').checked = true;
-                    } else {
-                        document.getElementById(cardId + 'check').checked = false;
-                    }
-                }
-            });
         }
     },
     methods: {
@@ -124,19 +112,6 @@ export default {
                 return;
             }
             alert('정보를 불러오는데 실패했습니다');
-        },
-        toArr(cardId) {
-            let index = this.deliverArr.indexOf(cardId);
-            if (index < 0) {
-                this.deliverArr[this.deliverArr.length] = cardId;
-            } else {
-                this.deliverArr.splice(index, 1);
-            }
-            if (this.deliverArr.length > 0) {
-                this.flag = false;
-            } else {
-                this.flag = true;
-            }
         },
         goDetailPage(cardId) {
             location.href = '/order-detail?state=' + this.$route.query.state + '&paymentid=' + cardId + '&page=' + this.$route.query.page + '&&storeid=' + this.$route.query.storeid + '&storeName=' + this.$route.query.storeName + '&addr=' + this.$route.query.addr + '&periodFlag=' + this.$route.query.periodFlag;
