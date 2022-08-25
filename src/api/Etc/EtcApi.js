@@ -2,7 +2,7 @@ import { instance, setInterceptors } from "@/api/request";
 
 async function requestUploadImg(data) {
     setInterceptors(instance);
-    return await instance.post('/auth/file/upload', data);
+    return await instance.post('/file/upload', data);
 }
 function requestListInfo(url) {
     setInterceptors(instance);

@@ -8,10 +8,13 @@
                         <p>주문일자:{{ info.orderDate }}</p>
                         <p>주문금액:{{ info.price }}원</p>
                         <p>결제번호:{{ info.cardId }}</p>
-                        <p>배달주소:{{info.destinationPostCode}},{{info.destinationAddr}},{{info.destinationDetailAddr}}</p>
-                        <p>주문자전화번호:{{info.orderOwnPhone}}</p>
+                        <p>배달주소:{{ info.destinationPostCode }},{{ info.destinationAddr }},{{ info.destinationDetailAddr
+                        }}</p>
+                        <p>주문자전화번호:{{ info.orderOwnPhone }}</p>
                     </a>
+                    <input type="checkbox" :id="info.cardId + 'check'" @click="toArr(info.cardId)">
                 </li>
+                <button @click="makeDeliverRoom" :disabled="flag">배달방 생성</button>
             </ul>
             <p v-else>
                 검색결과가 없습니다
@@ -42,13 +45,17 @@
 </template>
 
 <script>
-import { checkParam, showStoreInfo } from '@/assets/js/Jslib';
+import { checkNew, checkParam, show400ErrorList, showStoreInfo } from '@/assets/js/Jslib';
 import { mapGetters, mapMutations } from 'vuex';
+import { requestSave } from "@/api/deliver/DeliverApi";
 export default {
     data() {
         return {
             category: null,
-            keyword: null
+            keyword: null,
+            deliverArr: [],
+            storeid: this.$route.query.storeid,
+            flag: true
         }
     },
     mounted() {
@@ -68,14 +75,74 @@ export default {
     watch: {
         '$route'() {
             this.requestGet();
+
+        },
+        'inforList'() {
+            this.$nextTick(() => {
+                for (var i in this.inforList) {
+                    let cardId = this.inforList[i].cardId;
+                    let index = this.deliverArr.indexOf(cardId);
+                    if (index >= 0) {
+                        document.getElementById(cardId + 'check').checked = true;
+                    } else {
+                        document.getElementById(cardId + 'check').checked = false;
+                    }
+                }
+            });
         }
     },
     methods: {
-        goDetailPage(cardId){
-            location.href='/order-detail?state='+this.$route.query.state+'&paymentid='+cardId+'&page='+this.$route.query.page+'&&storeid='+this.$route.query.storeid+'&storeName='+this.$route.query.storeName+'&addr='+this.$route.query.addr+'&periodFlag='+this.$route.query.periodFlag;
+        makeDeliverRoom() {
+            let data = JSON.stringify({
+                "cardIds": this.deliverArr,
+                "storeId": this.storeid
+            })
+            console.log(data);
+            requestSave(data).then(response => {
+                this.insertDone(response.data);
+            }).catch(error => {
+                let response = error.response;
+                let responseData = response.data;
+                if (checkNew(response.status, responseData.message)) {
+                    requestSave(data).then(response => {
+                        this.insertDone(response.data);
+                    }).catch(error => {
+                        this.errorInsert(error);
+                    });
+                } else {
+                    this.errorInsert(error);
+                }
+            })
+        },
+        insertDone(data) {
+            alert(data.message);
+        },
+        errorInsert(error) {
+            let response = error.response;
+            if (response.status == 400) {
+                show400ErrorList(error);
+                return;
+            }
+            alert('정보를 불러오는데 실패했습니다');
+        },
+        toArr(cardId) {
+            let index = this.deliverArr.indexOf(cardId);
+            if (index < 0) {
+                this.deliverArr[this.deliverArr.length] = cardId;
+            } else {
+                this.deliverArr.splice(index, 1);
+            }
+            if (this.deliverArr.length > 0) {
+                this.flag = false;
+            } else {
+                this.flag = true;
+            }
+        },
+        goDetailPage(cardId) {
+            location.href = '/order-detail?state=' + this.$route.query.state + '&paymentid=' + cardId + '&page=' + this.$route.query.page + '&&storeid=' + this.$route.query.storeid + '&storeName=' + this.$route.query.storeName + '&addr=' + this.$route.query.addr + '&periodFlag=' + this.$route.query.periodFlag;
         },
         requestGet() {
-            let url = '/order/list/' + this.$route.query.storeid + '/' + this.$route.query.state + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&keyword=' + this.$route.query.keyword+'&periodFlag='+this.$route.query.periodFlag;
+            let url = '/order/list/' + this.$route.query.storeid + '/' + this.$route.query.state + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&keyword=' + this.$route.query.keyword + '&periodFlag=' + this.$route.query.periodFlag;
             this.$store.dispatch('basicStore/getInfolist', { url: url });
             this.showSearchInfoIfHave(this.$route.query.keyword, this.$route.query.category);
         },
@@ -92,7 +159,7 @@ export default {
         },
         nextOrder(num) {
             let page = (this.$route.query.page * 1) + num;
-            let keyword =  this.$route.query.keyword;
+            let keyword = this.$route.query.keyword;
             let category = this.$route.query.category;
             this.changeUrl(page, keyword, category);
         },

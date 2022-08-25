@@ -8,7 +8,7 @@
             <p>개수:{{ info.totalCount }}</p>
             <p>이벤트:{{ info.eventName }}</p>
             <button :id="info.id + 'try'" @click="update(info.id)"
-                :disabled="state == 10 || info.state == 127">부분환불</button>
+                :disabled="info.state == 10 || info.state == 127">부분환불</button>
             <input type="number" :id="info.id + 'count'" v-model="cancleCount" :min="1" :max="info.totalCount" hidden>
             <button :id="info.id + 'refund'" @click="refund(info.id)" hidden>결제취소</button>
             <button :id="info.id + 'cancle'" @click="cancle(info.id)" hidden>취소</button>
