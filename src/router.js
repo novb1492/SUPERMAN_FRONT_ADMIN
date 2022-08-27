@@ -3,7 +3,7 @@ import Home from "@/views/HelloWorld.vue";
 import loginPage from "@/views/loginPage.vue";
 import RegiStorePage from "@/views/RegiStorePage.vue";
 import MyPage from "@/views/MyPage.vue";
-import { checkLogin, checkParam, getParam } from "@/assets/js/Jslib";
+import { checkLogin, checkParam, getParam, storeCommonQueryInRouter } from "@/assets/js/Jslib";
 import RegiEmplPage from "@/views/employee/RegiEmplPage.vue";
 import StoreListPage from "@/views/store/StoreListPage.vue";
 import StoreDetailPage from "@/views/store/StoreDetailPage.vue";
@@ -13,7 +13,8 @@ import ProductListPage from "@/views/product/ProductListPage.vue";
 import CompanyListPage from "@/views/company/CompanyListPage.vue";
 import OrderListPage from "@/views/order/OrderListPage.vue";
 import OrderDetailPage from "@/views/order/OrderDetailPage.vue";
-
+import DeliverListPage from "@/views/deliver/DeliverListPage.vue";
+import DeliverDetailPage from "@/views/deliver/DeliverDetailPage.vue";
 const routes = [
   {
     path: "/",
@@ -102,6 +103,20 @@ const routes = [
     component: OrderDetailPage,
     beforeEnter: () => {
       checkLogin('/login', '/order-detail*state='+getParam('state')+'^paymentid='+getParam('cardId')+'^page='+getParam('page')+'^storeid='+getParam('storeid')+'^storeName='+getParam('storeName')+'^addr='+getParam('addr')+'^periodFlag='+getParam('periodFlag'), 'USER');
+    }
+  },
+  {
+    path: "/deliver-list",
+    component: DeliverListPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/deliver-list*page='+getParam('page')+'^state='+getParam('state')+'^storeid='+getParam('storeid')+'^storeName='+getParam('storeName')+'^addr='+getParam('addr'), 'USER');
+    }
+  },
+  {
+    path: "/deliver-detail",
+    component: DeliverDetailPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/deliver-detail?deliverid='+getParam('deliverid')+storeCommonQueryInRouter(), 'USER');
     }
   }
 ];
