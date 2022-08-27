@@ -123,7 +123,8 @@ export default {
       let data = JSON.stringify({
         "latitude": lat,
         "longitude": lon,
-        "roomid": 4
+        "roomid": 4,
+        "state":'start'
       })
 
       this.websocket.send(data);
