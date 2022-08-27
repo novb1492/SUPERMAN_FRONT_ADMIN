@@ -122,3 +122,10 @@ export function showStoreInfo(arr,storeName,changeShowMarketInfo) {
     data.name = storeName;
     changeShowMarketInfo(data);
 }
+export function storeCommonQueryInRouter(){
+    return '^storeid='+getParam('storeid')+'^storeName='+getParam('storeName')+'^addr='+getParam('addr');
+}
+export function storeCommonQuery(route){
+    return '&storeid=' + route.query.storeid + '&addr=' + route.query.addr + '&storeName=' + route.query.storeName;
+}
+ 
