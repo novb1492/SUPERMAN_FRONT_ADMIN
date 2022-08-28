@@ -2,10 +2,10 @@
     <div style="margin-top: 70px;">
         <div v-for="(deliverDetail, index) in deliverDetailArr" :key="index">
             {{ deliverDetail }}
-            <button @click="changeState(deliverDetail.deliverId, storeId, 'cancel')">배달취소</button>
-            <button @click="changeState(deliverDetail.deliverId, storeId, 'done')">배달완료</button>
+            <button @click="cancel(deliverDetail.deliverDetailId)">배달취소</button>
+            <button @click="done(deliverDetail.deliverDetailId, storeId, 'done')">배달완료</button>
         </div>
-        <button @click="changeState(deliverId, storeId, 'cancelAll')">배달전체취소</button>
+        <button @click="cancelAll">배달전체취소</button>
         <button @click="start">배달시작</button>
         <button @click="success2">배달위치전송</button>
     </div>
@@ -36,6 +36,53 @@ export default {
         this.requestGet();
     },
     methods: {
+        done(deliverDetailId){
+            let data = JSON.stringify({
+                "state": 'done',
+                "deliverDetailId":deliverDetailId,
+                "roomid":this.deliverId
+            });
+            this.websocket.send(data);
+        },
+        cancel(deliverDetailId){
+            let data = JSON.stringify({
+                "state": 'cancel',
+                "deliverDetailId":deliverDetailId,
+                "roomid":this.deliverId
+            });
+            this.websocket.send(data);
+        },
+        cancelAll() {
+            let data = JSON.stringify({
+                "state": 10,
+                "deliverId": this.deliverId,
+                "storeId": this.storeId
+            });
+            requestChangeState(data).then(response => {
+                this.doneCancelAll(response.data);
+            }).catch(error => {
+                let response = error.response;
+                let responseData = response.data;
+                if (checkNew(response.status, responseData.message)) {
+                    requestChangeState(data).then(response => {
+                        this.doneCancelAll(response.data);
+                    }).catch(error => {
+                        this.errorGet(error);
+                    });
+                } else {
+                    this.errorGet(error);
+                }
+            })
+        },
+        doneCancelAll(data) {
+            let rqeuestdata = JSON.stringify({
+                "roomid": this.deliverId,
+                "state": 'cancelAll',
+                "storeId": this.storeId
+            })
+            this.websocket.send(rqeuestdata);
+            alert(data.message);
+        },
         connect() {
             let authentications = JSON.parse(localStorage.getItem('authentication'))
             this.websocket = new WebSocket("ws://localhost:8080/ws/deliver?roomid=" + this.deliverId + "&role=ADMIN&access=" + authentications.authentication + '&refresh=' + authentications.refresh + '&storeId=' + this.storeId);
@@ -81,13 +128,13 @@ export default {
         },
         start() {
             let data = JSON.stringify({
-              "state": 20,
-              "deliverId": this.deliverId,
-              "storeId": this.storeId
+                "state": 20,
+                "deliverId": this.deliverId,
+                "storeId": this.storeId
             })
             requestChangeState(data).then(response => {
                 this.doneStart(response.data);
-            }).catch(error=>{
+            }).catch(error => {
                 let response = error.response;
                 let responseData = response.data;
                 if (checkNew(response.status, responseData.message)) {
@@ -117,8 +164,8 @@ export default {
                 "latitude": lat,
                 "longitude": lon,
                 "roomid": this.deliverId,
-                "state":'start',
-                "storeId":this.storeId
+                "state": 'start',
+                "storeId": this.storeId
             })
 
             this.websocket.send(data);

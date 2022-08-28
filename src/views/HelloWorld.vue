@@ -77,7 +77,18 @@ export default {
       }.bind(this);
     },
     connect2() {
-      this.websocket2 = new WebSocket("ws://localhost:8080/ws/deliver?roomid=4&role=USER");
+      //임시
+      let info = JSON.parse(localStorage.getItem('info'));
+      var temp=0;
+      if(info.role=='MANAGE'){
+        temp=4;
+      }else{
+        temp=5;
+      }
+            console.log(temp);
+
+      //---------------------------------------------------------
+      this.websocket2 = new WebSocket("ws://localhost:8080/ws/deliver?roomid=4&role=USER&deliverDetailId="+temp);
       this.websocket2.onopen = e => {
         console.log(e);
         //추후 검증 로직 추가
