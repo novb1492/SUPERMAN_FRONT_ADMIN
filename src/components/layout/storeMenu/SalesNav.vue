@@ -1,20 +1,28 @@
 <template>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="javascript:void();" id="navbarDropdown" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            매출관리
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="javascript:void();" @click="goRegiStore">월별매출</a></li>
-            <li><a class="dropdown-item" href="javascript:void();" @click="goStoreList">일별매출</a></li>
-            <li><a class="dropdown-item" href="javascript:void();" @click="goStoreList">전체매출</a></li>
-        </ul>
-    </li>
+    <li class="menu-li" @click="active"> 매출관리</li>
+    <li class="menu-detail-li" :class="{ 'active': flag }" @click="goRegiStore">월별매출</li>
+    <li class="menu-detail-li" :class="{ 'active': flag }" @click="goStoreList">일별매출</li>
+    <li class="menu-detail-li" :class="{ 'active': flag }" @click="goStoreList">전체매출</li>
+
 </template>
 
 <script>
 
 export default {
     name: 'SalesNav',
+    data() {
+        return {
+            flag: false
+        };
+    },
+    methods: {
+        active() {
+            if (this.flag) {
+                this.flag = false;
+                return;
+            }
+            this.flag = true;
+        }
+    }
 }
 </script>

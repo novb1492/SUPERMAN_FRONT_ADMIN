@@ -1,23 +1,28 @@
 <template>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="javascript:void();" id="navbarDropdown" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            배달관리
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="javascript:void();" @click="goDeliverList(100)">완료된배달</a></li>
-            <li><a class="dropdown-item" href="javascript:void();" @click="goDeliverList(1)">진행중배달</a></li>
-        </ul>
-    </li>
+    <li class="menu-li" @click="active">배달관리</li>
+    <li class="menu-detail-li" :class="{ 'active': flag  }" @click="goDeliverList(100)">완료된배달</li>
+    <li class="menu-detail-li" :class="{ 'active': flag  }" @click="goDeliverList(1)">진행중배달</li>
 </template>
 
 <script>
 
 export default {
     name: 'DeliverNav',
-    methods:{
-        goDeliverList(num){
-            location.href='/deliver-list?page=1&state='+num+'&storeid='+this.$route.query.storeid+'&storeName='+this.$route.query.storeName+'&addr='+this.$route.query.addr;
+    data() {
+        return {
+            flag: false
+        };
+    },
+    methods: {
+        goDeliverList(num) {
+            location.href = '/deliver-list?page=1&state=' + num + '&storeid=' + this.$route.query.storeid + '&storeName=' + this.$route.query.storeName + '&addr=' + this.$route.query.addr;
+        },
+        active() {
+            if (this.flag) {
+                this.flag = false;
+                return;
+            }
+            this.flag = true;
         }
     }
 }

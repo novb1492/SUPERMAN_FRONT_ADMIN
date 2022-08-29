@@ -5,6 +5,7 @@
     </div>
     <ul class="nav-menu-list">
       <AdminMainNav v-if="situataion == 0"></AdminMainNav>
+      <AdminStoreNav  v-if="situataion==1"></AdminStoreNav>
     </ul>
   </nav>
 </template>
@@ -12,6 +13,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import AdminMainNav from './AdminMainNav.vue';
+import AdminStoreNav from './AdminStoreNav.vue';
 
 export default {
   name: "AdminNav",
@@ -20,7 +22,7 @@ export default {
       situataion: "getSituation",
     })
   },
-  components: { AdminMainNav }
+  components: { AdminMainNav, AdminStoreNav }
 }
 </script>
 
