@@ -6,6 +6,8 @@ a{
     flex-direction: column;
     align-items: flex-start;
     padding: 1rem;
+    position: sticky;
+    top: 0;
 }
 .nav-section{
     display: flex;
@@ -35,10 +37,13 @@ a{
 .menu-detail-li.active{
     display: block;
 }
-
-/* @media screen  and (min-width: 1000px) {
+@media screen and (min-width: 500px) {
     .nav{
-        display: flex;
-        
+        background-color: red;
     }
-} */
+    .nav-section-icon{
+        display: none;
+    }
+
+   
+}

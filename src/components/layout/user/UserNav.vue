@@ -2,7 +2,7 @@
   <nav class="nav">
     <div class="nav-section">
       <a href="javascript:void();">SUPERMAN</a>
-      <i class="fa-solid fa-bars navtoggle" @click="active"></i>
+      <i class="fa-solid fa-bars navtoggle nav-section-icon" @click="active"></i>
     </div>
     <ul class="nav-menu-list" :class="{ 'active': flag }">
       <UserMainNav v-if="situataion == 0"></UserMainNav>
