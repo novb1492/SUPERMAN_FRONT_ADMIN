@@ -1,11 +1,12 @@
 <template>
   <nav class="nav">
-    <div>
+    <div class="nav-section">
       <a href="javascript:void();">SUPERMAN</a>
+      <i class="fa-solid fa-bars navtoggle" @click="active"></i>
     </div>
-    <ul class="nav-menu-list">
+    <ul class="nav-menu-list" :class="{ 'active': flag }">
       <AdminMainNav v-if="situataion == 0"></AdminMainNav>
-      <AdminStoreNav  v-if="situataion==1"></AdminStoreNav>
+      <AdminStoreNav v-if="situataion == 1"></AdminStoreNav>
     </ul>
   </nav>
 </template>
@@ -22,7 +23,21 @@ export default {
       situataion: "getSituation",
     })
   },
-  components: { AdminMainNav, AdminStoreNav }
+  data() {
+    return {
+      flag: false
+    };
+  },
+  components: { AdminMainNav, AdminStoreNav },
+  methods: {
+    active() {
+      if (this.flag) {
+        this.flag = false;
+        return;
+      }
+      this.flag = true;
+    }
+  }
 }
 </script>
 

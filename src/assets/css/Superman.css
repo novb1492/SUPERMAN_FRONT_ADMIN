@@ -7,7 +7,16 @@ a{
     align-items: flex-start;
     padding: 1rem;
 }
+.nav-section{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
 .nav-menu-list{
+    display: none;
+}
+.nav-menu-list.active{
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -26,3 +35,10 @@ a{
 .menu-detail-li.active{
     display: block;
 }
+
+/* @media screen  and (min-width: 1000px) {
+    .nav{
+        display: flex;
+        
+    }
+} */
