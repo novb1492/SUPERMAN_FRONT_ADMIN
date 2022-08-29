@@ -1,14 +1,7 @@
 <template>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="javascript:void();" id="navbarDropdown" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            직원관리
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="javascript:void();" @click="goRegiEmpl" v-if="role=='ADMIN' ||role=='MANAGE'">직원등록</a></li>
-            <li><a class="dropdown-item" href="javascript:void();" @click="goRegiEmpl" v-if="situataion==1">직원조회</a></li>
-        </ul>
-    </li>
+    <li class="menu-li" @click="active">직원관리</li>
+    <li class="menu-detail-li" :class="{ 'active': flag  }" v-if="role=='ADMIN' ||role=='MANAGE'" @click="goRegiEmpl">직원등록</li>
+    <li class="menu-detail-li" :class="{ 'active': flag  }" v-if="situataion==1">직원조회</li>
 </template>
 
 <script>
@@ -22,9 +15,21 @@ export default {
         })
 
     },
+    data() {
+        return {
+            flag: false
+        };
+    },
     methods: {
-         goRegiEmpl(){
+        goRegiEmpl(){
             location.href='/regi-employee?page=1';
+        },
+        active(){
+            if(this.flag){
+                this.flag=false;
+                return;
+            }
+            this.flag=true;
         }
     },
 }
