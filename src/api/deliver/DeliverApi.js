@@ -10,10 +10,15 @@ function requestGetDetail(data) {
 }
 function requestChangeState(data){
     setInterceptors(instance);
-    return  instance.put('/deliver/start', data);
+    return  instance.put('/deliver/state', data);
+}
+function requestDeliverDetailState(data){
+    setInterceptors(instance);
+    return  instance.put('/deliver-detail/state', data);
 }
 export {
     requestSave,
     requestGetDetail,
-    requestChangeState
+    requestChangeState,
+    requestDeliverDetailState
 }

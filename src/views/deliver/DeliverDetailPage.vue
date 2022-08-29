@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-import { requestGetDetail, requestChangeState } from "@/api/deliver/DeliverApi";
+import { requestGetDetail, requestChangeState, requestDeliverDetailState } from "@/api/deliver/DeliverApi";
 import { checkNew, showStoreInfo } from "@/assets/js/Jslib";
 import { mapMutations } from "vuex";
 export default {
@@ -37,20 +37,68 @@ export default {
     },
     methods: {
         done(deliverDetailId){
-            let data = JSON.stringify({
+            let requestData = JSON.stringify({
+                "state": 100,
+                "deliverDetailId":deliverDetailId,
+                "storeId":this.storeId,
+                "deliverId":this.deliverId
+            });
+            requestDeliverDetailState(requestData).then(response=>{
+                this.successDone(response.data,deliverDetailId);
+            }).catch(error=>{
+                let response = error.response;
+                let responseData = response.data;
+                if (checkNew(response.status, responseData.message)) {
+                    requestDeliverDetailState(requestData).then(response => {
+                        this.successDone(response.data,deliverDetailId);
+                    }).catch(error => {
+                        this.errorGet(error);
+                    });
+                } else {
+                    this.errorGet(error);
+                }
+            });
+        },
+        successDone(data,deliverDetailId){
+            let requestData = JSON.stringify({
                 "state": 'done',
                 "deliverDetailId":deliverDetailId,
                 "roomid":this.deliverId
             });
-            this.websocket.send(data);
+            this.websocket.send(requestData);
+            alert(data.message);
         },
         cancel(deliverDetailId){
-            let data = JSON.stringify({
+            let requestData = JSON.stringify({
+                "state": 10,
+                "deliverDetailId":deliverDetailId,
+                "storeId":this.storeId,
+                "deliverId":this.deliverId
+            });
+            requestDeliverDetailState(requestData).then(response=>{
+                this.doneCancel(response.data,deliverDetailId);
+            }).catch(error=>{
+                let response = error.response;
+                let responseData = response.data;
+                if (checkNew(response.status, responseData.message)) {
+                    requestDeliverDetailState(requestData).then(response => {
+                        this.doneCancel(response.data,deliverDetailId);
+                    }).catch(error => {
+                        this.errorGet(error);
+                    });
+                } else {
+                    this.errorGet(error);
+                }
+            });
+        },
+        doneCancel(data,deliverDetailId){
+            let requestData = JSON.stringify({
                 "state": 'cancel',
                 "deliverDetailId":deliverDetailId,
                 "roomid":this.deliverId
             });
-            this.websocket.send(data);
+            this.websocket.send(requestData);
+            alert(data.message);
         },
         cancelAll() {
             let data = JSON.stringify({
@@ -61,6 +109,7 @@ export default {
             requestChangeState(data).then(response => {
                 this.doneCancelAll(response.data);
             }).catch(error => {
+                console.log(error);
                 let response = error.response;
                 let responseData = response.data;
                 if (checkNew(response.status, responseData.message)) {
@@ -176,8 +225,8 @@ export default {
             let data = JSON.stringify({
                 "latitude": lat,
                 "longitude": lon,
-                "roomid": 4,
-                "storeId": 1,
+                "roomid": this.deliverId,
+                "storeId": this.storeId,
                 "state": 'start'
             })
             this.websocket.send(data);

@@ -7,7 +7,6 @@
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
             <li><a class="dropdown-item" href="javascript:void();" @click="goDeliverList(100)">완료된배달</a></li>
             <li><a class="dropdown-item" href="javascript:void();" @click="goDeliverList(1)">진행중배달</a></li>
-            <li><a class="dropdown-item" href="javascript:void();" @click="goDeliverList(10)">취소된배달</a></li>
         </ul>
     </li>
 </template>
