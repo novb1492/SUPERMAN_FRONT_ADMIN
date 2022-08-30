@@ -1,25 +1,28 @@
 <template>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="javascript:void();" id="navbarDropdown" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            매장관리
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <li><a class="dropdown-item" href="javascript:void();" @click="goRegiStore" v-if="role=='ADMIN'">매장등록</a></li>
-            <li><a class="dropdown-item" href="javascript:void();" @click="goStoreList">보유매장조회</a></li>
+    <ul class="menu-ul">
+        <li class="menu-li" @click="active">매장관리</li>
+        <ul class="menu-detail-ul" :class="{ 'active': flag }">
+            <li @click="goRegiStore" v-if="role == 'ADMIN'">매장등록</li>
+            <li @click="goStoreList">매장조회</li>
         </ul>
-    </li>
+    </ul>
+
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
 export default {
-    name:"StoreNav",
+    name: "StoreNav",
     computed: {
         ...mapGetters("NavStore", {
-            role:'getRole'
+            role: 'getRole'
         })
+    },
+    data() {
+        return {
+            flag: false
+        };
     },
     methods: {
         goStoreList() {
@@ -27,6 +30,13 @@ export default {
         },
         goRegiStore() {
             location.href = '/regi-store';
+        },
+        active() {
+            if (this.flag) {
+                this.flag = false;
+                return;
+            }
+            this.flag = true;
         }
     }
 }

@@ -25,7 +25,6 @@ export default {
         extraPlugins: [MyCustomUploadAdapterPlugin],
       })
       .then(newEditor => {
-        console.log('Editor was initialized', newEditor);
         this.editor = markRaw(newEditor);
       })
       .catch(error => {

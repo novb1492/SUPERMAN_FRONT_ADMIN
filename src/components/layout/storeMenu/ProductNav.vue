@@ -1,15 +1,11 @@
 <template>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="javascript:void();" id="navbarDropdown" role="button"
-            data-bs-toggle="dropdown" aria-expanded="false">
-            상품관리
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <li><a class="dropdown-item" href="javascript:void();" @click="goRegiProduct" v-if="role != 'USER'">상품등록</a>
-            </li>
-            <li><a class="dropdown-item" href="javascript:void();" @click="goProductList">상품조회</a></li>
+    <ul class="menu-ul">
+        <li class="menu-li" @click="active">상품관리</li>
+        <ul class="menu-detail-ul" :class="{ 'active': flag }">
+            <li @click="goRegiProduct" v-if="role != 'USER'">상품등록</li>
+            <li @click="goProductList">상품조회</li>
         </ul>
-    </li>
+    </ul>
 </template>
 
 <script>
@@ -23,12 +19,24 @@ export default {
             role: 'getRole'
         })
     },
-    methods:{
-        goRegiProduct(){
-            location.href='/regi-product?storeid='+this.$route.query.storeid+'&storeName='+this.$route.query.storeName+'&addr='+this.$route.query.addr;
+    data() {
+        return {
+            flag: false
+        };
+    },
+    methods: {
+        goRegiProduct() {
+            location.href = '/regi-product?storeid=' + this.$route.query.storeid + '&storeName=' + this.$route.query.storeName + '&addr=' + this.$route.query.addr;
         },
-        goProductList(){
-            location.href='/product-list?page=1&category=0&storeid='+this.$route.query.storeid+'&storeName='+this.$route.query.storeName+'&addr='+this.$route.query.addr;
+        goProductList() {
+            location.href = '/product-list?page=1&category=0&storeid=' + this.$route.query.storeid + '&storeName=' + this.$route.query.storeName + '&addr=' + this.$route.query.addr;
+        },
+        active() {
+            if (this.flag) {
+                this.flag = false;
+                return;
+            }
+            this.flag = true;
         }
     }
 }

@@ -1,8 +1,6 @@
 <template>
   <div>
-    <span>조회중인매장:{{showStoreInfo.name}}</span>
-    <br>
-    <span>주소:{{showStoreInfo.addr}}</span>
+    {{showStoreInfo}}
   </div>
 </template>
 

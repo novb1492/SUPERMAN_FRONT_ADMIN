@@ -3,7 +3,6 @@ export default {
         context.commit('changeSituation',data);
     },
     changeLoginFlag(context,data) {
-        console.log(data);
         context.commit('changeLoginFlag',data);
     }
 }

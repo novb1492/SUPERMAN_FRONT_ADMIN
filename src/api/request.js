@@ -21,7 +21,6 @@ export function setInterceptors(instance) {
       return response;
     },
     (error) => {
-      console.log(error);
       let response = error.response;
       let data = response.data;
       if (checkNew(response.status,data.message)) {

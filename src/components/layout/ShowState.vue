@@ -1,10 +1,6 @@
 <template>
-    <li class="nav-item" v-if="!loginFlag">
-        <a class="nav-link" href="javascript:void();" @click="goLogin">로그인</a>
-    </li>
-    <li class="nav-item" v-else>
-        <a class="nav-link" href="javascript:void();" @click="logOut">로그아웃</a>
-    </li>
+    <li class="menu-li" v-if="!loginFlag" @click="goLogin">로그인</li>
+    <li class="menu-li" v-else @click="logOut">로그아웃</li>
 </template>
 
 <script>

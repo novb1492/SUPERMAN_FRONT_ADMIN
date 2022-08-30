@@ -110,7 +110,6 @@ export default {
                 "id": this.$route.query.storeid,
                 "events": this.events
             });
-            console.log(data);
             this.$store.dispatch('ProductStore/requestProductSave', data);
         },
         uploadThumbNail() {
