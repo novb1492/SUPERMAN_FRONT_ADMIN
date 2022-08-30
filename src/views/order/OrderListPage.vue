@@ -83,7 +83,6 @@ export default {
                 "cardIds": this.deliverArr,
                 "storeId": this.storeid
             })
-            console.log(data);
             requestSave(data).then(response => {
                 this.insertDone(response.data);
             }).catch(error => {

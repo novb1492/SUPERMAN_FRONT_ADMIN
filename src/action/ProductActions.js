@@ -22,7 +22,6 @@ export default {
         requestSave(data).then(response=>{
             saveDone(response.data);
         }).catch(error=>{
-            console.log(error);
             let response = error.response;
             let responseData = response.data;
             if (checkNew(response.status, responseData.message)) {

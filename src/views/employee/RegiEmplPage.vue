@@ -110,7 +110,6 @@ export default {
             this.storeName = null;
         },
         doneSearch(response) {
-            console.log(response);
             this.userInfo = response.data;
             this.id = this.userInfo.id;
         },

@@ -51,9 +51,7 @@ export default class MyUploadAdapter {
             if (!response || response.error) {
                 return reject(response && response.error ? response.error.message : genericErrorText);
             }
-            console.log('결과');
             console.log(response);
-            console.log('reposne: ' + response.message);
             if (response.message == 'new') {
                 console.log('재용청필요함');
                 this._initRequest();

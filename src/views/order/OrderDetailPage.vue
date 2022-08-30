@@ -119,7 +119,6 @@ export default {
             changeShowMarketInfo: "changeShowMarketInfo",
         }),
         getDone(data) {
-            console.log(data.selectForOrderDto.cardNum);
             this.infoArr = data.selectDtos;
             this.payment = data.selectForOrderDto;
         },

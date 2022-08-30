@@ -109,7 +109,6 @@ export default {
             requestChangeState(data).then(response => {
                 this.doneCancelAll(response.data);
             }).catch(error => {
-                console.log(error);
                 let response = error.response;
                 let responseData = response.data;
                 if (checkNew(response.status, responseData.message)) {

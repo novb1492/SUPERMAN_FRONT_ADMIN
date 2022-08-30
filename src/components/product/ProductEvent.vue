@@ -66,7 +66,6 @@ export default {
             }
             if (!flag2) {
                 eventArr[eventArr.length] = event;
-                console.log(eventArr);
                 this.setEvents(eventArr);
             }
         },

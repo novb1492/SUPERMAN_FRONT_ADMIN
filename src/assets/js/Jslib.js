@@ -106,7 +106,6 @@ export function show400ErrorList(error) {
     let errors = error.response.data.errors;
     let data = error.response.data;
     console.log(errors);
-    console.log(data.message);
     if (errors == null || errors == undefined) {
         alert(data.message);
     } else {
