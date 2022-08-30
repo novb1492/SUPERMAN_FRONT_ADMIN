@@ -1,9 +1,11 @@
+import {  newTokenMessage, setTokenByXhr} from "@/assets/js/Jslib";
 export default class MyUploadAdapter {
     constructor(props) {
         // CKEditor 5's FileLoader instance.
         this.loader = props;
         // URL where to send files.
         this.url = 'http://localhost:8080/file/upload';
+        this.data=JSON.parse(localStorage.getItem('authentication'));
     }
 
     // Starts the upload process.
@@ -27,10 +29,10 @@ export default class MyUploadAdapter {
     // Example implementation using XMLHttpRequest.
     _initRequest() {
         console.log('_initRequest');
-
         const xhr = this.xhr = new XMLHttpRequest();
-
         xhr.open('POST', this.url, true);
+        xhr.setRequestHeader('authentication',this.data.authentication);
+        xhr.setRequestHeader('refreshToken',this.data.refresh);
         xhr.withCredentials = true;
         xhr.responseType = 'json';
 
@@ -51,9 +53,15 @@ export default class MyUploadAdapter {
             if (!response || response.error) {
                 return reject(response && response.error ? response.error.message : genericErrorText);
             }
-            console.log(response);
-            if (response.message == 'new') {
-                console.log('재용청필요함');
+            /**
+             * 토큰 만료시 재요청
+             */
+            if (response.message == newTokenMessage()) {
+                let headers=new Object;
+                headers.authentication=xhr.getResponseHeader('authentication');
+                headers.refreshtoken=xhr.getResponseHeader('refreshtoken');
+                setTokenByXhr(headers);
+                this.data=headers;
                 this._initRequest();
                 this._initListeners(resolve, reject);
                 this._sendRequest();
