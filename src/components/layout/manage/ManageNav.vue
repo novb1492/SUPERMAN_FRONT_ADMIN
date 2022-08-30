@@ -1,10 +1,10 @@
 <template>
   <nav class="nav">
     <div class="nav-section">
-      <a href="javascript:void();">SUPERMAN</a>
+      <a href="/">SUPERMAN</a>
       <i class="fa-solid fa-bars navtoggle" @click="active"></i>
     </div>
-    <ul class="nav-menu-list" :class="{ 'active': flag }">
+    <ul class="nav-menu-list-manage" :class="{ 'active': flag }">
       <ManageMainNav v-if="situataion == 0"></ManageMainNav>
       <ManageStoreNav v-if="situataion == 1"></ManageStoreNav>
     </ul>

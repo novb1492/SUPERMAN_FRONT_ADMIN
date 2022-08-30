@@ -48,6 +48,32 @@ a{
 .navtoggle{
     padding: 1rem;
 }
+.nav-menu-list-manage{
+    display: none;
+}
+.nav-menu-list-manage.active{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding-left: 0;
+}
+.nav-menu-list-user{
+    display: none;
+}
+.nav-menu-list-user.active{
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0;
+    padding-left: 0;
+}
 @media screen and (min-width: 500px) {
 
     .nav{
@@ -89,6 +115,44 @@ a{
     }
     .menu-ul{
         display: block;
+    }
+    .nav-menu-list-manage{
+        display: flex;
+        list-style: none;
+        width: 100%;
+        align-items: center;
+        justify-content: space-around;
+        margin: 0;
+        padding: 0.5rem 0;
+    }
+    .nav-menu-list-manage.active{
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        margin: 0;
+        padding: 0.5rem 0;
+    }
+    .nav-menu-list-user{
+        display: flex;
+        list-style: none;
+        width: 100%;
+        align-items: center;
+        justify-content: space-around;
+        margin: 0;
+        padding: 0.5rem 0;
+    }
+    .nav-menu-list-user.active{
+        list-style: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-around;
+        width: 100%;
+        margin: 0;
+        padding: 0.5rem 0;
     }
 
    
