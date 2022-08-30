@@ -41,9 +41,7 @@ export default {
     }
   },
   mounted() {
-    this.tt = navigator.userAgent;
     this.$store.dispatch('NavStore/changeSituation', 0);
-    this.connect();
   },
   methods: {
     on_pay() {
