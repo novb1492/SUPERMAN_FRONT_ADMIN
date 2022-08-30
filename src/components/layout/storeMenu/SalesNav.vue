@@ -1,9 +1,12 @@
 <template>
-    <li class="menu-li" @click="active"> 매출관리</li>
-    <li class="menu-detail-li" :class="{ 'active': flag }" @click="goRegiStore">월별매출</li>
-    <li class="menu-detail-li" :class="{ 'active': flag }" @click="goStoreList">일별매출</li>
-    <li class="menu-detail-li" :class="{ 'active': flag }" @click="goStoreList">전체매출</li>
-
+    <ul class="menu-ul">
+        <li class="menu-li" @click="active"> 매출관리</li>
+        <ul class="menu-detail-ul" :class="{ 'active': flag }">
+            <li @click="goRegiStore">월별매출</li>
+            <li @click="goStoreList">일별매출</li>
+            <li @click="goStoreList">전체매출</li>
+        </ul>
+    </ul>
 </template>
 
 <script>

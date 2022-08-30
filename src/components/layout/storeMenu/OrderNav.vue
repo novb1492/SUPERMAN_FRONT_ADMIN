@@ -1,8 +1,13 @@
 <template>
-    <li class="menu-li" @click="active">주문관리 </li>
-    <li class="menu-detail-li" :class="{ 'active': flag  }" @click="goOrder(100)">완료된주문</li>
-    <li class="menu-detail-li" :class="{ 'active': flag  }" @click="goOrder(1)">들어온주문</li>
-    <li class="menu-detail-li" :class="{ 'active': flag  }" @click="goOrder(10)">취소된주문</li>
+    <ul class="menu-ul">
+        <li class="menu-li" @click="active">주문관리 </li>
+        <ul class="menu-detail-ul" :class="{ 'active': flag }">
+            <li @click="goOrder(100)">완료된주문</li>
+            <li @click="goOrder(1)">들어온주문</li>
+            <li @click="goOrder(10)">취소된주문</li>
+        </ul>
+    </ul>
+
 </template>
 
 <script>
