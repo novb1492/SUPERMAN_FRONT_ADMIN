@@ -1,7 +1,12 @@
 <template>
-    <li class="menu-li" @click="active">매장관리</li>
-    <li class="menu-detail-li" :class="{ 'active': flag }" @click="goRegiStore" v-if="role == 'ADMIN'">매장등록</li>
-    <li class="menu-detail-li" :class="{ 'active': flag }" @click="goStoreList">매장조회</li>
+    <ul class="menu-ul">
+        <li class="menu-li" @click="active">매장관리</li>
+        <ul class="menu-detail-ul" :class="{ 'active': flag }">
+            <li @click="goRegiStore" v-if="role == 'ADMIN'">매장등록</li>
+            <li @click="goStoreList">매장조회</li>
+        </ul>
+    </ul>
+
 </template>
 
 <script>

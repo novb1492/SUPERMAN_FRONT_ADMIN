@@ -1,7 +1,11 @@
 <template>
-    <li class="menu-li" @click="active">사업자번호관리</li>
-    <li class="menu-detail-li" :class="{ 'active': flag }" @click="goRegiComapnyNum">사업자번호등록</li>
-    <li class="menu-detail-li" :class="{ 'active': flag }" @click="goRegiComapnyNumList">보유사업자번호조회</li>
+    <ul class="menu-ul">
+        <li class="menu-li" @click="active">사업자번호관리</li>
+        <ul class="menu-detail-ul" :class="{ 'active': flag }">
+            <li  @click="goRegiComapnyNum">사업자번호등록</li>
+            <li  @click="goRegiComapnyNumList">보유사업자번호조회</li>
+        </ul>
+    </ul>
 </template>
 
 <script>

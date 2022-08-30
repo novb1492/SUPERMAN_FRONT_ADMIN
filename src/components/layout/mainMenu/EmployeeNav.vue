@@ -1,7 +1,12 @@
 <template>
-    <li class="menu-li" @click="active">직원관리</li>
-    <li class="menu-detail-li" :class="{ 'active': flag  }" v-if="role=='ADMIN' ||role=='MANAGE'" @click="goRegiEmpl">직원등록</li>
-    <li class="menu-detail-li" :class="{ 'active': flag  }" v-if="situataion==1">직원조회</li>
+    <ul class="menu-ul">
+        <li class="menu-li" @click="active">직원관리</li>
+        <ul class="menu-detail-ul" :class="{ 'active': flag }">
+            <li v-if="role=='ADMIN' ||role=='MANAGE'" @click="goRegiEmpl">직원등록</li>
+            <li v-if="situataion==1">직원조회</li>
+        </ul>
+    </ul>
+
 </template>
 
 <script>
