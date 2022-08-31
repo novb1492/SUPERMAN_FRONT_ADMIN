@@ -2,14 +2,14 @@
     <ul class="menu-ul">
         <li class="menu-li" @click="active"> 매출관리</li>
         <ul class="menu-detail-ul" :class="{ 'active': flag }">
-            <li @click="goRegiStore">월별매출</li>
-            <li @click="goStoreList">일별매출</li>
-            <li @click="goStoreList">전체매출</li>
+            <li @click="goSalesListPage">매출확인</li>
         </ul>
     </ul>
 </template>
 
 <script>
+import { storeCommonQuery } from '@/assets/js/Jslib';
+
 
 export default {
     name: 'SalesNav',
@@ -19,6 +19,12 @@ export default {
         };
     },
     methods: {
+        goSalesListPage() {
+            var today = new Date();
+            var year = today.getFullYear();
+            var month = ('0' + (today.getMonth() + 1)).slice(-2);
+            location.href = '/sales-list?year='+year+'&month='+month+storeCommonQuery(this.$route);
+        },
         active() {
             if (this.flag) {
                 this.flag = false;

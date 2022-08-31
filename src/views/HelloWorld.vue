@@ -1,8 +1,7 @@
 <template>
   <div style="margin-top: 70px;"></div>
-  <button @click="test">배달시작</button>
   <button @click="connect2">손님이배달조회</button>
-  <button @click="success2">배달위치전송</button>
+
 
   <!-- 인코딩 euc-kr 필수 -->
   <form name="mobileweb" method="post" accept-charset="euc-kr">
