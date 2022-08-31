@@ -137,4 +137,10 @@ export function storeCommonQueryInRouter(){
 export function storeCommonQuery(route){
     return '&storeid=' + route.query.storeid + '&addr=' + route.query.addr + '&storeName=' + route.query.storeName;
 }
- 
+export function create2DArray(rows, columns) {
+    var arr = new Array(rows);
+    for (var i = 0; i < rows; i++) {
+        arr[i] = new Array(columns);
+    }
+    return arr;
+}
