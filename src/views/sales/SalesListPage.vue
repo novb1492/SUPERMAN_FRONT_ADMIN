@@ -154,7 +154,7 @@ export default {
             return dayArr;
         },
         setHourArr(hours) {
-            let hourArr = create2DArray(24, 2);
+            let hourArr = create2DArray(25, 2);
             hourArr[0][0] = '시간';
             hourArr[0][1] = '판매금액';
             for (let i = 1; i < 24; i++) {
@@ -165,6 +165,16 @@ export default {
                     hourArr[i][1] = hours[i];
 
                 }
+            }
+             /**
+             * 24시==0은 따로 처리해줘야한다
+             * 
+             * */
+             hourArr[24][0] = 24;
+            if (checkParam(hours[0])) {
+                hourArr[24][1] = 0;
+            } else {
+                hourArr[24][1] = hours[0];
             }
             return hourArr;
         }
