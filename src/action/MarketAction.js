@@ -1,5 +1,5 @@
 import {  requestStoreInfo,requestGetCompanyNumAll } from "@/api/market/MarketApi"
-import { checkNew, show400ErrorList } from "@/assets/js/Jslib";
+import { BackButton403Error, checkNew, newTokenMessage, show400ErrorList } from "@/assets/js/Jslib";
 
 export default {
     getStoreInfo(context, payload) {
@@ -7,6 +7,7 @@ export default {
         requestStoreInfo(id).then(response => {
             doneGetInfo(response,context);
         }).catch(error => {
+            console.log(error);
             let response = error.response;
             let data = response.data;
             if (checkNew(response.status, data.message)) {
@@ -89,6 +90,10 @@ function getInfoError(error) {
     let response = error.response;
     if(response.status==400){
         show400ErrorList(error);
+        return;
+    }
+    else if(response.status==403&&response.data.message==newTokenMessage()){
+        BackButton403Error();
         return;
     }
     alert(response.data.message);

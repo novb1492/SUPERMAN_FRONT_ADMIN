@@ -16,7 +16,7 @@ import OrderDetailPage from "@/views/order/OrderDetailPage.vue";
 import DeliverListPage from "@/views/deliver/DeliverListPage.vue";
 import DeliverDetailPage from "@/views/deliver/DeliverDetailPage.vue";
 import SalesListPage from "@/views/sales/SalesListPage.vue";
-
+import EmpListPage from "@/views/employee/EmpListPage.vue";
 const routes = [
   {
     path: "/",
@@ -90,7 +90,7 @@ const routes = [
     path: "/company-list",
     component: CompanyListPage,
     beforeEnter: () => {
-      checkLogin('/login', '/company-list?page='+getParam('page')+'^category='+getParam('category')+'^keyword='+getParam('keyword'), 'ADMIN');
+      checkLogin('/login', '/company-list*page='+getParam('page')+'^category='+getParam('category')+'^keyword='+getParam('keyword'), 'ADMIN');
     }
   },
   {
@@ -118,14 +118,21 @@ const routes = [
     path: "/deliver-detail",
     component: DeliverDetailPage,
     beforeEnter: () => {
-      checkLogin('/login', '/deliver-detail?deliverid='+getParam('deliverid')+storeCommonQueryInRouter(), 'USER');
+      checkLogin('/login', '/deliver-detail*deliverid='+getParam('deliverid')+storeCommonQueryInRouter(), 'USER');
     }
   },
   {
     path: "/sales-list",
     component: SalesListPage,
     beforeEnter: () => {
-      checkLogin('/login', '/sales-list?year='+getParam('year')+'&month='+getParam('month')+storeCommonQueryInRouter(), 'MANAGE');
+      checkLogin('/login', '/sales-list*year='+getParam('year')+'^month='+getParam('month')+storeCommonQueryInRouter(), 'MANAGE');
+    }
+  },
+  {
+    path: "/empl-list",
+    component: EmpListPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/empl-list*page='+getParam('pagee')+storeCommonQueryInRouter(), 'USER');
     }
   }
 ];
