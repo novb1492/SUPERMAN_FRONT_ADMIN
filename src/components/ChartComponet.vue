@@ -6,7 +6,7 @@
 <script>
 
 export default {
-    props: ['idName'],
+    props: ['idName','arr'],
     name:'ChartComponet',
     mounted() {
         window.google.charts.load('current', { 'packages': ['bar'] });
@@ -14,7 +14,6 @@ export default {
     },
     data() {
         return {
-            arr:[],
             subtitle:'',
         }
     },
@@ -37,9 +36,6 @@ export default {
              * */
             formatter.format(data, 1);
             chart.draw(data, window.google.charts.Bar.convertOptions(options));
-        },
-        setArr(data){
-            this.arr=data;
         }
     }
 }

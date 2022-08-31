@@ -1,12 +1,18 @@
 <template lang="">
     <div>
-        <ChartComponet ref="day" :idName="'day'"></ChartComponet>
-        <ChartComponet ref="hour" :idName="'hour'"></ChartComponet>
-        <ChartComponet ref="dayofweek" :idName="'dayofweek'"></ChartComponet>
+        {{year}}
+        {{month}}
+        <button @click="changeYear(1)">다음연도</button>
+        <button @click="changeYear(-1)">이전연도</button>
+        <button @click="changeMonth(1)">다음달</button>
+        <button @click="changeMonth(-1)">이전달</button>
+        <ChartComponet ref="day" :idName="'day'" :arr="dayArr"  :key="key1"></ChartComponet>
+        <ChartComponet ref="hour" :idName="'hour'" :arr="hourArr"  :key="key2"></ChartComponet>
+        <ChartComponet ref="dayofweek" :idName="'dayofweek'" :arr="dayofweekArr" :key="key3"></ChartComponet>
     </div>
 </template>
 <script>
-import { checkNew, checkParam, create2DArray, showStoreInfo } from '@/assets/js/Jslib';
+import { checkNew, checkParam, create2DArray, showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
 import { mapMutations } from 'vuex';
 import { requestGetByPeriod } from "@/api/payment/PaymentApi";
 import ChartComponet from "@/components/ChartComponet.vue";
@@ -15,22 +21,44 @@ export default {
     mounted() {
         this.$store.dispatch('NavStore/changeSituation', 1);
         showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
-        this.reqeuestGet();
+        this.requestGet();
+    },
+    watch: {
+        '$route'() {
+            this.requestGet();
+        }
     },
     data() {
         return {
             storeId: this.$route.query.storeid,
-            arr: [],
-            id: '',
+            key1:1,
+            key2:2,
+            key3:3,
+            dayArr:[],
+            hourArr:[],
+            dayofweekArr:[],
+            year:0,
+            month:0
         }
     },
     methods: {
+        changeYear(num){
+            let year = this.$route.query.year*1+num;
+            this.$router.push('/sales-list?year='+year+'&month='+this.$route.query.month+storeCommonQuery(this.$route));
+        },
+        changeMonth(num){
+            let month = this.getMonth(this.$route.query.month*1+num);
+            this.$router.push('/sales-list?year='+this.$route.query.year+'&month='+month+storeCommonQuery(this.$route));
+        },
         ...mapMutations("NavStore", {
             changeShowMarketInfo: "changeShowMarketInfo",
         }),
-        reqeuestGet() {
-            let month = this.$route.query.month;
+        requestGet() {
+            let month = this.getMonth(this.$route.query.month);
             let year = this.$route.query.year
+            this.year=year;
+            this.month=month;
+            
             requestGetByPeriod({ storeId: this.storeId, month: month, year: year }).then(response => {
                 this.doneGet(response.data);
             }).catch(error => {
@@ -47,11 +75,24 @@ export default {
                 }
             })
         },
+        getMonth(month){
+            if(month>12){
+                month=12;
+            }else if(month<1){
+                month=1;
+            }
+            return month;
+        },
         doneGet(data) {
-            this.$refs.hour.setArr(this.setHourArr(data.hours));
-            this.$refs.day.setArr(this.setDayArr(data.days));
-            this.$refs.dayofweek.setArr(  this.setDayOfWeek(data.dayOfWeeks));
-            // this.setDayOfWeek(data.dayOfWeeks);
+            this.hourArr=this.setHourArr(data.hours);
+            this.dayArr=this.setDayArr(data.days);
+            this.dayofweekArr=this.setDayOfWeek(data.dayOfWeeks);
+            /**
+             * 컴포넌트 재랜더링 위해 키값 변경
+             * */
+            this.key1+=1;
+            this.key2+=1;
+            this.key3+=1;
         },
         setDayOfWeek(dayofweeks) {
             let dayOfWeekArr = create2DArray(8, 2);
@@ -75,7 +116,6 @@ export default {
             } else {
                 dayOfWeekArr[7][1] = dayofweeks[0];
             }
-            console.log(dayOfWeekArr);
             return dayOfWeekArr;
         },
         getDayIfWeekText(num) {
