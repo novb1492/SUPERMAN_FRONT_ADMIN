@@ -15,6 +15,8 @@ import OrderListPage from "@/views/order/OrderListPage.vue";
 import OrderDetailPage from "@/views/order/OrderDetailPage.vue";
 import DeliverListPage from "@/views/deliver/DeliverListPage.vue";
 import DeliverDetailPage from "@/views/deliver/DeliverDetailPage.vue";
+import SalesListPage from "@/views/sales/SalesListPage.vue";
+
 const routes = [
   {
     path: "/",
@@ -117,6 +119,13 @@ const routes = [
     component: DeliverDetailPage,
     beforeEnter: () => {
       checkLogin('/login', '/deliver-detail?deliverid='+getParam('deliverid')+storeCommonQueryInRouter(), 'USER');
+    }
+  },
+  {
+    path: "/sales-list",
+    component: SalesListPage,
+    beforeEnter: () => {
+      checkLogin('/login', '/sales-list?year='+getParam('year')+'&month='+getParam('month')+storeCommonQueryInRouter(), 'MANAGE');
     }
   }
 ];
