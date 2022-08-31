@@ -14,7 +14,8 @@ export default {
     },
     data() {
         return {
-            arr:[]
+            arr:[],
+            subtitle:'',
         }
     },
     methods: {

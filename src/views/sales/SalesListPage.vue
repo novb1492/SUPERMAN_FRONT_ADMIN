@@ -6,7 +6,7 @@
     </div>
 </template>
 <script>
-import { checkNew ,checkParam,create2DArray, showStoreInfo} from '@/assets/js/Jslib';
+import { checkNew, checkParam, create2DArray, showStoreInfo } from '@/assets/js/Jslib';
 import { mapMutations } from 'vuex';
 import { requestGetByPeriod } from "@/api/payment/PaymentApi";
 import ChartComponet from "@/components/ChartComponet.vue";
@@ -20,8 +20,8 @@ export default {
     data() {
         return {
             storeId: this.$route.query.storeid,
-            arr:[],
-            id:'',
+            arr: [],
+            id: '',
         }
     },
     methods: {
@@ -47,50 +47,82 @@ export default {
                 }
             })
         },
-        doneGet(data){
+        doneGet(data) {
             this.$refs.hour.setArr(this.setHourArr(data.hours));
             this.$refs.day.setArr(this.setDayArr(data.days));
-            this.$refs.dayofweek.setArr(this.setDayOfWeek(data.dayOfWeeks));
+            this.$refs.dayofweek.setArr(  this.setDayOfWeek(data.dayOfWeeks));
+            // this.setDayOfWeek(data.dayOfWeeks);
         },
-        setDayOfWeek(dayofweeks){
-            let dayOfWeekArr=create2DArray(8,2);
-            dayOfWeekArr[0][0]='요일';
-            dayOfWeekArr[0][1]='판매금액';
-            for(let i=1;i<8 ;i++){
-                dayOfWeekArr[i][0]=i;
-                if(checkParam(dayofweeks[i])){
-                    dayOfWeekArr[i][1]=0;
-                }else{
-                    dayOfWeekArr[i][1]=dayofweeks[i];
+        setDayOfWeek(dayofweeks) {
+            let dayOfWeekArr = create2DArray(8, 2);
+            dayOfWeekArr[0][0] = '요일';
+            dayOfWeekArr[0][1] = '판매금액';
+            for (let i = 1; i < 8; i++) {
+                dayOfWeekArr[i][0] = this.getDayIfWeekText(i);
+                if (checkParam(dayofweeks[i])) {
+                    dayOfWeekArr[i][1] = 0;
+                } else {
+                    dayOfWeekArr[i][1] = dayofweeks[i];
                 }
             }
+            /**
+             * 일요일은 따로 처리해줘야한다
+             * 
+             * */
+            dayOfWeekArr[7][0] = this.getDayIfWeekText(0);
+            if (checkParam(dayofweeks[0])) {
+                dayOfWeekArr[7][1] = 0;
+            } else {
+                dayOfWeekArr[7][1] = dayofweeks[0];
+            }
+            console.log(dayOfWeekArr);
             return dayOfWeekArr;
         },
-        setDayArr(days){
-            let dayArr=create2DArray(32,2);
-            dayArr[0][0]='일';
-            dayArr[0][1]='판매금액';
-            for(let i=1;i<32 ;i++){
-                dayArr[i][0]=i+'일';
-                if(checkParam(days[i])){
-                    dayArr[i][1]=0;
-                }else{
-                    dayArr[i][1]=days[i];
+        getDayIfWeekText(num) {
+            switch (num) {
+                case 0:
+                    return "일";
+                case 1:
+                    return "월";
+                case 2:
+                    return "화";
+                case 3:
+                    return "수";
+                case 4:
+                    return "목";
+                case 5:
+                    return "금";
+                case 6:
+                    return "토";
+                default:
+                    break;
+            }
+        },
+        setDayArr(days) {
+            let dayArr = create2DArray(32, 2);
+            dayArr[0][0] = '일';
+            dayArr[0][1] = '판매금액';
+            for (let i = 1; i < 32; i++) {
+                dayArr[i][0] = i + '일';
+                if (checkParam(days[i])) {
+                    dayArr[i][1] = 0;
+                } else {
+                    dayArr[i][1] = days[i];
 
                 }
             }
             return dayArr;
         },
-        setHourArr(hours){
-            let hourArr=create2DArray(24,2);
-            hourArr[0][0]='시간';
-            hourArr[0][1]='판매금액';
-            for(let i=1;i<24 ;i++){
-                hourArr[i][0]=i+'시';
-                if(checkParam(hours[i])){
-                    hourArr[i][1]=0;
-                }else{
-                    hourArr[i][1]=hours[i];
+        setHourArr(hours) {
+            let hourArr = create2DArray(24, 2);
+            hourArr[0][0] = '시간';
+            hourArr[0][1] = '판매금액';
+            for (let i = 1; i < 24; i++) {
+                hourArr[i][0] = i + '시';
+                if (checkParam(hours[i])) {
+                    hourArr[i][1] = 0;
+                } else {
+                    hourArr[i][1] = hours[i];
 
                 }
             }
