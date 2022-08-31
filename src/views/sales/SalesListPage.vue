@@ -12,7 +12,7 @@
     </div>
 </template>
 <script>
-import { checkNew, checkParam, create2DArray, showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
+import { checkNew, checkParam, create2DArray, errorHandle, showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
 import { mapMutations } from 'vuex';
 import { requestGetByPeriod } from "@/api/payment/PaymentApi";
 import ChartComponet from "@/components/ChartComponet.vue";
@@ -68,10 +68,10 @@ export default {
                     requestGetByPeriod({ storeId: this.storeId, month: month, year: year }).then(response => {
                         this.doneGet(response.data);
                     }).catch(error => {
-                        this.errorInsert(error);
+                        errorHandle(error);
                     });
                 } else {
-                    this.errorInsert(error);
+                    errorHandle(error);
                 }
             })
         },

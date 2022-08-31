@@ -20,6 +20,12 @@ export function setTokenByXhr(response) {
     });
     localStorage.setItem("authentication", data);
 }
+/**
+ * 페이지 접근전 
+ * 페이지 권한이 있는지 확인한는함수
+ * @param {string} role 
+ * @returns 
+ */
 function checkRole(role) {
     let loginRole = getRole();
     console.log(loginRole);
@@ -56,6 +62,12 @@ export function getRole() {
         return null;
     }
 }
+/**
+ * 로그인후 
+ * 로컬스토리지에 
+ * 기본정보를 저장하는함수
+ * @param {response} response 
+ */
 export function setInfo(response) {
     let responseData = response.data;
     let data = JSON.stringify({
@@ -64,12 +76,26 @@ export function setInfo(response) {
     })
     localStorage.setItem('info', data);
 }
+/**
+ * 예외 발생시
+ * 해당 예외가 토큰 재발급 때문인지
+ * 확인하는 함수
+ * @param {int} state 
+ * @param {string} message 
+ * @returns 
+ */
 export function checkNew(state, message) {
     if (state == 403 && message == newTokenMessage()) {
         return true;
     }
     return false;
 }
+/**
+ * 리프레시토큰 유실 혹은 만료시
+ * @param {int} state 
+ * @param {string} message 
+ * @returns 
+ */
 export function checkexpireLogin(state, message) {
     if (state == 403 && message == '세션이 만료 되었습니다') {
         alert('로그인이 만료 되었습니다')
@@ -122,15 +148,31 @@ export function show400ErrorList(error) {
     }
 
 }
+/**
+ * 매장 클릭시
+ * 그뒤로 네비바에 조회중인 매장 기본정보 표시함수
+ * @param {arr} arr 
+ * @param {string} storeName 
+ * @param {function} changeShowMarketInfo 
+ */
 export function showStoreInfo(arr,storeName,changeShowMarketInfo) {
     let data=new Object;
     data.addr = arr;
     data.name = storeName;
     changeShowMarketInfo(data);
 }
+/**
+ * 라우터에서 사용하는 기본 쿼리문
+ * @returns 
+ */
 export function storeCommonQueryInRouter(){
     return '^storeid='+getParam('storeid')+'^storeName='+getParam('storeName')+'^addr='+getParam('addr');
 }
+/**
+ * .vue에서 사용하는 기본쿼리문
+ * @param {route} route 
+ * @returns 
+ */
 export function storeCommonQuery(route){
     return '&storeid=' + route.query.storeid + '&addr=' + route.query.addr + '&storeName=' + route.query.storeName;
 }
@@ -141,6 +183,34 @@ export function create2DArray(rows, columns) {
     }
     return arr;
 }
+/**
+ * 시간이 지나고 
+ * 뒤로/앞으로 가기 버튼 클릭시
+ * 생기는 403에러 처리 함수
+ */
 export function BackButton403Error() {
     location.reload();
+}
+export function error500(error) {
+    let data = error.response.data;
+    alert(data.message);
+}
+/**
+ * 에러 처리 하는 함수입니다
+ * 물로 페이지별/에러상황별 정책이 다르지만
+ * 혼자 만들다 보니 다 생각 하기 힘들어서
+ * 한 함수에 몰아 놓고 alert정보만 하고 있습니다
+ * @param {error} error 
+ */
+export function errorHandle(error){
+    let response = error.response;
+    if(response.status==400){
+        show400ErrorList(error);
+        return;
+    }else if(response.status==403&&response.data.message==newTokenMessage()){
+        BackButton403Error();
+        return;
+    }else if(response.status==500){
+        error500(error);
+    }
 }
