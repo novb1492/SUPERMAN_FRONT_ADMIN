@@ -47,7 +47,7 @@
 <script>
 import {  checkNew, checkParam, show400ErrorList, showStoreInfo } from '@/assets/js/Jslib';
 import { mapGetters, mapMutations } from 'vuex';
-import { requestSave } from '@/api/product/ProductApi';
+import { requestSave } from '@/api/deliver/DeliverApi';
 export default {
     data() {
         return {

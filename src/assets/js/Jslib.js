@@ -7,8 +7,6 @@ export function checkLogin(failUrl, sucUrl, role) {
     checkRole(role);
 }
 export function setToken(response) {
-    console.log(response.headers);
-    console.log(response.headers.authentication);
     let data = JSON.stringify({
         "authentication": response.headers.authentication,
         "refresh": response.headers.refreshtoken
@@ -16,7 +14,6 @@ export function setToken(response) {
     localStorage.setItem("authentication", data);
 }
 export function setTokenByXhr(response) {
-    console.log(response);
     let data = JSON.stringify({
         "authentication": response.authentication,
         "refresh": response.refreshtoken
@@ -137,4 +134,10 @@ export function storeCommonQueryInRouter(){
 export function storeCommonQuery(route){
     return '&storeid=' + route.query.storeid + '&addr=' + route.query.addr + '&storeName=' + route.query.storeName;
 }
- 
+export function create2DArray(rows, columns) {
+    var arr = new Array(rows);
+    for (var i = 0; i < rows; i++) {
+        arr[i] = new Array(columns);
+    }
+    return arr;
+}
