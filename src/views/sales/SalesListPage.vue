@@ -1,25 +1,27 @@
 <template lang="">
     <div>
-        <div id="day" style="width: 800px; height: 500px;"></div>
-        <div id="hour" style="width: 800px; height: 500px;"></div>
-        <div id="dayofweek" style="width: 800px; height: 500px;"></div>
-
+        <ChartComponet ref="day" :idName="'day'"></ChartComponet>
+        <ChartComponet ref="hour" :idName="'hour'"></ChartComponet>
+        <ChartComponet ref="dayofweek" :idName="'dayofweek'"></ChartComponet>
     </div>
 </template>
 <script>
 import { checkNew ,checkParam,create2DArray, showStoreInfo} from '@/assets/js/Jslib';
 import { mapMutations } from 'vuex';
 import { requestGetByPeriod } from "@/api/payment/PaymentApi";
+import ChartComponet from "@/components/ChartComponet.vue";
 export default {
+    components: { ChartComponet },
     mounted() {
         this.$store.dispatch('NavStore/changeSituation', 1);
         showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
         this.reqeuestGet();
-        window.google.charts.load('current', { 'packages': ['bar'] });
     },
     data() {
         return {
-            storeId: this.$route.query.storeid
+            storeId: this.$route.query.storeid,
+            arr:[],
+            id:'',
         }
     },
     methods: {
@@ -46,18 +48,15 @@ export default {
             })
         },
         doneGet(data){
-            let hourArr=this.setHourArr(data.hours);
-            let dayArr=this.setDayArr(data.days);
-            let dayOfWeekArr=this.setDayOfWeek(data.dayOfWeeks);
-            console.log(hourArr);
-            console.log(dayArr);
-            console.log(dayOfWeekArr);
-            this.drawChart(dayArr,'day');
-            this.drawChart(hourArr,'hour');
+            this.$refs.hour.setArr(this.setHourArr(data.hours));
+            this.$refs.day.setArr(this.setDayArr(data.days));
+            this.$refs.dayofweek.setArr(this.setDayOfWeek(data.dayOfWeeks));
         },
         setDayOfWeek(dayofweeks){
-            let dayOfWeekArr=create2DArray(7,2);
-            for(let i in dayOfWeekArr){
+            let dayOfWeekArr=create2DArray(8,2);
+            dayOfWeekArr[0][0]='요일';
+            dayOfWeekArr[0][1]='판매금액';
+            for(let i=1;i<8 ;i++){
                 dayOfWeekArr[i][0]=i;
                 if(checkParam(dayofweeks[i])){
                     dayOfWeekArr[i][1]=0;
@@ -96,25 +95,6 @@ export default {
                 }
             }
             return hourArr;
-        },
-        drawChart(arr,idName) {
-            var data = window.google.visualization.arrayToDataTable(arr);
-            var options = {
-                chart: {
-                    title: 'MrPizzaHut ',
-                    subtitle: '일 판매차트'
-                }
-            };
-            /*
-            돔접근
-            */
-            var chart = new window.google.charts.Bar(document.getElementById(idName));
-            var formatter = new window.google.visualization.NumberFormat({ prefix: '원', negativeParens: true });
-            /**
-             * 막대바 만듬  formatter.format(data, 1);
-             * */
-            formatter.format(data, 1);
-            chart.draw(data, window.google.charts.Bar.convertOptions(options));
         }
     }
 }
