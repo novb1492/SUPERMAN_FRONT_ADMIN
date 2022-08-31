@@ -6,6 +6,12 @@ export function checkLogin(failUrl, sucUrl, role) {
     }
     checkRole(role);
 }
+/**
+ * 로그인 혹은 
+ * 토큰 재발급시 
+ * 다시 토큰 로컬스토리지에 저장 함수
+ * @param {response} response 
+ */
 export function setToken(response) {
     let data = JSON.stringify({
         "authentication": response.headers.authentication,
@@ -13,6 +19,12 @@ export function setToken(response) {
     });
     localStorage.setItem("authentication", data);
 }
+/**
+ * MyUploadAdapter.js 파일
+ *  사용하는 함수 추후에 
+ * xhr->axios로 변경 하면 없어져도 됨
+ * @param {response} response 
+ */
 export function setTokenByXhr(response) {
     let data = JSON.stringify({
         "authentication": response.authentication,
@@ -115,10 +127,6 @@ export function checkPage(page) {
     }
     return page;
 }
-export function failGetStoreList(error) {
-    let response = error.response;
-    alert(response.data.message);
-}
 export function changeUrl(url) {
     history.pushState("https://10.150.189.220:3030" + url);
 }
@@ -132,6 +140,11 @@ export function getParam(sname) {
     }
     return sval;
 }
+/**
+ * 새토큰 발급시
+ * 서버에서 던저주는 메세지
+ * @returns 
+ */
 export function newTokenMessage() {
     return '새토큰이 발급되었습니다';
 }
