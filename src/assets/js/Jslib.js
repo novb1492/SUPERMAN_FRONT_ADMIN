@@ -141,3 +141,6 @@ export function create2DArray(rows, columns) {
     }
     return arr;
 }
+export function BackButton403Error() {
+    location.reload();
+}
