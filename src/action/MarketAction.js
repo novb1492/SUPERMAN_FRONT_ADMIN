@@ -1,5 +1,5 @@
 import {  requestStoreInfo,requestGetCompanyNumAll } from "@/api/market/MarketApi"
-import { BackButton403Error, checkNew, newTokenMessage, show400ErrorList } from "@/assets/js/Jslib";
+import { checkNew, errorHandle } from "@/assets/js/Jslib";
 
 export default {
     getStoreInfo(context, payload) {
@@ -14,11 +14,11 @@ export default {
                 requestStoreInfo(id).then(response => {
                     doneGetInfo(response,context);
                 }).catch(error => {
-                    getInfoError(error);
+                    errorHandle(error);
                 });
             }
             else {
-                getInfoError(error);
+                errorHandle(error);
             }
         });
     },
@@ -71,11 +71,11 @@ export default {
                 requestGetCompanyNumAll().then(response => {
                     doneGetCnAl(response,context);
                 }).catch(error => {
-                    getInfoError(error);
+                    errorHandle(error);
                 });
             }
             else {
-                getInfoError(error);
+                errorHandle(error);
             }
         })
     },
@@ -85,16 +85,4 @@ function doneGetCnAl(response, context) {
 }
 function doneGetInfo(response, context) {
     context.commit('changeStoreInfo', response.data);
-}
-function getInfoError(error) {
-    let response = error.response;
-    if(response.status==400){
-        show400ErrorList(error);
-        return;
-    }
-    else if(response.status==403&&response.data.message==newTokenMessage()){
-        BackButton403Error();
-        return;
-    }
-    alert(response.data.message);
 }

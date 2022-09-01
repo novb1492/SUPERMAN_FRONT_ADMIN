@@ -12,7 +12,7 @@
 </template>
 <script>
 import { requestGetDetail, requestChangeState, requestDeliverDetailState } from "@/api/deliver/DeliverApi";
-import { checkNew, showStoreInfo } from "@/assets/js/Jslib";
+import { checkNew, errorHandle, showStoreInfo } from "@/assets/js/Jslib";
 import { mapMutations } from "vuex";
 export default {
     data() {
@@ -52,10 +52,10 @@ export default {
                     requestDeliverDetailState(requestData).then(response => {
                         this.successDone(response.data,deliverDetailId);
                     }).catch(error => {
-                        this.errorGet(error);
+                        errorHandle(error);
                     });
                 } else {
-                    this.errorGet(error);
+                    errorHandle(error);
                 }
             });
         },
@@ -84,10 +84,10 @@ export default {
                     requestDeliverDetailState(requestData).then(response => {
                         this.doneCancel(response.data,deliverDetailId);
                     }).catch(error => {
-                        this.errorGet(error);
+                       errorHandle(error);
                     });
                 } else {
-                    this.errorGet(error);
+                   errorHandle(error);
                 }
             });
         },
@@ -115,10 +115,10 @@ export default {
                     requestChangeState(data).then(response => {
                         this.doneCancelAll(response.data);
                     }).catch(error => {
-                        this.errorGet(error);
+                        errorHandle(error);
                     });
                 } else {
-                    this.errorGet(error);
+                    errorHandle(error);
                 }
             })
         },
@@ -189,10 +189,10 @@ export default {
                     requestChangeState(data).then(response => {
                         this.doneStart(response.data);
                     }).catch(error => {
-                        this.errorGet(error);
+                        errorHandle(error);
                     });
                 } else {
-                    this.errorGet(error);
+                    errorHandle(error);
                 }
             })
         },

@@ -90,7 +90,7 @@ import KakaoPostCode from '@/components/KakaoPostCode.vue';
 import Ck5Editor from '@/components/Ck5Editor.vue';
 import KakaoMap from '@/components/KakaoMap.vue';
 import { mapActions, mapGetters, mapMutations } from "vuex";
-import { checkNew, show400ErrorList, showStoreInfo } from "@/assets/js/Jslib";
+import { checkNew, errorHandle, showStoreInfo } from "@/assets/js/Jslib";
 export default {
     props: ['flag', 'storeInfo'],
     components: { KakaoPostCode, Ck5Editor, KakaoMap },
@@ -255,22 +255,12 @@ export default {
                         let data = response.data;
                         this.setThumbnail(data.message[0]);
                     }).catch(error => {
-                        this.catchUploadError(error);
+                        errorHandle(error);
                     });
                 } else {
-                    this.catchUploadError(error);
+                    errorHandle(error);
                 }
             });
-        },
-        catchUploadError(error) {
-            let response = error.response;
-            let state = response.status;
-            let data = response.data;
-            if (state == 403) {
-                alert('재로그인 후 시도해주세요');
-            } else if (state == 400) {
-                alert(data.message);
-            }
         },
         showCircle() {
             if (isNaN(this.radius)) {
@@ -316,18 +306,12 @@ export default {
                     requestStoreInsert(data).then(() => {
                         this.doneInsert();
                     }).catch(error => {
-                        this.catchReigError(error);
+                        errorHandle(error);
                     });
                 } else {
-                    this.catchReigError(error);
+                    errorHandle(error);
                 }
             });
-        },
-        catchReigError(error) {
-            let response = error.response;
-            if (response.status == 400) {
-                show400ErrorList(error);
-            }
         },
         doneInsert() {
             alert('매장등록이 완료 되었습니다');

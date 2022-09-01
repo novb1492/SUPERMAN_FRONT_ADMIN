@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import {  checkNew, checkParam, show400ErrorList, showStoreInfo } from '@/assets/js/Jslib';
+import {  checkNew, checkParam, errorHandle, showStoreInfo } from '@/assets/js/Jslib';
 import { mapGetters, mapMutations } from 'vuex';
 import { requestSave } from '@/api/deliver/DeliverApi';
 export default {
@@ -92,23 +92,15 @@ export default {
                     requestSave(data).then(response => {
                         this.insertDone(response.data);
                     }).catch(error => {
-                        this.errorInsert(error);
+                        errorHandle(error);
                     });
                 } else {
-                    this.errorInsert(error);
+                    errorHandle(error);
                 }
             })
         },
         insertDone(data) {
             alert(data.message);
-        },
-        errorInsert(error) {
-            let response = error.response;
-            if (response.status == 400) {
-                show400ErrorList(error);
-                return;
-            }
-            alert('정보를 불러오는데 실패했습니다');
         },
         goDetailPage(cardId) {
             location.href = '/order-detail?state=' + this.$route.query.state + '&paymentid=' + cardId + '&page=' + this.$route.query.page + '&&storeid=' + this.$route.query.storeid + '&storeName=' + this.$route.query.storeName + '&addr=' + this.$route.query.addr + '&periodFlag=' + this.$route.query.periodFlag;

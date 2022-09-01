@@ -19,7 +19,7 @@
 
 <script>
 import { requestCompanyNumInsert } from "@/api/market/MarketApi";
-import { checkNew } from "@/assets/js/Jslib";
+import { checkNew, errorHandle } from "@/assets/js/Jslib";
 export default {
   name: 'RegiCompany',
   data() {
@@ -48,21 +48,16 @@ export default {
           requestCompanyNumInsert(requestdata).then(response => {
             this.doneInsert(response.data)
           }).catch(error => {
-            this.errorInsert(error);
+            errorHandle(error);
           })
         } else {
-          this.errorInsert(error);
+          errorHandle(error);
         }
       });
     },
     doneInsert(data) {
       alert(data.message);
       location.href = '/comapny-list?page=1';
-    },
-    errorInsert(error) {
-      let response = error.response;
-      let data = response.data;
-      alert(data.message);
     }
   }
 }

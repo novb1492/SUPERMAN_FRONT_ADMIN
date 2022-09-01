@@ -26,7 +26,7 @@
 
 <script>
 import { requestGetByCardId, requestRefund, requestRefundAll } from "@/api/order/OrderApi";
-import { checkNew, show400ErrorList, showStoreInfo } from '@/assets/js/Jslib';
+import { checkNew, errorHandle, showStoreInfo } from '@/assets/js/Jslib';
 import { mapMutations } from "vuex";
 export default {
     data() {
@@ -51,10 +51,10 @@ export default {
                 requestGetByCardId({ cardId: this.cardId, storeId: this.storeId }).then(response => {
                     this.getDone(response.data);
                 }).catch(error => {
-                    this.errorGet(error);
+                    errorHandle(error);
                 });
             } else {
-                this.errorGet(error);
+                errorHandle(error);
             }
         });
     },
@@ -69,10 +69,10 @@ export default {
                     requestRefundAll(this.cardId).then(response => {
                         this.refundDone(response.data);
                     }).catch(error => {
-                        this.errorRefund(error);
+                        errorHandle(error);
                     });
                 } else {
-                    this.errorRefund(error);
+                    errorHandle(error);
                 }
             })
         },
@@ -103,10 +103,10 @@ export default {
                         requestRefund(data).then(response => {
                             this.refundDone(response.data);
                         }).catch(error => {
-                            this.errorRefund(error);
+                            errorHandle(error);
                         });
                     } else {
-                        this.errorRefund(error);
+                        errorHandle(error);
                     }
                 })
             }
@@ -121,22 +121,6 @@ export default {
         getDone(data) {
             this.infoArr = data.selectDtos;
             this.payment = data.selectForOrderDto;
-        },
-        errorGet(error) {
-            let response = error.response;
-            if (response.status == 400) {
-                show400ErrorList(error);
-                return;
-            }
-            alert(response.data.message);
-        },
-        errorRefund(error) {
-            let response = error.response;
-            if (response.status == 400) {
-                show400ErrorList(error);
-                return;
-            }
-            alert(response.data.message);
         }
     }
 }

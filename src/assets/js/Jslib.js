@@ -217,6 +217,8 @@ export function error500(error) {
  */
 export function errorHandle(error){
     let response = error.response;
+    console
+    .log(response);
     if(response.status==400){
         show400ErrorList(error);
         return;
@@ -225,5 +227,7 @@ export function errorHandle(error){
         return;
     }else if(response.status==500){
         error500(error);
+        return;
     }
+    alert(response.data.message);
 }

@@ -1,6 +1,6 @@
 import { requestListInfo } from "@/api/Etc/EtcApi";
 import {requestLogin  } from "@/api/login/loginApi";
-import {  setToken,setInfo, checkNew, show400ErrorList} from "@/assets/js/Jslib";
+import {  setToken,setInfo, checkNew, errorHandle} from "@/assets/js/Jslib";
 export default {
     requestLogin(context,payload) {
         let data=JSON.stringify({
@@ -19,9 +19,7 @@ export default {
             let url=nextUrl.replace('*','?');
             location.href=url.replaceAll('^','&');
         }).catch(error=>{
-            let resposne=error.response;
-            let data=resposne.data.data;
-            alert(data.message);
+            errorHandle(error);
         });
     },
     getInfolist(context, payload) {
@@ -34,23 +32,14 @@ export default {
                 requestListInfo(payload.url).then(response => {
                     getDone(context,response);
                 }).catch(error => {
-                    errorGet(error);
+                   errorHandle(error);
                 });
             } else {
-                errorGet(error);
+               errorHandle(error);
             }
         });
     }
 }
 function getDone(context,response) {
     context.commit('changePaginList', response.data);
-}
-function errorGet(error) {
-    let response = error.response;
-    if(response.status==400){
-        show400ErrorList(error);
-        return;
-    }
-    alert('정보를 불러오는데 실패했습니다');
-    
 }

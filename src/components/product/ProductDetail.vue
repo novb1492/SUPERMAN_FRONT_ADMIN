@@ -75,12 +75,12 @@ export default {
     },
     data() {
         return {
-            category: null,
+            category: null
         }
     },
     mounted() {
         this.requestGetCategorys();
-        showStoreInfo(this.$route.query.addr,this.$route.query.storeName, this.changeShowMarketInfo);
+        showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
     },
     methods: {
         ...mapMutations("NavStore", {

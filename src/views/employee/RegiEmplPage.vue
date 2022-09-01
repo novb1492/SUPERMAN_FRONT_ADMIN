@@ -34,7 +34,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import { requestSearchMember } from "@/api/Member/MemberApi";
-import { checkNew, checkPage } from '@/assets/js/Jslib';
+import { checkNew, checkPage, errorHandle } from '@/assets/js/Jslib';
 import { requestInviteMember } from "@/api/market/MarketApi";
 export default {
     data() {
@@ -89,25 +89,13 @@ export default {
                     requestSearchMember(this.userId).then(response => {
                         this.doneSearch(response)
                     }).catch(error => {
-                        this.selectEmError(error);
+                        errorHandle(error);
                     })
                 } else {
-                    this.selectEmError(error);
+                    errorHandle(error);
 
                 }
             })
-        },
-        selectEmError(error) {
-            let response = error.response;
-            let data = response.data;
-            if (response.status == 400) {
-                alert(data.message);
-            } else {
-                alert('알 수 없는 에러 발생');
-            }
-            this.userInfo = null;
-            this.userId = null;
-            this.storeName = null;
         },
         doneSearch(response) {
             this.userInfo = response.data;
@@ -127,10 +115,10 @@ export default {
                     requestInviteMember(requestDate).then(response => {
                         this.doneInvite(response);
                     }).catch(error => {
-                        this.errorInvite(error);
+                        errorHandle(error);
                     })
                 } else {
-                    this.errorInvite(error);
+                    errorHandle(error);
                 }
             })
         },
@@ -138,15 +126,6 @@ export default {
             let data = response.data;
             alert(data.message);
             this.$router.go(0);
-        },
-        errorInvite(error) {
-            let response = error.response;
-            let data = response.data;
-            if (response.status == 400) {
-                alert(data.message);
-            } else {
-                alert('알 수 없는 에러 발생');
-            }
         }
 
     }
