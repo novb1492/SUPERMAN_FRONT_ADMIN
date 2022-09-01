@@ -1,7 +1,7 @@
 <template>
   <nav class="nav">
     <div class="nav-section">
-      <a href="javascript:void();">SUPERMAN</a>
+      <a href="/">SUPERMAN</a>
       <i class="fa-solid fa-bars navtoggle" @click="active"></i>
     </div>
     <ul class="nav-menu-list" :class="{ 'active': flag }">

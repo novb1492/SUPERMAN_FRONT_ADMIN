@@ -1,5 +1,5 @@
 import { requestGetCategorys,requestSave } from "@/api/product/ProductApi";
-import { checkNew, show400ErrorList } from "@/assets/js/Jslib";
+import { checkNew, errorHandle } from "@/assets/js/Jslib";
 export default {
     requestGetCategorys(context) {
         requestGetCategorys().then(response => {
@@ -11,10 +11,10 @@ export default {
                 requestGetCategorys().then(response => {
                     getDone(context,response.data);
                 }).catch(error => {
-                    errorGet(error);
+                    errorHandle(error);
                 });
             } else {
-                errorGet(error);
+                errorHandle(error);
             }
         });
     },
@@ -28,10 +28,10 @@ export default {
                 requestSave(data).then(response => {
                     saveDone(response.data);
                 }).catch(error => {
-                    errorSave(error);
+                    errorHandle(error);
                 });
             } else {
-                errorSave(error);
+                errorHandle(error);
             }
         })
     }
@@ -42,17 +42,4 @@ function saveDone(data) {
 }
 function getDone(context,data) {
     context.commit('setCategorys', data);
-}
-function errorGet(error) {
-    let response = error.response;
-    let data = response.data;
-    alert(data.message);
-}
-function errorSave(error) {
-    let response = error.response;
-    if(response.status==400){
-        show400ErrorList(error);
-        return;
-    }
-    alert(response.data.message);
 }
