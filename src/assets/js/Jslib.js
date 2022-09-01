@@ -225,9 +225,23 @@ export function errorHandle(error){
     }else if(response.status==403&&response.data.message==newTokenMessage()){
         BackButton403Error();
         return;
+    }else if(response.status==500&&response.data.message=='리프레시 토큰 발급에 실패했습니다'){
+        error403fail(error);
+        return;
     }else if(response.status==500){
         error500(error);
         return;
     }
+
     alert(response.data.message);
+}
+/**
+ * 무한 새로고침 연타시 
+ * 토큰 교체 실패이슈 발생
+ * @param {error} error 
+ */
+export function error403fail(error) {
+    let data = error.response.data;
+    alert(data.message);
+    location.href='/login'+location.href;
 }

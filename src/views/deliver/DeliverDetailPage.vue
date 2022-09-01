@@ -60,13 +60,14 @@ export default {
             });
         },
         successDone(data,deliverDetailId){
+            console.log(data);
             let requestData = JSON.stringify({
                 "state": 'done',
                 "deliverDetailId":deliverDetailId,
                 "roomid":this.deliverId
             });
             this.websocket.send(requestData);
-            alert(data.message);
+            // alert(data.message);
         },
         cancel(deliverDetailId){
             let requestData = JSON.stringify({
