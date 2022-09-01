@@ -35,7 +35,7 @@ export function setInterceptors(instance) {
   return instance;
 }
 export const instance = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: process.env.VUE_APP_API_URL,
   headers: {
     'Content-Type': "application/json",
   }

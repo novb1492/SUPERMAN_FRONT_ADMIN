@@ -1,8 +1,6 @@
 <template>
   <div style="margin-top: 70px;"></div>
   <button @click="connect2">손님이배달조회</button>
-
-
   <!-- 인코딩 euc-kr 필수 -->
   <form name="mobileweb" method="post" accept-charset="euc-kr">
     <!--*************************필수 세팅 부분************************************-->
@@ -27,6 +25,14 @@
   </form>
   <input type="button" value="결제취소" @click="cancel" />
   {{ kgResponse }}
+
+  백엔드가 ec2에 미인증 https사용중이여서
+  <br>
+  통신시 net::ERR_CERT_AUTHORITY_INVALID가 발생합니다
+  <br>
+  크롬에서 https://43.200.77.18:8080 검색후 
+  <br>
+  안전하지 않지만 허용 클릭후 테스트 해주세요
 </template>
 
 <script>
