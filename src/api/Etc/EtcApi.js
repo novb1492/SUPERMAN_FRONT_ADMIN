@@ -6,7 +6,7 @@ async function requestUploadImg(data) {
 }
 function requestListInfo(url) {
     setInterceptors(instance);
-    return  instance.get(url,{ withCreadentials: true });
+    return  instance.get(url);
 }
 export {
     requestUploadImg,
