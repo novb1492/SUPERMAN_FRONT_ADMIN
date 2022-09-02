@@ -1,6 +1,6 @@
 import { requestListInfo } from "@/api/Etc/EtcApi";
 import {requestLogin  } from "@/api/login/loginApi";
-import {  setToken,setInfo, checkNew, errorHandle} from "@/assets/js/Jslib";
+import {  setInfo, checkNew, errorHandle} from "@/assets/js/Jslib";
 export default {
     requestLogin(context,payload) {
         let data=JSON.stringify({
@@ -8,7 +8,6 @@ export default {
             "pwd":payload.pwd
         });
         requestLogin(data).then(response=>{
-            setToken(response);
             setInfo(response);
             context.dispatch('NavStore/changeLoginFlag',true,{ root: true });
             let nextUrl=payload.nextUrl;

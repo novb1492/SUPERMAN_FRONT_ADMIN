@@ -7,32 +7,6 @@ export function checkLogin(failUrl, sucUrl, role) {
     checkRole(role);
 }
 /**
- * 로그인 혹은 
- * 토큰 재발급시 
- * 다시 토큰 로컬스토리지에 저장 함수
- * @param {response} response 
- */
-export function setToken(response) {
-    let data = JSON.stringify({
-        "authentication": response.headers.authentication,
-        "refresh": response.headers.refreshtoken
-    });
-    localStorage.setItem("authentication", data);
-}
-/**
- * MyUploadAdapter.js 파일
- *  사용하는 함수 추후에 
- * xhr->axios로 변경 하면 없어져도 됨
- * @param {response} response 
- */
-export function setTokenByXhr(response) {
-    let data = JSON.stringify({
-        "authentication": response.authentication,
-        "refresh": response.refreshtoken
-    });
-    localStorage.setItem("authentication", data);
-}
-/**
  * 페이지 접근전 
  * 페이지 권한이 있는지 확인한는함수
  * @param {string} role 
