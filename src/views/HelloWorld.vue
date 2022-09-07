@@ -60,12 +60,12 @@ export default {
       let info = JSON.parse(localStorage.getItem('info'));
       var temp=0;
       if(info.role=='MANAGE'){
-        temp=6;
+        temp=1;
       }else{
-        temp=5;
+        temp=2;
       }
       //---------------------------------------------------------
-      this.websocket2 = new WebSocket("ws://localhost:8080/ws/deliver?roomid=5&role=USER&deliverDetailId="+temp);
+      this.websocket2 = new WebSocket("wss://localhost:8080/ws/deliver?roomid=7&role=USER&deliverDetailId="+temp);
       this.websocket2.onopen = e => {
         console.log(e);
         //추후 검증 로직 추가

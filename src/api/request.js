@@ -1,7 +1,7 @@
 import { checkexpireLogin} from '@/assets/js/Jslib';
 import axios from 'axios';
 
-export async function setInterceptors(instance)  {
+export  function setInterceptors(instance)  {
   instance.interceptors.request.use(
     (config) => {
       let data = JSON.parse(localStorage.getItem('authentication'));
@@ -16,7 +16,7 @@ export async function setInterceptors(instance)  {
     },
   );
   // Add a response interceptor
-  await instance.interceptors.response.use(
+   instance.interceptors.response.use(
     (response) => {
       return response;
     },

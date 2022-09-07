@@ -2,18 +2,7 @@
     <div style="margin-top: 70px;">
         <div style="margin-top: 70px;" class="container">
             <ul v-if="totalPage > 0">
-                <li v-for="(info, index) in inforList" :key="index">
-                    <a href="javascript:void();" @click="goDetailPage(info.cardId)">
-                        <p>주문자명:{{ info.orderOwnName }}</p>
-                        <p>주문일자:{{ info.orderDate }}</p>
-                        <p>주문금액:{{ info.price }}원</p>
-                        <p>결제번호:{{ info.cardId }}</p>
-                        <p>배달주소:{{ info.destinationPostCode }},{{ info.destinationAddr }},{{ info.destinationDetailAddr
-                        }}</p>
-                        <p>주문자전화번호:{{ info.orderOwnPhone }}</p>
-                    </a>
-                    <input type="checkbox" :value="info.cardId" v-model="deliverArr">
-                </li>
+                <OrderList v-for="(info) in inforList" :info="info" :key="info.cardId"></OrderList>
                 <button @click="makeDeliverRoom" :disabled="deliverArr.length==0">배달방 생성</button>
             </ul>
             <p v-else>
@@ -48,6 +37,7 @@
 import {  checkNew, checkParam, errorHandle, showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
 import { mapGetters, mapMutations } from 'vuex';
 import { requestSave } from '@/api/deliver/DeliverApi';
+import OrderList from '@/components/order/OrderList.vue';
 export default {
     data() {
         return {
@@ -56,24 +46,24 @@ export default {
             deliverArr: [],
             storeid: this.$route.query.storeid,
             flag: true
-        }
+        };
     },
     mounted() {
-        this.$store.dispatch('NavStore/changeSituation', 1);
+        this.$store.dispatch("NavStore/changeSituation", 1);
         showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
         this.requestGet();
     },
     computed: {
-        ...mapGetters('basicStore', {
-            inforList: 'getInfoList',
-            last: 'getLast',
-            first: 'getFirst',
-            nowPage: 'getNowPage',
-            totalPage: 'getTotalPage'
+        ...mapGetters("basicStore", {
+            inforList: "getInfoList",
+            last: "getLast",
+            first: "getFirst",
+            nowPage: "getNowPage",
+            totalPage: "getTotalPage"
         }),
     },
     watch: {
-        '$route'() {
+        "$route"() {
             this.requestGet();
         }
     },
@@ -82,7 +72,7 @@ export default {
             let data = JSON.stringify({
                 "cardIds": this.deliverArr,
                 "storeId": this.storeid
-            })
+            });
             requestSave(data).then(response => {
                 this.insertDone(response.data);
             }).catch(error => {
@@ -94,20 +84,18 @@ export default {
                     }).catch(error => {
                         errorHandle(error);
                     });
-                } else {
+                }
+                else {
                     errorHandle(error);
                 }
-            })
+            });
         },
         insertDone(data) {
             alert(data.message);
         },
-        goDetailPage(cardId) {
-            location.href = '/order-detail?state=' + this.$route.query.state + '&paymentid=' + cardId + '&page=' + this.$route.query.page + storeCommonQuery(this.$route)+ '&periodFlag=' + this.$route.query.periodFlag;
-        },
         requestGet() {
-            let url = '/order/list/' + this.$route.query.storeid + '/' + this.$route.query.state + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&keyword=' + this.$route.query.keyword + '&periodFlag=' + this.$route.query.periodFlag;
-            this.$store.dispatch('basicStore/getInfolist', { url: url });
+            let url = "/order/list/" + this.$route.query.storeid + "/" + this.$route.query.state + "?page=" + this.$route.query.page + "&category=" + this.$route.query.category + "&keyword=" + this.$route.query.keyword + "&periodFlag=" + this.$route.query.periodFlag;
+            this.$store.dispatch("basicStore/getInfolist", { url: url });
             this.showSearchInfoIfHave(this.$route.query.keyword, this.$route.query.category);
         },
         ...mapMutations("NavStore", {
@@ -128,7 +116,7 @@ export default {
             this.changeUrl(page, keyword, category);
         },
         changeUrl(page, keyword, category) {
-            let changeUrl = '/order-list?state=' + this.$route.query.state+ '&page=' + page + '&category=' + category + '&keyword=' + keyword + storeCommonQuery(this.$route);
+            let changeUrl = "/order-list?state=" + this.$route.query.state + "&page=" + page + "&category=" + category + "&keyword=" + keyword + storeCommonQuery(this.$route);
             this.$router.push(changeUrl);
         },
         search() {
@@ -137,7 +125,8 @@ export default {
             let category = this.category;
             this.changeUrl(page, keyword, category);
         },
-    }
+    },
+    components: { OrderList }
 }
 </script>
 
