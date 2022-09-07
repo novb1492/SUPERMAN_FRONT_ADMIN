@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { storeCommonQuery } from '@/assets/js/Jslib';
+
 
 export default {
     name: 'DeliverNav',
@@ -20,7 +22,7 @@ export default {
     },
     methods: {
         goDeliverList(num) {
-            location.href = '/deliver-list?page=1&state=' + num + '&storeid=' + this.$route.query.storeid + '&storeName=' + this.$route.query.storeName + '&addr=' + this.$route.query.addr;
+            location.href = '/deliver-list?page=1&state=' + num + storeCommonQuery(this.$route);
         },
         active() {
             if (this.flag) {

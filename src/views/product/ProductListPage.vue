@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { checkParam, showStoreInfo } from '@/assets/js/Jslib';
+import { checkParam, showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
   mounted() {
@@ -116,7 +116,7 @@ export default {
       return keyword;
     },
     changeUrl(page,keyword,category){
-      let changeUrl = '/product-list?storeid=' + this.$route.query.storeid + '&page=' + page + '&category=' + category + '&val=' + keyword + '&addr=' + this.$route.query.addr + '&storeName=' + this.$route.query.storeName;
+      let changeUrl = '/product-list?page=' + page + '&category=' + category + '&val=' + keyword + storeCommonQuery(this.$route);
       this.$router.push(changeUrl);
     }
   },

@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import {  checkNew, checkParam, errorHandle, showStoreInfo } from '@/assets/js/Jslib';
+import {  checkNew, checkParam, errorHandle, showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
 import { mapGetters, mapMutations } from 'vuex';
 import { requestSave } from '@/api/deliver/DeliverApi';
 export default {
@@ -103,7 +103,7 @@ export default {
             alert(data.message);
         },
         goDetailPage(cardId) {
-            location.href = '/order-detail?state=' + this.$route.query.state + '&paymentid=' + cardId + '&page=' + this.$route.query.page + '&&storeid=' + this.$route.query.storeid + '&storeName=' + this.$route.query.storeName + '&addr=' + this.$route.query.addr + '&periodFlag=' + this.$route.query.periodFlag;
+            location.href = '/order-detail?state=' + this.$route.query.state + '&paymentid=' + cardId + '&page=' + this.$route.query.page + storeCommonQuery(this.$route)+ '&periodFlag=' + this.$route.query.periodFlag;
         },
         requestGet() {
             let url = '/order/list/' + this.$route.query.storeid + '/' + this.$route.query.state + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&keyword=' + this.$route.query.keyword + '&periodFlag=' + this.$route.query.periodFlag;
@@ -128,7 +128,7 @@ export default {
             this.changeUrl(page, keyword, category);
         },
         changeUrl(page, keyword, category) {
-            let changeUrl = '/order-list?state=' + this.$route.query.state + '&storeid=' + this.$route.query.storeid + '&page=' + page + '&category=' + category + '&keyword=' + keyword + '&addr=' + this.$route.query.addr + '&storeName=' + this.$route.query.storeName;
+            let changeUrl = '/order-list?state=' + this.$route.query.state+ '&page=' + page + '&category=' + category + '&keyword=' + keyword + storeCommonQuery(this.$route);
             this.$router.push(changeUrl);
         },
         search() {

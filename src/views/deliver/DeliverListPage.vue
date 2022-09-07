@@ -26,7 +26,7 @@
     </div>
 </template>
 <script>
-import { showStoreInfo } from '@/assets/js/Jslib';
+import { showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
 import { mapGetters, mapMutations } from 'vuex';
 
 export default {
@@ -64,11 +64,11 @@ export default {
             this.changeUrl(page);
         },
         changeUrl(page) {
-            let changeUrl = '/deliver-list?state=' + this.$route.query.state + '&storeid=' + this.$route.query.storeid + '&page=' + page + '&addr=' + this.$route.query.addr + '&storeName=' + this.$route.query.storeName;
+            let changeUrl = '/deliver-list?state=' + this.$route.query.state+ '&page=' + page  + storeCommonQuery(this.$route);
             this.$router.push(changeUrl);
         },
         goDetailPage(deliverId){
-            location.href='/deliver-detail?deliverid='+deliverId+'&storeid=' + this.$route.query.storeid + '&addr=' + this.$route.query.addr + '&storeName=' + this.$route.query.storeName;
+            location.href='/deliver-detail?deliverid='+deliverId+storeCommonQuery(this.$route);
         }
     }
 }
