@@ -2,7 +2,7 @@
     <div style="margin-top: 70px;">
         <div style="margin-top: 70px;" class="container">
             <ul v-if="totalPage > 0">
-                <OrderList v-for="(info) in inforList" :info="info" :key="info.cardId"></OrderList>
+                <OrderList v-for="(info) in inforList" :info="info" :deliverArr="deliverArr" :key="info.cardId" v-on:checkAction="checkAction"></OrderList>
                 <button @click="makeDeliverRoom" :disabled="deliverArr.length==0">배달방 생성</button>
             </ul>
             <p v-else>
@@ -11,8 +11,8 @@
         </div>
         <div class="pagingContainer">
             <div class="pagingbox">
-                <button @click="nextOrder(1)" :disabled="last">다음</button>
-                <button @click="nextOrder(-1)" :disabled="first">이전</button>
+                <button @click="nextOrder(1)" >다음</button>
+                <button @click="nextOrder(-1)" >이전</button>
             </div>
             <div class="pagingbox">
                 {{ nowPage }}/{{ totalPage }}
@@ -125,6 +125,14 @@ export default {
             let category = this.category;
             this.changeUrl(page, keyword, category);
         },
+        checkAction(cardId){
+            let index=this.deliverArr.indexOf(cardId);
+            if(index===-1){
+                this.deliverArr[this.deliverArr.length]=cardId;
+            }else{
+                this.deliverArr.splice(index,1);
+            }
+        }
     },
     components: { OrderList }
 }

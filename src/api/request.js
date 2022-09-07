@@ -4,11 +4,6 @@ import axios from 'axios';
 export  function setInterceptors(instance)  {
   instance.interceptors.request.use(
     (config) => {
-      let data = JSON.parse(localStorage.getItem('authentication'));
-      if (data != null) {
-        config.headers.authentication = data.authentication;
-        config.headers.refreshToken = data.refresh;
-      }
       return config;
     },
     (error) => {
