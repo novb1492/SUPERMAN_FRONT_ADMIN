@@ -36,7 +36,6 @@ export default {
         this.$store.dispatch("NavStore/changeSituation", 1);
         showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
         this.requestGet();
-        this.requestGetCategorys();
     },
     data() {
         return {
@@ -50,7 +49,8 @@ export default {
             last: "getLast",
             first: "getFirst",
             nowPage: "getNowPage",
-            totalPage: "getTotalPage"
+            totalPage: "getTotalPage",
+            doneFlag:"getDoneFlag",
         }),
         ...mapGetters("ProductStore", {
             categorys: "getCategorys"
@@ -59,6 +59,11 @@ export default {
     watch: {
         "$route"() {
             this.requestGet();
+        },
+        //만료된 리프레시토큰 이슈 해결 
+        //동시요청 말고 순차적으로 요청
+        "doneFlag"(){
+          this.requestGetCategorys();
         }
     },
     methods: {
