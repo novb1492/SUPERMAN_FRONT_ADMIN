@@ -58,7 +58,7 @@ const routes = [
     path: "/store-detail",
     component: StoreDetailPage,
     beforeEnter: () => {
-      checkLogin('/login', '/store-detail*id='+getParam('id')+ '^storeName=' + getParam('storeName') + '^addr=' + getParam('addr'), 'USER');
+      checkLogin('/login', '/store-detail*storeid='+getParam('storeid')+ '^storeName=' + getParam('storeName') + '^addr=' + getParam('addr'), 'USER');
     }
   },
   {
@@ -83,7 +83,7 @@ const routes = [
       if(checkParam(category)){
         category='0';
       }
-      checkLogin('/login', '/product-list*page='+getParam('page')+'^category='+category+'^storeid='+getParam('storeid')+ '^storeName=' + getParam('storeName') + '^addr=' + getParam('addr'), 'USER');
+      checkLogin('/login', '/product-list*page='+getParam('page')+'^category='+category+'^val='+getParam('val')+storeCommonQueryInRouter(), 'USER');
     }
   },
   {
@@ -97,21 +97,21 @@ const routes = [
     path: "/order-list",
     component: OrderListPage,
     beforeEnter: () => {
-      checkLogin('/login', '/order-list*state='+getParam('state')+'^page='+getParam('page')+'^category='+getParam('category')+'^storeid='+getParam('storeid')+ '^storeName=' + getParam('storeName') + '^addr=' + getParam('addr')+'^periodFlag='+getParam('periodFlag'), 'USER');
+      checkLogin('/login', '/order-list*state='+getParam('state')+'^page='+getParam('page')+'^category='+getParam('category')+'^keyword='+getParam('keyword')+'^periodFlag='+getParam('periodFlag')+storeCommonQueryInRouter(), 'USER');
     }
   },
   {
     path: "/order-detail",
     component: OrderDetailPage,
     beforeEnter: () => {
-      checkLogin('/login', '/order-detail*state='+getParam('state')+'^paymentid='+getParam('cardId')+'^page='+getParam('page')+'^storeid='+getParam('storeid')+'^storeName='+getParam('storeName')+'^addr='+getParam('addr')+'^periodFlag='+getParam('periodFlag'), 'USER');
+      checkLogin('/login', '/order-detail*state='+getParam('state')+'^paymentid='+getParam('cardId')+'^page='+getParam('page')+storeCommonQueryInRouter()+'^periodFlag='+getParam('periodFlag'), 'USER');
     }
   },
   {
     path: "/deliver-list",
     component: DeliverListPage,
     beforeEnter: () => {
-      checkLogin('/login', '/deliver-list*page='+getParam('page')+'^state='+getParam('state')+'^storeid='+getParam('storeid')+'^storeName='+getParam('storeName')+'^addr='+getParam('addr'), 'USER');
+      checkLogin('/login', '/deliver-list*page='+getParam('page')+'^state='+getParam('state')+storeCommonQueryInRouter(), 'USER');
     }
   },
   {

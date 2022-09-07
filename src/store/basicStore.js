@@ -4,7 +4,7 @@ import mutations from '@/mutaion/basicMutaions'
 export const basicStore = {
     namespaced: true,
     state: {
-        tt: null,
+        doneFlag: false,
         infoList: [],
         totalPage: 0,
         last: false,
@@ -31,6 +31,9 @@ export const basicStore = {
         getNowPage(state) {
             return state.nowPage;
         },
+        getDoneFlag(state){
+            return state.doneFlag;
+        }
     },
     actions,
     mutations,

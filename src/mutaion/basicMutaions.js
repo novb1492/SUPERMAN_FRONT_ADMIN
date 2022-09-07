@@ -6,5 +6,8 @@ export default {
         state.first = data.first;
         state.empty = data.empty;
         state.nowPage = data.number + 1;
-    },
+        if(!state.doneFlag){
+            state.doneFlag=true;
+        }
+    }
 }

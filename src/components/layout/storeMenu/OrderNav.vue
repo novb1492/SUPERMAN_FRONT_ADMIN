@@ -11,12 +11,14 @@
 </template>
 
 <script>
+import { storeCommonQuery } from '@/assets/js/Jslib';
+
 
 export default {
     name: 'OrderNav',
     methods: {
         goOrder(num) {
-            location.href = '/order-list?state=' + num + '&page=1&&storeid=' + this.$route.query.storeid + '&storeName=' + this.$route.query.storeName + '&addr=' + this.$route.query.addr + '&periodFlag=false';
+            location.href = '/order-list?state=' + num + '&page=1&periodFlag=false'+storeCommonQuery(this.$route);
         },
         active() {
             if (this.flag) {

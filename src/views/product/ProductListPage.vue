@@ -1,22 +1,7 @@
 <template>
   <div style="margin-top: 70px;" class="container">
     <ul v-if="totalPage > 0">
-      <li v-for="(info, index) in inforList" :key="index">
-        <a href="javascript:void();" @click="goDetailPage(store.id)">
-          <img :src="info.imgPath" />
-          <p>{{ info.name }}</p>
-          <p>{{ info.price }}원</p>
-          <p v-if="info.state == 1">
-            판매중
-          </p>
-          <p v-else-if="info.state == 0">
-            품절
-          </p>
-          <p v-else-if="info.state == 30">
-            판매중단
-          </p>
-        </a>
-      </li>
+      <ProductList v-for="(info) in inforList" :info="info" :key="info.id"></ProductList>
     </ul>
     <p v-else>
       검색결과가 없습니다
@@ -43,83 +28,89 @@
 </template>
 
 <script>
-import { checkParam, showStoreInfo } from '@/assets/js/Jslib';
+import { checkParam, showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
+import ProductList from '@/components/product/ProductList.vue';
 export default {
-  mounted() {
-    this.$store.dispatch('NavStore/changeSituation', 1);
-    showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
-    this.requestGet();
-    this.requestGetCategorys();
-  },
-  data() {
-    return {
-      category: null,
-      keyword: null
-    }
-  },
-  computed: {
-    ...mapGetters('basicStore', {
-      inforList: 'getInfoList',
-      last: 'getLast',
-      first: 'getFirst',
-      nowPage: 'getNowPage',
-      totalPage: 'getTotalPage'
-    }),
-    ...mapGetters("ProductStore", {
-      categorys: "getCategorys"
-    })
-  },
-  watch: {
-    '$route'() {
-      this.requestGet();
-    }
-  },
-
-  methods: {
-    search() {
-      let page = 1;
-      let keyword = this.keyword;
-      let category = this.category;
-      this.changeUrl(page,keyword,category);
+    mounted() {
+        this.$store.dispatch("NavStore/changeSituation", 1);
+        showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
+        this.requestGet();
     },
-    ...mapActions("ProductStore", {
-      requestGetCategorys: "requestGetCategorys"
-    }),
-    requestGet() {
-      let url = '/user/product/list/' + this.$route.query.storeid + '?page=' + this.$route.query.page + '&category=' + this.$route.query.category + '&val=' + this.$route.query.val;
-      this.$store.dispatch('basicStore/getInfolist', { url: url });
-      this.showSearchInfoIfHave(this.$route.query.val, this.$route.query.category);
+    data() {
+        return {
+            category: null,
+            keyword: null
+        };
     },
-    showSearchInfoIfHave(keyword, category) {
-      if (!checkParam(keyword)) {
-        this.keyword = keyword;
-      }
-      if (!checkParam(category)) {
-        this.category = category;
-      }
+    computed: {
+        ...mapGetters("basicStore", {
+            inforList: "getInfoList",
+            last: "getLast",
+            first: "getFirst",
+            nowPage: "getNowPage",
+            totalPage: "getTotalPage",
+            doneFlag:"getDoneFlag",
+        }),
+        ...mapGetters("ProductStore", {
+            categorys: "getCategorys"
+        })
     },
-    ...mapMutations("NavStore", {
-      changeShowMarketInfo: "changeShowMarketInfo",
-    }),
-    nextProduct(num) {
-      let page = (this.$route.query.page * 1) + num;
-      let keyword = this.getKeyword();
-      let category = this.$route.query.category;
-      this.changeUrl(page,keyword,category);
+    watch: {
+        "$route"() {
+            this.requestGet();
+        },
+        //만료된 리프레시토큰 이슈 해결 
+        //동시요청 말고 순차적으로 요청
+        "doneFlag"(){
+          this.requestGetCategorys();
+        }
     },
-    getKeyword() {
-      let keyword = null;
-      if (!checkParam(this.$route.query.val)) {
-        keyword = this.$route.query.val;
-      }
-      return keyword;
+    methods: {
+        search() {
+            let page = 1;
+            let keyword = this.keyword;
+            let category = this.category;
+            this.changeUrl(page, keyword, category);
+        },
+        ...mapActions("ProductStore", {
+            requestGetCategorys: "requestGetCategorys"
+        }),
+        requestGet() {
+            let url = "/user/product/list/" + this.$route.query.storeid + "?page=" + this.$route.query.page + "&category=" + this.$route.query.category + "&val=" + this.$route.query.val;
+            this.$store.dispatch("basicStore/getInfolist", { url: url });
+            this.showSearchInfoIfHave(this.$route.query.val, this.$route.query.category);
+        },
+        showSearchInfoIfHave(keyword, category) {
+            if (!checkParam(keyword)) {
+                this.keyword = keyword;
+            }
+            if (!checkParam(category)) {
+                this.category = category;
+            }
+        },
+        ...mapMutations("NavStore", {
+            changeShowMarketInfo: "changeShowMarketInfo",
+        }),
+        nextProduct(num) {
+            let page = (this.$route.query.page * 1) + num;
+            let keyword = this.getKeyword();
+            let category = this.$route.query.category;
+            this.changeUrl(page, keyword, category);
+        },
+        getKeyword() {
+            let keyword = null;
+            if (!checkParam(this.$route.query.val)) {
+                keyword = this.$route.query.val;
+            }
+            return keyword;
+        },
+        changeUrl(page, keyword, category) {
+            let changeUrl = "/product-list?page=" + page + "&category=" + category + "&val=" + keyword + storeCommonQuery(this.$route);
+            this.$router.push(changeUrl);
+        }
     },
-    changeUrl(page,keyword,category){
-      let changeUrl = '/product-list?storeid=' + this.$route.query.storeid + '&page=' + page + '&category=' + category + '&val=' + keyword + '&addr=' + this.$route.query.addr + '&storeName=' + this.$route.query.storeName;
-      this.$router.push(changeUrl);
-    }
-  },
+    components: { ProductList }
 }
 </script>
 

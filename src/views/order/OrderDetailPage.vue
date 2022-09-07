@@ -1,19 +1,6 @@
 <template>
     <div style="margin-top: 70px;">
-        <div v-for="(info, index) in infoArr" :key="index">
-            <img :src="info.productImgPath" alt="" srcset="">
-            <p>주문번호:{{ info.id }}</p>
-            <p>상품이름:{{ info.productName }}</p>
-            <p>가격:{{ info.price }}원</p>
-            <p>개수:{{ info.totalCount }}</p>
-            <p>이벤트:{{ info.eventName }}</p>
-            <button :id="info.id + 'try'" @click="update(info.id)"
-                :disabled="info.state == 10 || info.state == 127">부분환불</button>
-            <input type="number" :id="info.id + 'count'" v-model="cancleCount" :min="1" :max="info.totalCount" hidden>
-            <button :id="info.id + 'refund'" @click="refund(info.id)" hidden>결제취소</button>
-            <button :id="info.id + 'cancle'" @click="cancle(info.id)" hidden>취소</button>
-            <p v-if="info.state == 10 || info.state == 127">환불된 제품입니다</p>
-        </div>
+        <OrderDetail v-for="(info) in infoArr" :info="info" :key="info.id"></OrderDetail>
         <div>
             <div>결제정보</div>
             <p> 주문 총금액:{{ payment.totalPrice }}</p>
@@ -25,22 +12,23 @@
 </template>
 
 <script>
-import { requestGetByCardId, requestRefund, requestRefundAll } from "@/api/order/OrderApi";
+import { requestGetByCardId, requestRefundAll } from "@/api/order/OrderApi";
 import { checkNew, errorHandle, showStoreInfo } from '@/assets/js/Jslib';
 import { mapMutations } from "vuex";
+import OrderDetail from "@/components/order/OrderDetail.vue";
 export default {
     data() {
         return {
             cardId: this.$route.query.paymentid,
             storeId: this.$route.query.storeid,
             infoArr: [],
-            payment: '',
+            payment: "",
             state: this.$route.query.state,
             cancleCount: 0
-        }
+        };
     },
     mounted() {
-        this.$store.dispatch('NavStore/changeSituation', 1);
+        this.$store.dispatch("NavStore/changeSituation", 1);
         showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
         requestGetByCardId({ cardId: this.cardId, storeId: this.storeId }).then(response => {
             this.getDone(response.data);
@@ -53,7 +41,8 @@ export default {
                 }).catch(error => {
                     errorHandle(error);
                 });
-            } else {
+            }
+            else {
                 errorHandle(error);
             }
         });
@@ -71,49 +60,11 @@ export default {
                     }).catch(error => {
                         errorHandle(error);
                     });
-                } else {
+                }
+                else {
                     errorHandle(error);
                 }
-            })
-        },
-        cancle(id) {
-            document.getElementById(id + 'try').hidden = false;
-            document.getElementById(id + 'cancle').hidden = true;
-            document.getElementById(id + 'refund').hidden = true;
-            document.getElementById(id + 'count').hidden = true;
-        },
-        update(id) {
-            document.getElementById(id + 'try').hidden = true;
-            document.getElementById(id + 'cancle').hidden = false;
-            document.getElementById(id + 'refund').hidden = false;
-            document.getElementById(id + 'count').hidden = false;
-        },
-        refund(id) {
-            if (confirm('주문번호:' + id + '을 환불하시겠습니까?')) {
-                let data = JSON.stringify({
-                    "orderId": id,
-                    "count": this.cancleCount
-                })
-                requestRefund(data).then(response => {
-                    this.refundDone(response.data);
-                }).catch(error => {
-                    let response = error.response;
-                    let responseData = response.data;
-                    if (checkNew(response.status, responseData.message)) {
-                        requestRefund(data).then(response => {
-                            this.refundDone(response.data);
-                        }).catch(error => {
-                            errorHandle(error);
-                        });
-                    } else {
-                        errorHandle(error);
-                    }
-                })
-            }
-        },
-        refundDone(data) {
-            alert(data.message);
-            this.$router.go(0);
+            });
         },
         ...mapMutations("NavStore", {
             changeShowMarketInfo: "changeShowMarketInfo",
@@ -122,7 +73,8 @@ export default {
             this.infoArr = data.selectDtos;
             this.payment = data.selectForOrderDto;
         }
-    }
+    },
+    components: { OrderDetail }
 }
 </script>
 

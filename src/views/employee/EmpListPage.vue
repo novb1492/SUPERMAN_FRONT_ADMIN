@@ -2,12 +2,7 @@
     <div>
         <div style="margin-top: 70px;" class="container">
             <ul v-if="totalPage > 0">
-                <li v-for="(info, index) in inforList" :key="index">
-                    <p>이름:{{info.name}}</p>
-                    <p>전화번호:{{ info.phone }}</p>
-                    <p>이메일:{{ info.email }}</p>
-                    <p>권한:{{ info.role}}</p>
-                </li>
+                <EmpList v-for="(info) in inforList" :info="info" :key="info.employeeId"></EmpList>
             </ul>
             <p v-else>
                 검색결과가 없습니다
@@ -25,10 +20,11 @@
     </div>
 </template>
 <script>
-import { showStoreInfo } from '@/assets/js/Jslib';
+import { showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
 import { mapGetters, mapMutations } from 'vuex';
-
+import EmpList from "@/components/employee/EmpList.vue";
 export default {
+    components: { EmpList },
     mounted() {
         this.$store.dispatch('NavStore/changeSituation', 1);
         showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
@@ -62,7 +58,7 @@ export default {
             this.changeUrl(page);
         },
         changeUrl(page) {
-            let changeUrl = '/deliver-list?storeid=' + this.$route.query.storeid + '&page=' + page + '&addr=' + this.$route.query.addr + '&storeName=' + this.$route.query.storeName;
+            let changeUrl = '/empl-list?page=' + page + storeCommonQuery(this.$route);
             this.$router.push(changeUrl);
         }
     }

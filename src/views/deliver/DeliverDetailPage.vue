@@ -133,8 +133,7 @@ export default {
             alert(data.message);
         },
         connect() {
-            let authentications = JSON.parse(localStorage.getItem('authentication'))
-            this.websocket = new WebSocket("ws://localhost:8080/ws/deliver?roomid=" + this.deliverId + "&role=ADMIN&access=" + authentications.authentication + '&refresh=' + authentications.refresh + '&storeId=' + this.storeId);
+            this.websocket = new WebSocket(process.env.VUE_APP_WSAPI_URL+"/ws/deliver?roomid=" + this.deliverId + "&role=ADMIN&storeId=" + this.storeId);
             this.websocket.onopen = e => {
                 console.log(e);
                 //추후 검증 로직 추가

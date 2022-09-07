@@ -1,22 +1,7 @@
 <template>
     <div style="margin-top: 70px;" class="container">
         <ul v-if="totalPage > 0">
-            <li v-for="(store, index) in infoList" :key="index">
-                <a href="javascript:void();" @click="goDetailPage(store.id)">
-                    <img :src="store.imgPath" />
-                    <p>매장명:{{ store.name }}</p>
-                    <p>주소:{{ store.address }}</p>
-                    <p v-if="store.state == 1">
-                        영업중
-                    </p>
-                    <p v-else-if="store.state == 0">
-                        영업종료
-                    </p>
-                    <p v-else-if="store.state == 40">
-                        폐업
-                    </p>
-                </a>
-            </li>
+            <StoreList v-for="(store) in infoList" :info="store" :storeid="store.id" :key="store.id"></StoreList>
         </ul>
         <p v-else>
             검색결과가 없습니다
@@ -43,34 +28,35 @@
 <script>
 import { checkPage, checkParam } from '@/assets/js/Jslib';
 import { mapGetters } from 'vuex';
+import StoreList from '@/components/store/StoreList.vue';
 
 export default {
     data() {
         return {
             category: null,
             keyword: null,
-            flag:true
-        }
+            flag: true
+        };
     },
     watch: {
-        '$route'() {
+        "$route"() {
             this.requestGet();
         }
     },
     computed: {
-        ...mapGetters('basicStore', {
-            infoList: 'getInfoList',
-            last: 'getLast',
-            first: 'getFirst',
-            nowPage: 'getNowPage',
-            totalPage: 'getTotalPage'
+        ...mapGetters("basicStore", {
+            infoList: "getInfoList",
+            last: "getLast",
+            first: "getFirst",
+            nowPage: "getNowPage",
+            totalPage: "getTotalPage"
         }),
-        ...mapGetters('NavStore', {
-            role: 'getRole',
+        ...mapGetters("NavStore", {
+            role: "getRole",
         })
     },
     mounted() {
-        this.$store.dispatch('NavStore/changeSituation', 0);
+        this.$store.dispatch("NavStore/changeSituation", 0);
         this.requestGet();
     },
     methods: {
@@ -78,26 +64,26 @@ export default {
             let keyword = this.getKeyword();
             let category = this.$route.query.category;
             let page = checkPage(this.$route.query.page);
-            let url = '/store/list?page=' + page + '&keyword=' + keyword + '&category=' + category;
-            this.showSearchInfoIfHave(keyword,category);
-            this.$store.dispatch('basicStore/getInfolist', { url: url});
+            let url = "/store/list?page=" + page + "&keyword=" + keyword + "&category=" + category;
+            this.showSearchInfoIfHave(keyword, category);
+            this.$store.dispatch("basicStore/getInfolist", { url: url });
         },
-        showSearchInfoIfHave(keyword,category){
-            if(!checkParam(keyword)){
-                this.keyword=keyword;
+        showSearchInfoIfHave(keyword, category) {
+            if (!checkParam(keyword)) {
+                this.keyword = keyword;
             }
-            if(!checkParam(category)){
-                this.category=category;
+            if (!checkParam(category)) {
+                this.category = category;
             }
         },
         goDetailPage(storeId) {
-            location.href = '/store-detail?storeid=' + storeId;
+            location.href = "/store-detail?storeid=" + storeId;
         },
         nextStore(num) {
             let page = (this.$route.query.page * 1) + num;
             let keyword = this.getKeyword();
             let category = this.$route.query.category;
-            this.changeUrl(page,keyword,category);
+            this.changeUrl(page, keyword, category);
         },
         getKeyword() {
             let keyword = null;
@@ -107,13 +93,14 @@ export default {
             return keyword;
         },
         search() {
-            this.changeUrl(1,this.keyword,this.category);    
+            this.changeUrl(1, this.keyword, this.category);
         },
-        changeUrl(page,keyword,category){
-            let changeUrl = '/store-list?page='+page+'&keyword=' + keyword + '&category=' + category;
-            this.$router.push(changeUrl);    
+        changeUrl(page, keyword, category) {
+            let changeUrl = "/store-list?page=" + page + "&keyword=" + keyword + "&category=" + category;
+            this.$router.push(changeUrl);
         }
-    }
+    },
+    components: { StoreList }
 }
 </script>
 
