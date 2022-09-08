@@ -15,13 +15,6 @@
       {{ nowPage }}/{{ totalPage }}
     </div>
     <div class="pagingbox">
-      <!-- <select name="pets" id="pet-select" v-model="category">
-        <option :value="cate.id" v-for="(cate, index) in categorys" :key="index">
-          {{ cate.name }}
-        </option>
-      </select>
-      <input type="text" v-model="keyword">
-      <input type="button" value="검색" @click="search" /> -->
       <ProductSearchArea :url="url"></ProductSearchArea>
     </div>
   </div>
