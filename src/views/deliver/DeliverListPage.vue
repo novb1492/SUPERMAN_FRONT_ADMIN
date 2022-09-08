@@ -10,8 +10,7 @@
         </div>
         <div class="pagingContainer">
             <div class="pagingbox">
-                <button @click="nextDeliver(1)" :disabled="last">다음</button>
-                <button @click="nextDeliver(-1)" :disabled="first">이전</button>
+                <ChangePageButton :url="url" :clazzs="'changePageButton'"></ChangePageButton>
             </div>
             <div class="pagingbox">
                 {{ nowPage }}/{{ totalPage }}
@@ -23,6 +22,7 @@
 import { showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
 import { mapGetters, mapMutations } from 'vuex';
 import DeliverList from '@/components/deliver/DeliverList.vue';
+import ChangePageButton from '@/components/paging/ChangePageButton.vue';
 
 export default {
     mounted() {
@@ -44,6 +44,11 @@ export default {
             this.requestGet();
         }
     },
+    data() {
+        return {
+            url:"/deliver-list?state=" + this.$route.query.state+ storeCommonQuery(this.$route)+"&"
+        }
+    },
     methods: {
         ...mapMutations("NavStore", {
             changeShowMarketInfo: "changeShowMarketInfo",
@@ -51,17 +56,9 @@ export default {
         requestGet() {
             let url = "/deliver/list/" + this.$route.query.storeid + "/" + this.$route.query.state + "?page=" + this.$route.query.page;
             this.$store.dispatch("basicStore/getInfolist", { url: url });
-        },
-        nextDeliver(num) {
-            let page = (this.$route.query.page * 1) + num;
-            this.changeUrl(page);
-        },
-        changeUrl(page) {
-            let changeUrl = "/deliver-list?state=" + this.$route.query.state + "&page=" + page + storeCommonQuery(this.$route);
-            this.$router.push(changeUrl);
         }
     },
-    components: { DeliverList }
+    components: { DeliverList, ChangePageButton }
 }
 </script>
 <style >
