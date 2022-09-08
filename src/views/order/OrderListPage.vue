@@ -11,23 +11,13 @@
         </div>
         <div class="pagingContainer">
             <div class="pagingbox">
-                <button @click="nextOrder(1)" >다음</button>
-                <button @click="nextOrder(-1)" >이전</button>
+                <ChangePageButton :url="url" :clazzs="'changePageButton'"></ChangePageButton>
             </div>
             <div class="pagingbox">
                 {{ nowPage }}/{{ totalPage }}
             </div>
             <div class="pagingbox">
-                <select name="pets" id="pet-select" v-model="category">
-                    <option value="addr">
-                        주소
-                    </option>
-                    <option value="name">
-                        주문자명
-                    </option>
-                </select>
-                <input type="text" v-model="keyword">
-                <input type="button" value="검색" @click="search" />
+                <SearchArea :url="url" :flag="true" :valueAndTexts="valueAndTexts"></SearchArea>
             </div>
         </div>
     </div>
@@ -38,6 +28,9 @@ import {  checkNew, checkParam, errorHandle, showStoreInfo, storeCommonQuery } f
 import { mapGetters, mapMutations } from 'vuex';
 import { requestSave } from '@/api/deliver/DeliverApi';
 import OrderList from '@/components/order/OrderList.vue';
+import ChangePageButton from '@/components/paging/ChangePageButton.vue';
+import SearchArea from '@/components/paging/SearchArea.vue';
+
 export default {
     data() {
         return {
@@ -45,7 +38,9 @@ export default {
             keyword: null,
             deliverArr: [],
             storeid: this.$route.query.storeid,
-            flag: true
+            flag: true,
+            url:"/order-list?state=" + this.$route.query.state  + storeCommonQuery(this.$route)+'&',
+            valueAndTexts:[{text:'이름',value:'name'},{text:'주소',value:'addr'}]
         };
     },
     mounted() {
@@ -134,7 +129,7 @@ export default {
             }
         }
     },
-    components: { OrderList }
+    components: { OrderList, ChangePageButton, SearchArea }
 }
 </script>
 

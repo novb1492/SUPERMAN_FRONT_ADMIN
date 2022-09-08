@@ -10,8 +10,7 @@
         </div>
         <div class="pagingContainer">
             <div class="pagingbox">
-                <button @click="nextEmpl(1)" :disabled="last">다음</button>
-                <button @click="nextEmpl(-1)" :disabled="first">이전</button>
+                <ChangePageButton :url="url" :clazzs="'changePageButton'"></ChangePageButton>
             </div>
             <div class="pagingbox">
                 {{ nowPage }}/{{ totalPage }}
@@ -23,8 +22,10 @@
 import { showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
 import { mapGetters, mapMutations } from 'vuex';
 import EmpList from "@/components/employee/EmpList.vue";
+import ChangePageButton from '@/components/paging/ChangePageButton.vue';
+
 export default {
-    components: { EmpList },
+    components: { EmpList,ChangePageButton },
     mounted() {
         this.$store.dispatch('NavStore/changeSituation', 1);
         showStoreInfo(this.$route.query.addr, this.$route.query.storeName, this.changeShowMarketInfo);
@@ -45,6 +46,11 @@ export default {
             this.requestGet();
         }
     },
+    data() {
+        return {
+            url:'/empl-list?'+ storeCommonQuery(this.$route)+'&'
+        }
+    },
     methods: {
         ...mapMutations("NavStore", {
             changeShowMarketInfo: "changeShowMarketInfo",
@@ -52,14 +58,6 @@ export default {
         requestGet() {
             let url = '/employee/list/' + this.$route.query.storeid + '?page=' + this.$route.query.page;
             this.$store.dispatch('basicStore/getInfolist', { url: url });
-        },
-        nextEmpl(num) {
-            let page = (this.$route.query.page * 1) + num;
-            this.changeUrl(page);
-        },
-        changeUrl(page) {
-            let changeUrl = '/empl-list?page=' + page + storeCommonQuery(this.$route);
-            this.$router.push(changeUrl);
         }
     }
 }

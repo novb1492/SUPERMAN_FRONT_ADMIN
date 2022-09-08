@@ -9,20 +9,13 @@
   </div>
   <div class="pagingContainer">
     <div class="pagingbox">
-      <button @click="nextProduct(1)" :disabled="last">다음</button>
-      <button @click="nextProduct(-1)" :disabled="first">이전</button>
+      <ChangePageButton :url="url" :clazzs="'changePageButton'"></ChangePageButton>
     </div>
     <div class="pagingbox">
       {{ nowPage }}/{{ totalPage }}
     </div>
     <div class="pagingbox">
-      <select name="pets" id="pet-select" v-model="category">
-        <option :value="cate.id" v-for="(cate, index) in categorys" :key="index">
-          {{ cate.name }}
-        </option>
-      </select>
-      <input type="text" v-model="keyword">
-      <input type="button" value="검색" @click="search" />
+      <ProductSearchArea :url="url"></ProductSearchArea>
     </div>
   </div>
 </template>
@@ -31,6 +24,9 @@
 import { checkParam, showStoreInfo, storeCommonQuery } from '@/assets/js/Jslib';
 import { mapActions, mapGetters, mapMutations } from 'vuex';
 import ProductList from '@/components/product/ProductList.vue';
+import ChangePageButton from '@/components/paging/ChangePageButton.vue';
+import ProductSearchArea from '@/components/product/ProductSearchArea.vue';
+
 export default {
     mounted() {
         this.$store.dispatch("NavStore/changeSituation", 1);
@@ -40,7 +36,8 @@ export default {
     data() {
         return {
             category: null,
-            keyword: null
+            keyword: null,
+            url:"/product-list?" + storeCommonQuery(this.$route)+'&'
         };
     },
     computed: {
@@ -77,7 +74,7 @@ export default {
             requestGetCategorys: "requestGetCategorys"
         }),
         requestGet() {
-            let url = "/user/product/list/" + this.$route.query.storeid + "?page=" + this.$route.query.page + "&category=" + this.$route.query.category + "&val=" + this.$route.query.val;
+            let url = "/user/product/list/" + this.$route.query.storeid + "?page=" + this.$route.query.page + "&category=" + this.$route.query.category + "&keyword=" + this.$route.query.keyword;
             this.$store.dispatch("basicStore/getInfolist", { url: url });
             this.showSearchInfoIfHave(this.$route.query.val, this.$route.query.category);
         },
@@ -91,26 +88,9 @@ export default {
         },
         ...mapMutations("NavStore", {
             changeShowMarketInfo: "changeShowMarketInfo",
-        }),
-        nextProduct(num) {
-            let page = (this.$route.query.page * 1) + num;
-            let keyword = this.getKeyword();
-            let category = this.$route.query.category;
-            this.changeUrl(page, keyword, category);
-        },
-        getKeyword() {
-            let keyword = null;
-            if (!checkParam(this.$route.query.val)) {
-                keyword = this.$route.query.val;
-            }
-            return keyword;
-        },
-        changeUrl(page, keyword, category) {
-            let changeUrl = "/product-list?page=" + page + "&category=" + category + "&val=" + keyword + storeCommonQuery(this.$route);
-            this.$router.push(changeUrl);
-        }
+        })
     },
-    components: { ProductList }
+    components: { ProductList, ChangePageButton, ProductSearchArea }
 }
 </script>
 
