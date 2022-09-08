@@ -9,33 +9,29 @@
     </div>
     <div class="pagingContainer">
         <div class="pagingbox">
-            <button @click="nextStore(1)" :disabled="last">다음</button>
-            <button @click="nextStore(-1)" :disabled="first">이전</button>
+            <ChangePageButton :url="url" :clazzs="'changePageButton'"></ChangePageButton>
         </div>
         <div class="pagingbox">
             {{ nowPage }}/{{ totalPage }}
         </div>
-        <div class="pagingbox">
-            <select name="pets" id="pet-select" v-model="category">
-                <option value="name">이름</option>
-                <option value="addr">주소</option>
-            </select>
-            <input type="text" v-model="keyword">
-            <input type="button" value="검색" @click="search" />
-        </div>
+        <SearchArea :url="url" :flag="true" :valueAndTexts="valueAndTexts"></SearchArea>
     </div>
 </template>
 <script>
 import { checkPage, checkParam } from '@/assets/js/Jslib';
 import { mapGetters } from 'vuex';
 import StoreList from '@/components/store/StoreList.vue';
+import ChangePageButton from '@/components/paging/ChangePageButton.vue';
+import SearchArea from '@/components/paging/SearchArea.vue';
 
 export default {
     data() {
         return {
             category: null,
             keyword: null,
-            flag: true
+            flag: true,
+            valueAndTexts:[{text:'이름',value:'name'},{text:'주소',value:'addr'}],
+            url:'/store-list?'
         };
     },
     watch: {
@@ -61,7 +57,7 @@ export default {
     },
     methods: {
         requestGet() {
-            let keyword = this.getKeyword();
+            let keyword = this.$route.query.keyword;
             let category = this.$route.query.category;
             let page = checkPage(this.$route.query.page);
             let url = "/store/list?page=" + page + "&keyword=" + keyword + "&category=" + category;
@@ -75,32 +71,9 @@ export default {
             if (!checkParam(category)) {
                 this.category = category;
             }
-        },
-        goDetailPage(storeId) {
-            location.href = "/store-detail?storeid=" + storeId;
-        },
-        nextStore(num) {
-            let page = (this.$route.query.page * 1) + num;
-            let keyword = this.getKeyword();
-            let category = this.$route.query.category;
-            this.changeUrl(page, keyword, category);
-        },
-        getKeyword() {
-            let keyword = null;
-            if (!checkParam(this.$route.query.keyword)) {
-                keyword = this.$route.query.keyword;
-            }
-            return keyword;
-        },
-        search() {
-            this.changeUrl(1, this.keyword, this.category);
-        },
-        changeUrl(page, keyword, category) {
-            let changeUrl = "/store-list?page=" + page + "&keyword=" + keyword + "&category=" + category;
-            this.$router.push(changeUrl);
         }
     },
-    components: { StoreList }
+    components: { StoreList, ChangePageButton, SearchArea }
 }
 </script>
 
