@@ -26,6 +26,7 @@ import { mapActions, mapGetters, mapMutations } from 'vuex';
 import ProductList from '@/components/product/ProductList.vue';
 import ChangePageButton from '@/components/paging/ChangePageButton.vue';
 import ProductSearchArea from '@/components/product/ProductSearchArea.vue';
+
 export default {
     mounted() {
         this.$store.dispatch("NavStore/changeSituation", 1);

@@ -24,6 +24,7 @@ import StoreList from '@/components/store/StoreList.vue';
 import ChangePageButton from '@/components/paging/ChangePageButton.vue';
 import SearchArea from '@/components/paging/SearchArea.vue';
 
+
 export default {
     data() {
         return {

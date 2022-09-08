@@ -24,6 +24,7 @@ import { mapGetters, mapMutations } from 'vuex';
 import DeliverList from '@/components/deliver/DeliverList.vue';
 import ChangePageButton from '@/components/paging/ChangePageButton.vue';
 
+
 export default {
     mounted() {
         this.$store.dispatch("NavStore/changeSituation", 1);

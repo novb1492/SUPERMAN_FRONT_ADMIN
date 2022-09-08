@@ -30,6 +30,7 @@ import { requestSave } from '@/api/deliver/DeliverApi';
 import OrderList from '@/components/order/OrderList.vue';
 import ChangePageButton from '@/components/paging/ChangePageButton.vue';
 import SearchArea from '@/components/paging/SearchArea.vue';
+
 export default {
     data() {
         return {
