@@ -10,7 +10,7 @@ function requestInviteMember(data) {
 }
 function requestStoreInfo(id) {
     setInterceptors(instance);
-    return  instance.get('/store/'+id);
+    return  instance.get(`/store/${id}`);
 }
 function requestCompanyNumInsert(data) {
     setInterceptors(instance);

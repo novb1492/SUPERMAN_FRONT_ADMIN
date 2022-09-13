@@ -44,11 +44,11 @@ export default {
     methods: {
         changeYear(num){
             let year = this.$route.query.year*1+num;
-            this.$router.push('/sales-list?year='+year+'&month='+this.$route.query.month+storeCommonQuery(this.$route));
+            this.$router.push(`/sales-list?year=${year}&month=${this.$route.query.month}${storeCommonQuery(this.$route)}`);
         },
         changeMonth(num){
             let month = this.getMonth(this.$route.query.month*1+num);
-            this.$router.push('/sales-list?year='+this.$route.query.year+'&month='+month+storeCommonQuery(this.$route));
+            this.$router.push(`/sales-list?year=${this.$route.query.year}&month=${month}${storeCommonQuery(this.$route)}`);
         },
         ...mapMutations("NavStore", {
             changeShowMarketInfo: "changeShowMarketInfo",

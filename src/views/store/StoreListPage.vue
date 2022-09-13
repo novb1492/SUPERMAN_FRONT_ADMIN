@@ -61,7 +61,7 @@ export default {
             let keyword = this.$route.query.keyword;
             let category = this.$route.query.category;
             let page = checkPage(this.$route.query.page);
-            let url = "/store/list?page=" + page + "&keyword=" + keyword + "&category=" + category;
+            let url = `/store/list?page=${page}&keyword=${keyword}&category=${category}`;
             this.showSearchInfoIfHave(keyword, category);
             this.$store.dispatch("basicStore/getInfolist", { url: url });
         },

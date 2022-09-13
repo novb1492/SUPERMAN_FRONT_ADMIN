@@ -27,10 +27,10 @@ export default {
     },
     methods: {
         goRegiProduct() {
-            location.href = '/regi-product?'+storeCommonQuery(this.$route);
+            location.href = `/regi-product?${storeCommonQuery(this.$route)}`;
         },
         goProductList() {
-            location.href = '/product-list?page=1&category=0'+storeCommonQuery(this.$route);
+            location.href = `/product-list?page=1&category=0${storeCommonQuery(this.$route)}`;
         },
         active() {
             if (this.flag) {

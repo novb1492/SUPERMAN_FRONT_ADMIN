@@ -50,7 +50,7 @@ export default {
             this.refundFlag=false;
         },
         refund() {
-            if (confirm("주문번호:" + this.orederId + "을 환불하시겠습니까?")) {
+            if (confirm(`주문번호:${this.orederId}을 환불하시겠습니까?`)) {
                 let data = JSON.stringify({
                     "orderId": this.orederId,
                     "count": this.cancleCount

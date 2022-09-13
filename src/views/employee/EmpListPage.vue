@@ -48,7 +48,7 @@ export default {
     },
     data() {
         return {
-            url:'/empl-list?'+ storeCommonQuery(this.$route)+'&'
+            url:`/empl-list?${storeCommonQuery(this.$route)}&`
         }
     },
     methods: {

@@ -14,7 +14,7 @@ export default {
     props: ['info'],
     methods:{
         goDetailPage(deliverId){
-            location.href='/deliver-detail?deliverid='+deliverId+storeCommonQuery(this.$route);
+            location.href=`/deliver-detail?deliverid=${deliverId}${storeCommonQuery(this.$route)}`;
         }
     }
 }

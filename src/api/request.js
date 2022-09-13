@@ -20,7 +20,7 @@ export  function setInterceptors(instance)  {
       let response = error.response;
       let data = response.data;
       if(checkexpireLogin(response.status,data.message)){
-        location.href='/login?nextUrl='+location.href;
+        location.href=`/login?nextUrl=${location.href}`;
       }
       return Promise.reject(error);
     },

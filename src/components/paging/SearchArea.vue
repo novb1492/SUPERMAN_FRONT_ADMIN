@@ -20,7 +20,7 @@ export default {
     },
     methods:{
         search(){
-            let changeUrl =this.url+"page=1&keyword=" + this.keyword + "&category=" + this.category;
+            let changeUrl =`${this.url}page=1&keyword=${this.keyword}&category=${this.category}`;
             this.$router.push(changeUrl);
         }
     }

@@ -31,7 +31,7 @@ export default {
             location.href='/regi-employee?page=1';
         },
         goEmplList(){
-            location.href='/empl-list?page=1'+storeCommonQuery(this.$route);
+            location.href=`/empl-list?page=1${storeCommonQuery(this.$route)}`;
         },
         active(){
             if(this.flag){

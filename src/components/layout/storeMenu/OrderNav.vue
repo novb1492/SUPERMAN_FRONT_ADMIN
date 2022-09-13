@@ -18,7 +18,7 @@ export default {
     name: 'OrderNav',
     methods: {
         goOrder(num) {
-            location.href = '/order-list?state=' + num + '&page=1&periodFlag=false'+storeCommonQuery(this.$route);
+            location.href = `/order-list?state=${num}&page=1&periodFlag=false${storeCommonQuery(this.$route)}`;
         },
         active() {
             if (this.flag) {

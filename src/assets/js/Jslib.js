@@ -101,9 +101,6 @@ export function checkPage(page) {
     }
     return page;
 }
-export function changeUrl(url) {
-    history.pushState("https://10.150.189.220:3030" + url);
-}
 export function getParam(sname) {
     var params = location.search.substr(location.search.indexOf("?") + 1);
     var sval = "";
@@ -153,7 +150,7 @@ export function showStoreInfo(arr,storeName,changeShowMarketInfo) {
  * @returns 
  */
 export function storeCommonQueryInRouter(){
-    return '^storeid='+getParam('storeid')+'^storeName='+getParam('storeName')+'^addr='+getParam('addr');
+    return `^storeid=${getParam('storeid')}+'^storeName=${getParam('storeName')}+'^addr=${getParam('addr')}`;
 }
 /**
  * .vue에서 사용하는 기본쿼리문
@@ -217,5 +214,5 @@ export function errorHandle(error){
 export function error403fail(error) {
     let data = error.response.data;
     alert(data.message);
-    location.href='/login?nextUrl='+location.href;
+    location.href=`/login?nextUrl=${location.href}`;
 }

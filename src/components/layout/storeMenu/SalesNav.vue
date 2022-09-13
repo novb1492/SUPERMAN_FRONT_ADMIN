@@ -23,7 +23,7 @@ export default {
             var today = new Date();
             var year = today.getFullYear();
             var month = ('0' + (today.getMonth() + 1)).slice(-2);
-            location.href = '/sales-list?year='+year+'&month='+month+storeCommonQuery(this.$route);
+            location.href = `/sales-list?year=${year}&month=${month}${storeCommonQuery(this.$route)}`;
         },
         active() {
             if (this.flag) {

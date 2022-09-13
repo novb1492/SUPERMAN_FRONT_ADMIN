@@ -39,7 +39,7 @@ export default {
             deliverArr: [],
             storeid: this.$route.query.storeid,
             flag: true,
-            url:"/order-list?state=" + this.$route.query.state  + storeCommonQuery(this.$route)+'&',
+            url:`/order-list?state=${this.$route.query.state}${ storeCommonQuery(this.$route)}&`,
             valueAndTexts:[{text:'이름',value:'name'},{text:'주소',value:'addr'}]
         };
     },
@@ -89,7 +89,7 @@ export default {
             alert(data.message);
         },
         requestGet() {
-            let url = "/order/list/" + this.$route.query.storeid + "/" + this.$route.query.state + "?page=" + this.$route.query.page + "&category=" + this.$route.query.category + "&keyword=" + this.$route.query.keyword + "&periodFlag=" + this.$route.query.periodFlag;
+            let url =`/order/list/${this.$route.query.storeid}/${this.$route.query.state}?page=${this.$route.query.page}&category=${this.$route.query.category}&keyword=${this.$route.query.keyword}&periodFlag=${this.$route.query.periodFlag}`;
             this.$store.dispatch("basicStore/getInfolist", { url: url });
             this.showSearchInfoIfHave(this.$route.query.keyword, this.$route.query.category);
         },
@@ -111,7 +111,7 @@ export default {
             this.changeUrl(page, keyword, category);
         },
         changeUrl(page, keyword, category) {
-            let changeUrl = "/order-list?state=" + this.$route.query.state + "&page=" + page + "&category=" + category + "&keyword=" + keyword + storeCommonQuery(this.$route);
+            let changeUrl =`/order-list?state=${this.$route.query.state}&page=${page}&category=${category}&keyword=${keyword}${storeCommonQuery(this.$route)}`;
             this.$router.push(changeUrl);
         },
         search() {

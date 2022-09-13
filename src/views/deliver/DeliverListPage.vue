@@ -47,7 +47,7 @@ export default {
     },
     data() {
         return {
-            url:"/deliver-list?state=" + this.$route.query.state+ storeCommonQuery(this.$route)+"&"
+            url:`/deliver-list?state=${this.$route.query.state}${storeCommonQuery(this.$route)}&`
         }
     },
     methods: {
@@ -55,7 +55,7 @@ export default {
             changeShowMarketInfo: "changeShowMarketInfo",
         }),
         requestGet() {
-            let url = "/deliver/list/" + this.$route.query.storeid + "/" + this.$route.query.state + "?page=" + this.$route.query.page;
+            let url = `/deliver/list/${this.$route.query.storeid}/${this.$route.query.state}?page=${this.$route.query.page}`;
             this.$store.dispatch("basicStore/getInfolist", { url: url });
         }
     },

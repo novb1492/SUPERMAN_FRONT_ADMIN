@@ -20,7 +20,7 @@ export default {
             let page = (this.$route.query.page * 1) + num;
             let keyword = this.$route.query.keyword;
             let category = this.$route.query.category;
-            let changeUrl =this.url+"page=" + page + "&keyword=" + keyword + "&category=" + category;
+            let changeUrl =`${this.url}page=${page}&keyword=${keyword}&category=${category}`;
             this.$router.push(changeUrl);
         }
     }   

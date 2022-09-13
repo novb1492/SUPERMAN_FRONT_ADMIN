@@ -2,7 +2,7 @@ import { instance, setInterceptors } from "@/api/request";
 
 function requestGetByCardId(data) {
     setInterceptors(instance);
-    return  instance.get('/order/'+data.storeId+'/'+data.cardId);
+    return  instance.get(`/order/${data.storeId}/${data.cardId}`);
 }
 function requestRefund(data) {
     setInterceptors(instance);
@@ -10,7 +10,7 @@ function requestRefund(data) {
 }
 function requestRefundAll(data) {
     setInterceptors(instance);
-    return  instance.post('/payment/cancle/all/'+data);
+    return  instance.post(`/payment/cancle/all/${data}`);
 }
 export {
     requestGetByCardId,

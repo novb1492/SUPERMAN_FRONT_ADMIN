@@ -37,7 +37,7 @@ export default {
         return {
             category: null,
             keyword: null,
-            url:"/product-list?" + storeCommonQuery(this.$route)+'&'
+            url:`/product-list?${storeCommonQuery(this.$route)}&`
         };
     },
     computed: {
@@ -74,7 +74,7 @@ export default {
             requestGetCategorys: "requestGetCategorys"
         }),
         requestGet() {
-            let url = "/user/product/list/" + this.$route.query.storeid + "?page=" + this.$route.query.page + "&category=" + this.$route.query.category + "&keyword=" + this.$route.query.keyword;
+            let url = `/user/product/list/${this.$route.query.storeid}?page=${this.$route.query.page}&category=${this.$route.query.category}&keyword=${this.$route.query.keyword}`;
             this.$store.dispatch("basicStore/getInfolist", { url: url });
             this.showSearchInfoIfHave(this.$route.query.val, this.$route.query.category);
         },

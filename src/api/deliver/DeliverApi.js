@@ -6,7 +6,7 @@ function requestSave(data) {
 }
 function requestGetDetail(data) {
     setInterceptors(instance);
-    return  instance.get('/deliver/'+data.storeId+'/'+data.deliverId);
+    return  instance.get(`/deliver/${data.storeId}/${data.deliverId}`);
 }
 function requestChangeState(data){
     setInterceptors(instance);
